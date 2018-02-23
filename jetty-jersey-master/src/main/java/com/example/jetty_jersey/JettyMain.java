@@ -13,6 +13,8 @@ import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.servlet.ServletContainer;
 
+import java.util.ArrayList;
+
 public class JettyMain {
 
 	public static void main(String[] args) throws Exception {
@@ -21,7 +23,7 @@ public class JettyMain {
 
 		// Add a connector
 		ServerConnector connector = new ServerConnector(server);
-		connector.setHost("0.0.0.0");
+		connector.setHost("localhost");
 		connector.setPort(8080);
 		connector.setIdleTimeout(30000);
 		server.addConnector(connector);
@@ -38,23 +40,48 @@ public class JettyMain {
 		handlerWebServices.setContextPath("/ws");
 		handlerWebServices.addServlet(servletHolder, "/*");
 
+		String[] pages = {
+				"home.html",
+				"pages/login.html",
+				"pages/register.html",
+				"pages/show_map.html",
+				"pages/index_map.html"
+		};
+
+		String[] paths = {
+				"/",
+				"/login",
+				"/register",
+				"/map_show",
+				"/map_index"
+		};
+
 		// Add a handler for resources (/*)
-		ResourceHandler handlerPortal = new ResourceHandler();
-		handlerPortal.setResourceBase("src/main/webapp");
-		handlerPortal.setDirectoriesListed(false);
-		handlerPortal.setWelcomeFiles(new String[] { "pages/examples/login.html" });
-		ContextHandler handlerPortalCtx = new ContextHandler();
-		handlerPortalCtx.setContextPath("/");
-		handlerPortalCtx.setHandler(handlerPortal);
+		ArrayList<ResourceHandler> handlerPortals = new ArrayList<ResourceHandler>();
+		ArrayList<ContextHandler> handlerPortalCtxs = new ArrayList<ContextHandler>();
+
+		for(int i=0; i<pages.length; i++){
+			ResourceHandler handlerPortal = new ResourceHandler();
+			handlerPortal.setResourceBase("src/main/webapp");
+			handlerPortal.setDirectoriesListed(false);
+			handlerPortal.setWelcomeFiles(new String[] { pages[i] });
+			ContextHandler handlerPortalCtx = new ContextHandler();
+			handlerPortalCtx.setContextPath(paths[i]);
+			handlerPortalCtx.setHandler(handlerPortal);
+
+			handlerPortals.add(handlerPortal);
+			handlerPortalCtxs.add(handlerPortalCtx);
+		}
 
 		// Activate handlers
 		ContextHandlerCollection contexts = new ContextHandlerCollection();
-		contexts.setHandlers(new Handler[] { handlerWebServices, handlerPortalCtx });
+		contexts.addHandler(handlerWebServices);
+		for(ContextHandler contextHandler : handlerPortalCtxs){
+			contexts.addHandler(contextHandler);
+		}
 		server.setHandler(contexts);
 
 		// Start server
 		server.start();
-
 	}
-
 }
