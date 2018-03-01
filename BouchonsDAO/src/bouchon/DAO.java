@@ -2,26 +2,26 @@ package bouchon;
 
 import java.awt.Event;
 
-import com.irif.dao.fake.EventAction;
-import com.irif.dao.fake.MapAction;
-import com.irif.dao.fake.PlaceAction;
-import com.irif.dao.fake.UserAction;
+import com.irif.dao.fake.EventDao;
+import com.irif.dao.fake.MapDao;
+import com.irif.dao.fake.PlaceDao;
+import com.irif.dao.fake.UserDao;
 
 public class DAO {
 
-	public static UserAction getUserAction(){
-		return new UserAction();
+	public static UserDao getUserDao(){
+		return new UserDao();
 	}
-	
-	public static MapAction getMapAction(){
-		return new MapAction();
+
+	public static MapDao getMapDao(){
+		return new MapDao();
 	}
-	
-	public static EventAction getEventAction(){
-		return new EventAction();
+
+	public static EventDao getEventDao(){
+		return new EventDao();
 	}
-	
-	public static PlaceAction getPlaceAction(){
-		return new PlaceAction();
+
+	public static PlaceDao getPlaceDao(){
+		return new PlaceDao();
 	}
 }
