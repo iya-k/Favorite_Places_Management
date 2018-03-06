@@ -19,6 +19,4 @@ public interface EventDao {
   */
   List<Event> getEvents(String username);
 
-  
-
 }
