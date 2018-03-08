@@ -445,6 +445,10 @@
                 $("#map-content").removeClass("col-xs-12");
                 $("#map-content").addClass("col-md-8");
               }
+
+              $("#place-lat").val(marker.getPosition().lat);
+              $("#place-lng").val(marker.getPosition().lng);
+
               map.setCenter(this.getPosition());
               // infowindow.open(map, marker);
             });
@@ -456,6 +460,10 @@
             $("#map-content").addClass("col-xs-12");
           });
       } 
+
+      $("[data-widget='edit']").click(function(){
+        $("#add-place-modal").modal("show");
+      });
     </script>
 
     <!-- Template to display place information also events if it has events -->
