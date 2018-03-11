@@ -1,0 +1,42 @@
+package com.irif.projet.genielogiciel.jetty_jersey.DAO;
+
+import java.util.List;
+
+public abstract class DAO<T> {
+	  protected Object connect = null;
+	  
+	  private DAO(){}
+
+	  
+	  public DAO(Object connect){
+	    this.connect = connect;
+	  }
+	   
+	  /**
+	  * creation method
+	  * @param obj
+	  * @return boolean if created true else false
+	  */
+	  public abstract boolean create(T obj);
+
+	  /**
+	  * delete method
+	  * @param obj
+	  * @return boolean if deleted true else false
+	  */
+	  public abstract boolean delete(T obj);
+
+	  /**
+	  * update method
+	  * @param obj
+	  * @return boolean if updated true else false
+	  */
+	  public abstract boolean update(T obj);
+
+	  /**
+	  * find method
+	  * @param id
+	  * @return T list corresponding to the id
+	  */
+	  public abstract List<T> find(int id);
+	}
