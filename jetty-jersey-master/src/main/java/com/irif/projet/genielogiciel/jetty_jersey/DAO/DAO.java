@@ -2,13 +2,15 @@ package com.irif.projet.genielogiciel.jetty_jersey.DAO;
 
 import java.util.List;
 
+import org.elasticsearch.client.transport.TransportClient;
+
 public abstract class DAO<T> {
 	  protected Object connect = null;
 	  
-	  private DAO(){}
+	  protected DAO(){}
 
 	  
-	  public DAO(Object connect){
+	  public DAO(TransportClient connect){
 	    this.connect = connect;
 	  }
 	   

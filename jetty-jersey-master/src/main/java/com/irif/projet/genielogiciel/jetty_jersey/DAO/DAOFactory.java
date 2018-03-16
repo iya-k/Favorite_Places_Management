@@ -1,10 +1,23 @@
 package com.irif.projet.genielogiciel.jetty_jersey.DAO;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
+import org.elasticsearch.client.Client;
+import org.elasticsearch.client.transport.TransportClient;
+import org.elasticsearch.common.settings.Setting;
+import org.elasticsearch.common.settings.Settings;
+import org.elasticsearch.common.transport.TransportAddress;
+import org.elasticsearch.transport.client.PreBuiltTransportClient;
+
 import com.irif.projet.genielogiciel.jetty_jersey.DAO.implement.*;
 
 public class DAOFactory extends AbstractDAOFactory{
-	private static  Object connect;// a voir
+
 	
+	private static TransportClient connect;
+	
+	//private TransportClient client;
 	private static UserDAO userDAO;
 	private static MapDAO mapDAO;
 	private static PlaceDAO placeDAO;
@@ -13,9 +26,24 @@ public class DAOFactory extends AbstractDAOFactory{
 	private static PictureDAO pictureDAO;
 	
 	
+	public void initClient() {
+		
+		try {
+
+			connect = new PreBuiltTransportClient(Settings.EMPTY)
+						.addTransportAddress(new TransportAddress(InetAddress.getByName("localhost"), 9300))
+				        .addTransportAddress(new TransportAddress(InetAddress.getByName("localhost"), 9301));
+				
+		}	catch (UnknownHostException e) {
+			System.out.println(e);
+		}
+		
+		
+	}
+	
 	public DAO getUserDAO() {
 		if(userDAO == null) {
-			userDAO = new UserDAO(connect);
+			userDAO = new UserDAO();
 		}
 		return userDAO;
 	}

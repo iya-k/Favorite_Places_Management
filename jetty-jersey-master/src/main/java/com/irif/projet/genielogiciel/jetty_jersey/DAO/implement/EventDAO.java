@@ -7,7 +7,7 @@ import com.irif.projet.genielogiciel.jetty_jersey.DAO.DAO;
 public class EventDAO extends DAO<EventDAO>{
 
 	public EventDAO(Object connect) {
-		super(connect);
+		super();
 		// TODO Auto-generated constructor stub
 	}
 

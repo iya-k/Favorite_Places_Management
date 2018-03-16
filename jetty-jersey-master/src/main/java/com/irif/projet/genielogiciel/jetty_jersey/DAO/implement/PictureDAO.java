@@ -8,7 +8,7 @@ import com.irif.projet.genielogiciel.jetty_jersey.model.Picture;
 public class PictureDAO extends DAO<Picture>{
 
 	public PictureDAO(Object connect) {
-		super(connect);
+		super();
 		// TODO Auto-generated constructor stub
 	}
 

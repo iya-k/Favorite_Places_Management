@@ -8,7 +8,7 @@ import com.irif.projet.genielogiciel.jetty_jersey.model.Place;
 public class PlaceDAO extends DAO<Place>{
 
 	public PlaceDAO(Object connect) {
-		super(connect);
+		super();
 		// TODO Auto-generated constructor stub
 	}
 

@@ -8,7 +8,7 @@ import com.irif.projet.genielogiciel.jetty_jersey.model.Comment;
 public class CommentDAO extends DAO<Comment>{
 
 	public CommentDAO(Object connect) {
-		super(connect);
+		super();
 		// TODO Auto-generated constructor stub
 	}
 

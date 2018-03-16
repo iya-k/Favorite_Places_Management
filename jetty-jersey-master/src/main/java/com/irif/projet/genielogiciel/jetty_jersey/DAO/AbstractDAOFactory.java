@@ -53,7 +53,9 @@ public abstract class AbstractDAOFactory {
 	public static AbstractDAOFactory getFactory(int type){
 		switch(type){
 		case DAO_FACTORY:
-			return new DAOFactory();
+			DAOFactory adf= new DAOFactory();
+			adf.initClient();
+			return adf;
 		default:
 			return null;
 		}

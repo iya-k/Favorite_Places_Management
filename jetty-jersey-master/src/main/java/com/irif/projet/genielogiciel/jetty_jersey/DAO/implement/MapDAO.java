@@ -8,7 +8,7 @@ import com.irif.projet.genielogiciel.jetty_jersey.model.Map;
 public class MapDAO extends DAO<Map>{
 
 	public MapDAO(Object connect) {
-		super(connect);
+		super();
 		// TODO Auto-generated constructor stub
 	}
 
