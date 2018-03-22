@@ -36,7 +36,7 @@ public class UserDAO extends DAO<User>{
 			
 			//IndexRequestBuilder indexRequestBuilder = this.connect.prepareIndex(indexName, documentType, documentId);
 			//indexRequestBuilder.setSource(jsonDocument);
-			
+			return true;
 		} else {
 			return false;		
 		}

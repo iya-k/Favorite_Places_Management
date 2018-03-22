@@ -1,11 +1,23 @@
 package com.example.jetty_jersey;
 
-import com.irif.projet.genielogiciel.jetty_jersey.DAO.DAOFactory;
+import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.ServerConnector;
+import org.eclipse.jetty.server.handler.ContextHandler;
+import org.eclipse.jetty.server.handler.ContextHandlerCollection;
+import org.eclipse.jetty.server.handler.ResourceHandler;
+import org.eclipse.jetty.servlet.ServletContextHandler;
+import org.eclipse.jetty.servlet.ServletHolder;
+import org.glassfish.jersey.filter.LoggingFilter;
+import org.glassfish.jersey.jackson.JacksonFeature;
+import org.glassfish.jersey.server.ResourceConfig;
+import org.glassfish.jersey.servlet.ServletContainer;
+
+import java.util.ArrayList;
 
 public class JettyMain {
 
 	public static void main(String[] args) throws Exception {
-		/*
+
 		// Initialize the server
 		Server server = new Server();
 
@@ -70,8 +82,6 @@ public class JettyMain {
 		server.setHandler(contexts);
 
 		// Start server
-		server.start();*/
-		DAOFactory daf = new DAOFactory();
-		daf.initClient();
+		server.start();
 	}
 }

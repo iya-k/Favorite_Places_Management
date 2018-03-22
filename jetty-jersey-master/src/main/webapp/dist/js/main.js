@@ -83,8 +83,8 @@ function initMap() {
     };
 
     $("#markers").show();
-    $("#markers").css('top', event.pixel.y - 60);
-    $("#markers").css('left', event.pixel.x - 85);
+    $("#markers").css('top', (event.pixel.y - 60));
+    $("#markers").css('left', (event.pixel.x - 85));
     // popupAddPlaceModel(data);
 
     /*addMarker({coords: {
