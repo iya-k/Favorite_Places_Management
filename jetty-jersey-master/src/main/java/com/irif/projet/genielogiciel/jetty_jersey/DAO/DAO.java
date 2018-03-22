@@ -5,7 +5,7 @@ import java.util.List;
 import org.elasticsearch.client.transport.TransportClient;
 
 public abstract class DAO<T> {
-	  protected Object connect = null;
+	  protected TransportClient connect = null;
 	  
 	  protected DAO(){}
 
