@@ -12,8 +12,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-    <!-- DataTables -->
-    <link rel="stylesheet" href="../plugins/datatables/dataTables.bootstrap.css">
+    <!-- iCheck for checkboxes and radio inputs -->
+    <link rel="stylesheet" href="../plugins/iCheck/all.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="../dist/css/AdminLTE.min.css">
     <!-- AdminLTE Skins. Choose a skin from the css/skins
@@ -21,6 +21,9 @@
     <link rel="stylesheet" href="../dist/css/skins/_all-skins.min.css">
 
     <link rel="stylesheet" type="text/css" href="../dist/css/main.css">
+
+    <link rel="stylesheet" type="text/css" href="../dist/css/menu.css">
+
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -31,228 +34,44 @@
   </head>
   <body class="hold-transition skin-blue layout-top-nav">
     <div class="wrapper">
-      <header class="main-header">
-        <nav class="navbar navbar-static-top">
-          <div class="container">
-            <div class="navbar-header">
-              <a href="#" class="navbar-brand"><b>Admin</b>LTE</a>
-              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
-                <i class="fa fa-bars"></i>
-              </button>
-            </div>
-
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
-              <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-                <li><a href="#">Link</a></li>
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
-                  <ul class="dropdown-menu" role="menu">
-                    <li><a href="#">Action</a></li>
-                    <li><a href="#">Another action</a></li>
-                    <li><a href="#">Something else here</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#">Separated link</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#">One more separated link</a></li>
-                  </ul>
-                </li>
-              </ul>
-              <form class="navbar-form navbar-left" role="search">
-                <div class="form-group">
-                  <input type="text" class="form-control" id="navbar-search-input" placeholder="Search">
-                </div>
-              </form>
-            </div><!-- /.navbar-collapse -->
-            <!-- Navbar Right Menu -->
-              <div class="navbar-custom-menu">
-                <ul class="nav navbar-nav">
-                  <!-- Messages: style can be found in dropdown.less-->
-                  <li class="dropdown messages-menu">
-                    <!-- Menu toggle button -->
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                      <i class="fa fa-envelope-o"></i>
-                      <span class="label label-success">4</span>
-                    </a>
-                    <ul class="dropdown-menu">
-                      <li class="header">You have 4 messages</li>
-                      <li>
-                        <!-- inner menu: contains the messages -->
-                        <ul class="menu">
-                          <li><!-- start message -->
-                            <a href="#">
-                              <div class="pull-left">
-                                <!-- User Image -->
-                                <img src="../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-                              </div>
-                              <!-- Message title and timestamp -->
-                              <h4>
-                                Support Team
-                                <small><i class="fa fa-clock-o"></i> 5 mins</small>
-                              </h4>
-                              <!-- The message -->
-                              <p>Why not buy a new awesome theme?</p>
-                            </a>
-                          </li><!-- end message -->
-                        </ul><!-- /.menu -->
-                      </li>
-                      <li class="footer"><a href="#">See All Messages</a></li>
-                    </ul>
-                  </li><!-- /.messages-menu -->
-
-                  <!-- Notifications Menu -->
-                  <li class="dropdown notifications-menu">
-                    <!-- Menu toggle button -->
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                      <i class="fa fa-bell-o"></i>
-                      <span class="label label-warning">10</span>
-                    </a>
-                    <ul class="dropdown-menu">
-                      <li class="header">You have 10 notifications</li>
-                      <li>
-                        <!-- Inner Menu: contains the notifications -->
-                        <ul class="menu">
-                          <li><!-- start notification -->
-                            <a href="#">
-                              <i class="fa fa-users text-aqua"></i> 5 new members joined today
-                            </a>
-                          </li><!-- end notification -->
-                        </ul>
-                      </li>
-                      <li class="footer"><a href="#">View all</a></li>
-                    </ul>
-                  </li>
-                  <!-- Tasks Menu -->
-                  <li class="dropdown tasks-menu">
-                    <!-- Menu Toggle Button -->
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                      <i class="fa fa-flag-o"></i>
-                      <span class="label label-danger">9</span>
-                    </a>
-                    <ul class="dropdown-menu">
-                      <li class="header">You have 9 tasks</li>
-                      <li>
-                        <!-- Inner menu: contains the tasks -->
-                        <ul class="menu">
-                          <li><!-- Task item -->
-                            <a href="#">
-                              <!-- Task title and progress text -->
-                              <h3>
-                                Design some buttons
-                                <small class="pull-right">20%</small>
-                              </h3>
-                              <!-- The progress bar -->
-                              <div class="progress xs">
-                                <!-- Change the css width attribute to simulate progress -->
-                                <div class="progress-bar progress-bar-aqua" style="width: 20%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                                  <span class="sr-only">20% Complete</span>
-                                </div>
-                              </div>
-                            </a>
-                          </li><!-- end task item -->
-                        </ul>
-                      </li>
-                      <li class="footer">
-                        <a href="#">View all tasks</a>
-                      </li>
-                    </ul>
-                  </li>
-                  <!-- User Account Menu -->
-                  <li class="dropdown user user-menu">
-                    <!-- Menu Toggle Button -->
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                      <!-- The user image in the navbar-->
-                      <img src="../dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-                      <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                      <span class="hidden-xs">Alexander Pierce</span>
-                    </a>
-                    <ul class="dropdown-menu">
-                      <!-- The user image in the menu -->
-                      <li class="user-header">
-                        <img src="../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-                        <p>
-                          Alexander Pierce - Web Developer
-                          <small>Member since Nov. 2012</small>
-                        </p>
-                      </li>
-                      <!-- Menu Body -->
-                      <li class="user-body">
-                        <div class="col-xs-4 text-center">
-                          <a href="#">Followers</a>
-                        </div>
-                        <div class="col-xs-4 text-center">
-                          <a href="#">Sales</a>
-                        </div>
-                        <div class="col-xs-4 text-center">
-                          <a href="#">Friends</a>
-                        </div>
-                      </li>
-                      <!-- Menu Footer-->
-                      <li class="user-footer">
-                        <div class="pull-left">
-                          <a href="#" class="btn btn-default btn-flat">Profile</a>
-                        </div>
-                        <div class="pull-right">
-                          <a href="#" class="btn btn-default btn-flat">Sign out</a>
-                        </div>
-                      </li>
-                    </ul>
-                  </li>
-                </ul>
-              </div><!-- /.navbar-custom-menu -->
-          </div><!-- /.container-fluid -->
-        </nav>
+      <header>
+        <a href="#" class="menu-style" id="plus-option">
+          <i class="fa fa-plus"></i>
+        </a>
+        <ul id="menu-list" class="hide-list">
+          <li>
+            <a href="#" class="menu-style" id="setting">
+              <i class="fa fa-gear"></i>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="menu-style" id="road">
+              <i class="fa fa-car"></i>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="menu-style" id="add-place">
+              <i class="fa fa-map-marker"></i>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="menu-style" id="edit-map">
+              <i class="fa fa-edit"></i>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="menu-style" id="index-map">
+              <i class="fa fa-map"></i>
+            </a>
+          </li>
+        </ul>
       </header>
       
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper map-background">
-        <!-- Content Header (Page header) -->
-        <section class="content-header">
-          <h1>
-            Show Map
-            <small>page</small>
-          </h1>
-          <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li><a href="#">Tables</a></li>
-            <li class="active">Data tables</li>
-          </ol>
-        </section>
-
-        <!-- Main content -->
-        <section class="content">
-          <div class="row">
-            <div id="place-info" class="col-md-4" hidden>
-              <div class="box box-solid">
-                <div class="box-header with-border">
-                  <i class="fa fa-map-marker"></i>
-                  <h3 class="box-title">Place Name</h3>
-                  <div class="box-tools pull-right">
-                    <button class="btn btn-box-tool" data-widget="edit"><i class="fa fa-edit"></i></button>
-                    <button class="btn btn-box-tool" data-widget="leave"><i class="fa fa-chevron-left"></i></button>
-                  </div>
-                </div><!-- /.box-header -->
-                <div class="box-body">
-                </div><!-- /.box-body -->
-              </div><!-- /.box -->
-            </div><!-- ./col -->
-            <div id="map-content" class="col-xs-12">
-              <div class="box">
-                <div class="box-body no-padding">
-                  <div id="google-map" style="height: 768px;"></div>
-                </div>
-              </div>
-            </div><!-- /.col -->
-          </div><!-- /.row -->
+        <section id="google-map" style="height: 768px;">
         </section><!-- /.content -->
       </div><!-- /.content-wrapper -->
-      <footer class="main-footer">
-        <div class="pull-right hidden-xs">
-          <b>Version</b> 2.3.0
-        </div>
-        <strong>Copyright &copy; 2014-2015 <a href="#">Almsaeed Studio</a>.</strong> All rights reserved.
-      </footer>
 
       <div class="modal" id="place-info-modal" tabindex="-1" role="dialog">
         <div class="modal-dialog">
@@ -261,6 +80,7 @@
               <i class="fa fa-map-marker"></i>
               <h3 class="box-title">Place Name</h3>
               <div class="box-tools pull-right">
+                <button class="btn btn-box-tool" data-widget="add"><i class="fa fa-plus"></i></button>
                 <button class="btn btn-box-tool" data-widget="edit"><i class="fa fa-edit"></i></button>
                 <button class="btn btn-box-tool" data-dismiss="modal"><i class="fa fa-times"></i></button>
               </div>
@@ -293,8 +113,19 @@
               <form role="form" enctype="multipart/form-data">
                 <div class="box-body">
                   <div class="form-group">
-                    <label for="place-name">Name</label>
-                    <input type="text" class="form-control" id="place-name" placeholder="Place Name">
+                    <div><label>Type</label></div>
+                    <div>
+                      <label>
+                        <input type="radio" name="r1" class="minimal" checked>
+                        Place
+                      </label>
+                    </div>
+                    <div>
+                      <label>
+                        <input type="radio" name="r1" class="minimal">
+                        Event
+                      </label>
+                    </div>
                   </div>
                   <div class="form-group">
                     <label for="place-lat">Latitude</label>
@@ -303,6 +134,10 @@
                   <div class="form-group">
                     <label for="place-lng">Longitude</label>
                     <input type="text" class="form-control" id="place-lng" placeholder="Place Longitude">
+                  </div>
+                  <div class="form-group">
+                    <label for="place-name">Name</label>
+                    <input type="text" class="form-control" id="place-name" placeholder="Place Name">
                   </div>
                   <div class="form-group">
                     <label for="place-message">Message</label>
@@ -317,153 +152,113 @@
 
                 <div class="box-footer modal-footer">
                   <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary">Add Place</button>
+                  <button type="button" class="btn btn-success">Add Place</button>
                 </div>
               </form>
             </div>
           </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
       </div><!-- /.modal -->
-     
+
+      <div class="modal" id="maps-list-modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title">Maps List</h4>
+            </div>
+            <div class="modal-body">
+              
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" data-widget="add-map">Add Map</button>
+            </div>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+      </div><!-- /.modal -->
+
+      <div class="modal" id="add-map-modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title">Modal Default</h4>
+            </div>
+            <div class="modal-body">
+              <!-- form start -->
+              <form role="form">
+                <div class="box-body">
+                  <div class="form-group">
+                    <label for="map-name">Map Name</label>
+                    <input type="text" class="form-control" id="map-name" placeholder="Map Name">
+                  </div>
+                  <!-- radio -->
+                  <div class="form-group">
+                    <div class="radio">
+                      <label>
+                        <input class="minimal" type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+                        Private
+                      </label>
+                    </div>
+                    <div class="radio">
+                      <label>
+                        <input class="minimal" type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+                        Friends
+                      </label>
+                    </div>
+                    <div class="radio">
+                      <label>
+                        <input class="minimal" type="radio" name="optionsRadios" id="optionsRadios3" value="option3">
+                        Public
+                      </label>
+                    </div>
+                  </div>
+                </div><!-- /.box-body -->
+
+                <div class="box-footer modal-footer">
+                  <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-success">Add Map</button>
+                </div>
+              </form>
+            </div>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+      </div><!-- /.modal -->
+
+      <div id="markers" style="position: absolute">
+        <a href="#" marker-target="0"><img src="../dist/img/map-marker-green.png"></a>
+        <a href="#" marker-target="1"><img src="../dist/img/map-marker-blue.png"></a>
+        <a href="#" marker-target="2"><img src="../dist/img/map-marker-red.png"></a>
+        <a href="#" marker-target="3"><img src="../dist/img/map-marker-orange.png"></a>
+        <a href="#" marker-target="4"><img src="../dist/img/map-marker-purple.png"></a>
+      </div>
+
       <!-- Add the sidebar's background. This div must be placed
            immediately after the control sidebar -->
       <div class="control-sidebar-bg"></div>
     </div><!-- ./wrapper -->
 
-    <!-- jQuery 2.1.4 -->
-    <script src="../plugins/jQuery/jQuery-2.1.4.min.js"></script>
-    <!-- Bootstrap 3.3.5 -->
-    <script src="../bootstrap/js/bootstrap.min.js"></script>
-    <!-- DataTables -->
-    <script src="../plugins/datatables/jquery.dataTables.min.js"></script>
-    <script src="../plugins/datatables/dataTables.bootstrap.min.js"></script>
-    <!-- SlimScroll -->
-    <script src="../plugins/slimScroll/jquery.slimscroll.min.js"></script>
-    <!-- FastClick -->
-    <script src="../plugins/fastclick/fastclick.min.js"></script>
-    <!-- AdminLTE App -->
-    <script src="../dist/js/app.min.js"></script>
-    <!-- Google map api  -->
-    <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCTVjwocX-hS7ESfirPaQVA_oWM2A0Ik2U&callback=initMap" type="text/javascript"></script>
-    <!-- Underscore Plugin -->
-    <script type="text/javascript" src="../plugins/underscore/underscore.js"></script>
-    <!-- AdminLTE App -->
-    <script src="../dist/js/app.min.js"></script>
-    <!-- AdminLTE for demo purposes -->
-    <script src="../dist/js/demo.js"></script>
-    <!-- page script -->
-    <script>
-      $(function() {
-          $("#example1").DataTable();
-          $('#example2').DataTable({
-              "paging": true,
-              "lengthChange": false,
-              "searching": false,
-              "ordering": true,
-              "info": true,
-              "autoWidth": false
-          });
-      });
-
-      function initMap() {
-          markers = [
-            {
-              coords: {
-                lat: 48.8662189, 
-                lng: 2.3189001
-              }, // coordiantes
-              icon: "../dist/img/map-marker-red.png", // icon image
-              label: "location 1", // place name
-            },
-            {
-              coords: {
-                lat: 48.8456664, 
-                lng: 2.3409146
-              }, // coordiantes
-              icon: "../dist/img/map-marker-blue.png", // icon image
-              label: "location 2", // place name
-            },
-            {
-              coords: {
-                lat: 48.8375083, 
-                lng: 2.1000479
-              }, // coordiantes
-              icon: "../dist/img/map-marker-green.png", // icon image
-              label: "location 3", // place name
-            },
-          ]; // markers to fill on a map
-
-          var map = new google.maps.Map(document.getElementById("google-map"), {
-              center: new google.maps.LatLng( 48.8589507, 2.2770201),
-              zoom: 12
-          });
-
-          /**
-           * Right click on map listener
-           * 
-           */
-          google.maps.event.addListener(map, 'click', function(event){
-            $("#place-lat").val(event.latLng.lat());
-            $("#place-lng").val(event.latLng.lng());
-            $("#add-place-modal").modal("show");
-
-            /*addMarker({coords: {
-              lat: latitude,
-              lng: longitude
-            }});*/
-          });
-
-          for(i=0; i<markers.length; i++){
-            addMarker(markers[i]);
-          }
-
-          /**
-           * function to add marker on a map
-           * 
-           */
-          function addMarker(markerProp){
-            var marker = new google.maps.Marker({
-              map: map,
-              position: markerProp.coords,
-              label: markerProp.label,
-              icon: markerProp.icon,
-            });
-
-            /*alert(markerProp.content);
-            var infowindow = new google.maps.InfoWindow({
-              content: markerProp.content
-            });*/
-
-            marker.addListener('click', function(){
-              if($(window).width() < 992){
-                $("#place-info-modal").modal("show");
-                $("#place-info-modal .box-body").html(_.template($("#place-info-content").html()));
-              }else{
-                $("#place-info .box-body").html(_.template($("#place-info-content").html()));
-                $("#place-info").show();
-                $("#map-content").removeClass("col-xs-12");
-                $("#map-content").addClass("col-md-8");
-              }
-
-              $("#place-lat").val(marker.getPosition().lat);
-              $("#place-lng").val(marker.getPosition().lng);
-
-              map.setCenter(this.getPosition());
-              // infowindow.open(map, marker);
-            });
-          }
-
-          $("[data-widget='leave']").click(function(){
-            $("#place-info").hide();
-            $("#map-content").removeClass("col-md-8");
-            $("#map-content").addClass("col-xs-12");
-          });
-      } 
-
-      $("[data-widget='edit']").click(function(){
-        $("#add-place-modal").modal("show");
-      });
+    <!-- Template to display list of maps -->
+    <script type="text/template" id="maps-list-content">
+      <% 
+        data = data.data;
+        console.log(data);
+        for(i=0; i<data.length; i++) { 
+          console.log(data[i].url);
+      %>
+        <div class="box box-widget widget-user">
+          <!-- Add the bg color to the header using any of the bg-* classes -->
+          <a href="#">
+            <div class="widget-user-header bg-black" style="background: url(<%= data[i].url %>) center center;">
+              <h3 class="widget-user-username"><%= data[i].name %></h3>
+              <!-- <h5 class="widget-user-desc"></h5> -->
+            </div>
+          </a>
+        </div>
+      <% 
+        }
+      %>
     </script>
 
     <!-- Template to display place information also events if it has events -->
@@ -482,19 +277,19 @@
           </ol>
           <div class="carousel-inner">
             <div class="item active">
-              <img src="http://placehold.it/900x500/39CCCC/ffffff&text=I+Love+Bootstrap" alt="First slide">
+              <img src="../dist/img/paris-diderot-1.jpg" alt="First slide">
               <div class="carousel-caption">
                 First Slide
               </div>
             </div>
             <div class="item">
-              <img src="http://placehold.it/900x500/3c8dbc/ffffff&text=I+Love+Bootstrap" alt="Second slide">
+              <img src="../dist/img/paris-diderot-2.jpg" alt="Second slide">
               <div class="carousel-caption">
                 Second Slide
               </div>
             </div>
             <div class="item">
-              <img src="http://placehold.it/900x500/f39c12/ffffff&text=I+Love+Bootstrap" alt="Third slide">
+              <img src="../dist/img/paris-diderot-3.jpg" alt="Third slide">
               <div class="carousel-caption">
                 Third Slide
               </div>
@@ -567,5 +362,30 @@
         </div>
       </div>
     </script>
+
+    <!-- jQuery 2.1.4 -->
+    <script src="../plugins/jQuery/jQuery-2.1.4.min.js"></script>
+    <!-- Bootstrap 3.3.5 -->
+    <script src="../bootstrap/js/bootstrap.min.js"></script>
+    <!-- DataTables -->
+    <script src="../plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="../plugins/datatables/dataTables.bootstrap.min.js"></script>
+    <!-- SlimScroll -->
+    <script src="../plugins/slimScroll/jquery.slimscroll.min.js"></script>
+    <!-- FastClick -->
+    <script src="../plugins/fastclick/fastclick.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="../dist/js/app.min.js"></script>
+    <!-- iCheck 1.0.1 -->
+    <script src="../plugins/iCheck/icheck.min.js"></script>
+    <!-- Google map api  -->
+    <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCTVjwocX-hS7ESfirPaQVA_oWM2A0Ik2U&callback=initMap" type="text/javascript"></script>
+    <!-- Underscore Plugin -->
+    <script type="text/javascript" src="../plugins/underscore/underscore.js"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="../dist/js/demo.js"></script>
+    <!-- page script -->
+    <script src="../dist/js/main.js" type="text/javascript"></script>
   </body>
 </html>

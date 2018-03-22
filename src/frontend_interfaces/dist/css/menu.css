@@ -1,0 +1,62 @@
+.menu-style {
+    width: 50px;
+    height: 50px;
+    background-color: #3c8dbc;
+    color: #FFF;
+    border-radius: 50%;
+    text-align: center;
+    box-shadow: 2px 2px 3px #999;
+    z-index: 1000;
+}
+
+.menu-style i {
+    font-size: 24px;
+    margin-top: 13px;
+}
+
+a#plus-option {
+    position: fixed;
+    bottom: 20px;
+    right: 40px;
+}
+
+ul#menu-list {
+    position: fixed;
+    right: 40px;
+    bottom: 60px;
+    z-index: 100;
+}
+
+ul#menu-list li {
+    list-style: none;
+    margin-bottom: 10px;
+}
+
+ul#menu-list li a {
+    display: block;
+}
+
+ul#menu-list:hover {
+    visibility: visible!important;
+    opacity: 1!important;
+}
+
+.hide-list {
+    visibility: hidden;
+}
+
+.show-list/*, a#plus-option:hover+ul*/ {
+    visibility: visible;
+    animation: scale-in 0.5s;
+}
+
+@keyframes scale-in {
+    from {
+        transform: scale(0);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
