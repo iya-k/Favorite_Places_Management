@@ -12,12 +12,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
-import com.example.jetty_jersey.ws.LoginRessource.LoginClass;
 import com.irif.projet.genielogiciel.jetty_jersey.DAO.AbstractDAOFactory;
 import com.irif.projet.genielogiciel.jetty_jersey.DAO.DAO;
-import com.irif.projet.genielogiciel.jetty_jersey.DAO.DAOFactory;
 import com.irif.projet.genielogiciel.jetty_jersey.model.Event;
-import com.irif.projet.genielogiciel.jetty_jersey.model.User;
 
 @Path("/id_map")
 public class EventRessource {

@@ -20,4 +20,16 @@ $(function(){
 	$("#button").click(function(){
 		getServerData("ws/example/aircraft",callDone);
 	});
+	$("#place").click(function(){
+		getServerData("ws/id_map/id_place",callDone);
+	});
+	$("#map").click(function(){
+		getServerData("ws/map/pass",callDone);
+	});
+	$("#event").click(function(){
+		getServerData("ws/id_map/id_event",callDone);
+	});
+	$("#login").click(function(){
+		getServerData("ws/login/user",callDone);
+	});
 });
