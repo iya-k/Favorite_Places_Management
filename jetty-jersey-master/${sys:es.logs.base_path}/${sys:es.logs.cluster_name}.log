@@ -1,0 +1,6 @@
+[2018-03-24T21:18:38,603][INFO ][o.e.p.PluginsService     ] [_client_] no modules loaded
+[2018-03-24T21:18:38,612][INFO ][o.e.p.PluginsService     ] [_client_] loaded plugin [org.elasticsearch.index.reindex.ReindexPlugin]
+[2018-03-24T21:18:38,612][INFO ][o.e.p.PluginsService     ] [_client_] loaded plugin [org.elasticsearch.join.ParentJoinPlugin]
+[2018-03-24T21:18:38,612][INFO ][o.e.p.PluginsService     ] [_client_] loaded plugin [org.elasticsearch.percolator.PercolatorPlugin]
+[2018-03-24T21:18:38,612][INFO ][o.e.p.PluginsService     ] [_client_] loaded plugin [org.elasticsearch.script.mustache.MustachePlugin]
+[2018-03-24T21:18:38,612][INFO ][o.e.p.PluginsService     ] [_client_] loaded plugin [org.elasticsearch.transport.Netty4Plugin]

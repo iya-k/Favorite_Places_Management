@@ -1,5 +1,7 @@
 package com.irif.projet.genielogiciel.jetty_jersey.DAO;
 
+import java.net.UnknownHostException;
+
 public abstract class AbstractDAOFactory {
 	/**
 	 * different types of factories
@@ -44,13 +46,14 @@ public abstract class AbstractDAOFactory {
 	public abstract DAO getPictureDAO();
 
 
-	//Méthode permettant de récupérer les Factory
+	//Mï¿½thode permettant de rï¿½cupï¿½rer les Factory
 	/**
 	 * 
 	 * @param type : type of factory desired
 	 * @return factory corresponding to the type
+	 * @throws UnknownHostException 
 	 */
-	public static AbstractDAOFactory getFactory(int type){
+	public static AbstractDAOFactory getFactory(int type) throws UnknownHostException{
 		switch(type){
 		case DAO_FACTORY:
 			DAOFactory adf= new DAOFactory();

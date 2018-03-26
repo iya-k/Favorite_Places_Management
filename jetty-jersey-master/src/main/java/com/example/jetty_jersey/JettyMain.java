@@ -13,11 +13,20 @@ import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.servlet.ServletContainer;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.irif.projet.genielogiciel.jetty_jersey.DAO.AbstractDAOFactory;
+import com.irif.projet.genielogiciel.jetty_jersey.DAO.DAO;
+import com.irif.projet.genielogiciel.jetty_jersey.DAO.DAOFactory;
+import com.irif.projet.genielogiciel.jetty_jersey.model.User;
+
+import java.io.IOException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 public class JettyMain {
-
-	public static void main(String[] args) throws Exception {
+	
+	public static void main(String[] args) throws Exception {	
 		// Initialize the server
 		Server server = new Server();
 

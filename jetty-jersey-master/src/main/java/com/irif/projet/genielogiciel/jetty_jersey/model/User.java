@@ -1,7 +1,8 @@
 package com.irif.projet.genielogiciel.jetty_jersey.model;
 
 public class User {
-	private int userId;
+	private static int cpt = 1;
+	private int id;
 	private String username;//username unique a utiliser comme primary key
 	private String firstname;
 	private String lastname;
@@ -10,28 +11,30 @@ public class User {
 
 	public User(){}
 	
-	public User(int userId,String username,String firstname,String lastname,String email,String password) {
-		this.userId=userId;
+	public User(String username,String firstname,String lastname,String email,String password){
+		this.id=cpt;
 		this.username=username;
 		this.firstname=firstname;
 		this.lastname=lastname;
 		this.email=email;
 		this.password=password;
+		cpt++;
+	}
+	
+
+	public int getId(){
+		return id;
 	}
 
-	public int getUserId() {
-		return userId;
+	public void setUserId(int id) {
+		this.id = id;
 	}
 
-	public void setUserId(int userId) {
-		this.userId = userId;
-	}
-
-	public String getUsername() {
+	public String getName(){
 		return username;
 	}
 
-	public void setUsername(String username) {
+	public void setName(String username){
 		this.username = username;
 	}
 
@@ -66,9 +69,7 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-	
-	
-
-
+	public static int getCpt(){
+		return cpt;
+	}
 }

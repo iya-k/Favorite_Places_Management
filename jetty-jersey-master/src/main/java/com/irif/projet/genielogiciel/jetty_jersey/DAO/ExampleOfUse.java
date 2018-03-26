@@ -6,7 +6,8 @@ import com.irif.projet.genielogiciel.jetty_jersey.model.User;
 
 public class ExampleOfUse {
 
-	public static void main(String[] args) {
+	public static void main(String[] args){
+		/*
 		//obtention du factory correspondant
 		AbstractDAOFactory aDAOF = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
 		//obtention du DAO
@@ -26,6 +27,6 @@ public class ExampleOfUse {
 		String firstname=usr2.get(0).getFirstname() ;
 		String lastname=usr2.get(0).getLastname();
 		String email=usr2.get(0).getEmail();
-		String password=usr2.get(0).getPassword();
+		String password=usr2.get(0).getPassword();*/
 	}
 }
