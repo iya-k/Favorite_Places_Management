@@ -17,7 +17,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.irif.projet.genielogiciel.jetty_jersey.model.User;
 
-public abstract class DAO<T> {
+public abstract class DAO<T>{
 	  protected TransportClient client;
 	  protected ObjectMapper mapper;
 	  

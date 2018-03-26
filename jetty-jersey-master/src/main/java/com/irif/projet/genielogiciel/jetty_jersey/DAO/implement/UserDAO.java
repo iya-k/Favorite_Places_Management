@@ -45,7 +45,6 @@ public class UserDAO extends DAO<User>{
 		IndexRequestBuilder indexRequest = client.prepareIndex(index,type)
                                                  .setId(Integer.toString(user.getId()))
                                                  .setSource(json,XContentType.JSON);
-		
 		return (indexRequest.execute().actionGet().getId().equals(Integer.toString(user.getId())));
 	}
 
@@ -54,7 +53,6 @@ public class UserDAO extends DAO<User>{
 		DeleteResponse response = client.prepareDelete(index,type,Integer.toString(user.getId())).get();
 		return false;
 	}
-
 	@Override
 	public boolean update(String index,String type,User user) throws JsonProcessingException, InterruptedException, ExecutionException{
 		UpdateRequest updateRequest = new UpdateRequest();

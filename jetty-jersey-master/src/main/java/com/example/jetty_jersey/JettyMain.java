@@ -1,6 +1,5 @@
 package com.example.jetty_jersey;
 
-import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.server.handler.ContextHandler;
@@ -25,8 +24,10 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 public class JettyMain {
-	
-	public static void main(String[] args) throws Exception {	
+
+
+	public static void main(String[] args) throws Exception {
+
 		// Initialize the server
 		Server server = new Server();
 
@@ -77,7 +78,7 @@ public class JettyMain {
 			ContextHandler handlerPortalCtx = new ContextHandler();
 			handlerPortalCtx.setContextPath(paths[i]);
 			handlerPortalCtx.setHandler(handlerPortal);
-
+ 
 			handlerPortals.add(handlerPortal);
 			handlerPortalCtxs.add(handlerPortalCtx);
 		}
