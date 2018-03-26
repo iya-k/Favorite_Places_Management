@@ -1,8 +1,5 @@
 package com.irif.projet.genielogiciel.jetty_jersey.DAO;
 
-import java.util.List;
-
-import com.irif.projet.genielogiciel.jetty_jersey.model.User;
 
 public class ExampleOfUse {
 

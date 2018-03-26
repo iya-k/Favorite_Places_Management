@@ -1,33 +1,13 @@
 package com.irif.projet.genielogiciel.jetty_jersey.DAO;
 
-import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-<<<<<<< HEAD
-import java.util.concurrent.ExecutionException;
 
-import org.elasticsearch.action.index.IndexRequestBuilder;
-import org.elasticsearch.action.index.IndexResponse;
-import org.elasticsearch.action.update.UpdateRequest;
-import org.elasticsearch.client.Client;
-=======
-import java.util.Date;
-
-import org.elasticsearch.action.index.IndexResponse;
->>>>>>> 4e5acf3f311b6d507c9ebc7ec6276f4b1d98cb67
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.TransportAddress;
-import org.elasticsearch.common.xcontent.XContentFactory;
-<<<<<<< HEAD
-import org.elasticsearch.common.xcontent.XContentType;
-=======
->>>>>>> 4e5acf3f311b6d507c9ebc7ec6276f4b1d98cb67
 import org.elasticsearch.transport.client.PreBuiltTransportClient;
 
-import com.example.jetty_jersey.dao.User;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.irif.projet.genielogiciel.jetty_jersey.DAO.implement.*;
 
 public class DAOFactory extends AbstractDAOFactory{

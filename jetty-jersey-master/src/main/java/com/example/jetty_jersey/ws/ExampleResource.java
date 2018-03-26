@@ -60,20 +60,16 @@ public class ExampleResource {
 			AbstractDAOFactory aDAOF = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
 			DAO<User> userDAO =aDAOF.getUserDAO();
 			userDAO.create("userdb","user",usr);			
-		}catch(UnknownHostException | JsonProcessingException e) {
+		}catch(JsonProcessingException e) {
 			e.printStackTrace();
 		}
 	}
 	
 	public static void deleteTest(){
-		try {
-			User usr = new User("Jojo", "Julien", "TEST", "chic@univ-paris-diderot.com", "1*2+3/4");
-			AbstractDAOFactory aDAOF = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
-			DAO<User> userDAO =aDAOF.getUserDAO();
-			userDAO.delete("userdb","user",usr);			
-		}catch(UnknownHostException e) {
-			e.printStackTrace();
-		}
+		User usr = new User("Jojo", "Julien", "TEST", "chic@univ-paris-diderot.com", "1*2+3/4");
+		AbstractDAOFactory aDAOF = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
+		DAO<User> userDAO =aDAOF.getUserDAO();
+		userDAO.delete("userdb","user",usr);
 	}
 	
 	public static void updateTest(){
@@ -82,7 +78,7 @@ public class ExampleResource {
 			AbstractDAOFactory aDAOF = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
 			DAO<User> userDAO =aDAOF.getUserDAO();
 			userDAO.update("userdb","user",usr);			
-		}catch(UnknownHostException | JsonProcessingException | InterruptedException | ExecutionException e){
+		}catch(JsonProcessingException | InterruptedException | ExecutionException e){
 			e.printStackTrace();
 		}
 	}

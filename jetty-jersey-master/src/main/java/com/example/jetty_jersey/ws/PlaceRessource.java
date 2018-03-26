@@ -18,14 +18,13 @@ import com.irif.projet.genielogiciel.jetty_jersey.model.Event;
 
 @Path("/id_map")
 public class PlaceRessource {
-
+	AbstractDAOFactory daoFact = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
+	DAO<Event> placeDao = daoFact.getUserDAO();
+	
 	public static class PlaceClass {
 		public int id_place;
 	}
-
-	AbstractDAOFactory daoFact = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
-	DAO<Event> placeDao = daoFact.getUserDAO();
-
+	
     private static void registerException(Exception e) {
         Logger.getLogger(MapRessource.class.getName()).log(Level.SEVERE, null, e);
     }

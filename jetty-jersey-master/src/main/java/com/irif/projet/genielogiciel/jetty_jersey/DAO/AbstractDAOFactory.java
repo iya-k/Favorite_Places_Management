@@ -53,14 +53,17 @@ public abstract class AbstractDAOFactory {
 	 * @return factory corresponding to the type
 	 * @throws UnknownHostException 
 	 */
-	public static AbstractDAOFactory getFactory(int type) throws UnknownHostException{
-		switch(type){
-		case DAO_FACTORY:
-			DAOFactory adf= new DAOFactory();
-			adf.initClient();
-			return adf;
-		default:
+	public static AbstractDAOFactory getFactory(int type){
+			try {
+				switch(type){
+					case DAO_FACTORY:
+						DAOFactory adf= new DAOFactory();
+						adf.initClient();
+						return adf;
+				}
+			} catch (UnknownHostException e) {
+				e.printStackTrace();
+			}
 			return null;
-		}
 	}
 }

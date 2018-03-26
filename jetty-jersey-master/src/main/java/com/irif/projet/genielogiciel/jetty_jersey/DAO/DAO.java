@@ -3,19 +3,11 @@ package com.irif.projet.genielogiciel.jetty_jersey.DAO;
 import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-
-import org.elasticsearch.action.search.SearchRequestBuilder;
-import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.client.transport.TransportClient;
-import org.elasticsearch.index.query.QueryBuilder;
-import org.elasticsearch.index.query.QueryBuilders;
-
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.irif.projet.genielogiciel.jetty_jersey.model.User;
 
 public abstract class DAO<T>{
 	  protected TransportClient client;
