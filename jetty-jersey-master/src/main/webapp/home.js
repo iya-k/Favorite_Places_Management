@@ -24,12 +24,12 @@ $(function(){
 		getServerData("ws/id_map/id_place",callDone);
 	});
 	$("#map").click(function(){
-		getServerData("ws/map/pass",callDone);
+		getServerData("ws/map/list",callDone);
 	});
 	$("#event").click(function(){
-		getServerData("ws/id_map/id_event",callDone);
+		getServerData("ws/id_map/ev",callDone);
 	});
 	$("#login").click(function(){
-		getServerData("ws/login/user",callDone);
+		getServerData("ws/login/pass",callDone);
 	});
 });
