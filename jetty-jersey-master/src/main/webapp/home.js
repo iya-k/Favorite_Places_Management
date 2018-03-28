@@ -21,15 +21,15 @@ $(function(){
 		getServerData("ws/example/aircraft",callDone);
 	});
 	$("#place").click(function(){
-		getServerData("ws/id_map/id_place",callDone);
+		getServerData("ws/id_map/testP",callDone);
 	});
 	$("#map").click(function(){
-		getServerData("ws/map/list",callDone);
+		getServerData("ws/maps/test",callDone);
 	});
 	$("#event").click(function(){
-		getServerData("ws/id_map/ev",callDone);
+		getServerData("ws/id_map/test",callDone);
 	});
 	$("#login").click(function(){
-		getServerData("ws/login/pass",callDone);
+		getServerData("ws/users/test",callDone);
 	});
 });

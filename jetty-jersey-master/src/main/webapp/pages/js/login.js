@@ -1,7 +1,7 @@
 function postLogin(pseudo, pass, success){
 	$.ajax({
         dataType: "json",
-        url: "ws/login/user",
+        url: "ws/users/"+pseudo+"/"+pass,
         type: "POST",
     }).done(success)
 	.fail(success);
@@ -21,7 +21,6 @@ function login(result){
 	else
 	{	
 		var pseudo =localStorage.getItem("tmp");
-		//alert(pseudo);
 		localStorage.setItem("pseudo",pseudo);
 		localStorage.setItem("role",role);
 		document.location.href="show_map.html";
@@ -43,7 +42,6 @@ $("#ok").click(function (){
 		localStorage.setItem("tmp",pseudo);
 		
 		var jq = $.post( "ws/login/"+pseudo+"/"+pass, function() {
-			  //alert( "success" );
 			})
 			  .done(login)
 			  .fail(function() {

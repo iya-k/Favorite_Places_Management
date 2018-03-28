@@ -21,7 +21,7 @@ public class MapRessource {
 	AbstractDAOFactory daoFact = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
 	DAO<Map> mapDao = daoFact.getMapDAO();
 	Map retour = null;
-	boolean ok = false;
+	boolean ok;
 
     private static void registerException(Exception e) {
         Logger.getLogger(MapRessource.class.getName()).log(Level.SEVERE, null, e);
@@ -30,7 +30,7 @@ public class MapRessource {
     @Path("/list")
     @GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Map> getMaps(String index) {
+	public List<Map> getMaps(@PathParam("index")String index) {
     	List<Map> retour = null;
 		try {
 			retour = mapDao.findAll(index, Constants.MAPS);
@@ -56,7 +56,7 @@ public class MapRessource {
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	public boolean addMap(Map map) {
-		boolean ok = false;
+		ok = false;
 		 try {
 			ok = mapDao.create(String.valueOf(map.getMapId()),Constants.MAPS,map);
 		} catch (JsonProcessingException e) {
@@ -70,8 +70,14 @@ public class MapRessource {
 	@DELETE
 	@Path("/{id_map}")
 	public boolean deleteMap(Map map) {
-		boolean ok = false;
 		ok = mapDao.delete(String.valueOf(map.getMapId()),Constants.MAPS,map);
 		return ok;
 	}
+	
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("/test")
+	public void retrieve() {
+		System.out.println(Constants.MAPS);
+    }
 }
