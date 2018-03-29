@@ -34,7 +34,7 @@ public class JettyMain {
 		// Add a connector
 		ServerConnector connector = new ServerConnector(server);
 		connector.setHost("localhost");
-		connector.setPort(8080);
+		connector.setPort(8082);
 		connector.setIdleTimeout(30000);
 		server.addConnector(connector);
 

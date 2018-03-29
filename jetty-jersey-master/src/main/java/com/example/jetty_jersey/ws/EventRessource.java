@@ -21,7 +21,7 @@ import com.irif.projet.genielogiciel.jetty_jersey.DAO.AbstractDAOFactory;
 import com.irif.projet.genielogiciel.jetty_jersey.DAO.DAO;
 import com.irif.projet.genielogiciel.jetty_jersey.model.Event;
 
-@Path("/id_map")
+@Path("/"+Constants.EVENTS)
 public class EventRessource {
 
 	AbstractDAOFactory daoFact = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);

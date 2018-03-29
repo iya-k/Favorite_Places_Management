@@ -47,7 +47,8 @@ public class PlaceRessource {
 
 	@GET
 	@Path("/{id_place}")
-	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	//@Produces(MediaType.APPLICATION_JSON)
 	public Place getPlace(Place place){
 		try {
 			place = placeDao.find(String.valueOf(place.getId()), Constants.PLACES, place);

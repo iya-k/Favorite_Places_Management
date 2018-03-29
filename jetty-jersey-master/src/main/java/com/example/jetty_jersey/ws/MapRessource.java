@@ -40,10 +40,11 @@ public class MapRessource {
 
 		return retour;
 	}
-
+    
 	@GET
 	@Path("/{id_map}")
-	@Produces(MediaType.APPLICATION_JSON)
+	//@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
 	public Map getMap(Map map){
 		try {
 			map = mapDao.find(String.valueOf(map.getMapId()), Constants.MAPS, map);
