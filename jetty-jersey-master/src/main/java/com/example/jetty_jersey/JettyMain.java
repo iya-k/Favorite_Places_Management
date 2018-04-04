@@ -72,7 +72,7 @@ public class JettyMain {
 
 		for(int i=0; i<pages.length; i++){
 			ResourceHandler handlerPortal = new ResourceHandler();
-			handlerPortal.setResourceBase("src/main/webapp");
+			handlerPortal.setResourceBase("jetty-jersey-master/src/main/webapp");
 			handlerPortal.setDirectoriesListed(false);
 			handlerPortal.setWelcomeFiles(new String[] { pages[i] });
 			ContextHandler handlerPortalCtx = new ContextHandler();
