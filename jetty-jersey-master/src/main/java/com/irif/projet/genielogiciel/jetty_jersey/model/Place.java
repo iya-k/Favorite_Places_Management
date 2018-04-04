@@ -8,19 +8,19 @@ public class Place {
 	private String name;
 	private String adress;
 	private String description;
-	private int mapId; //id de la map sur lequel est placer
+	private int mapid; //id de la map sur lequel est placer
 	private List<Picture> pictures;
 	private List<Comment> comments;
 	
 	public Place(){}
 	
-	public Place(String name, String adress, String description,int mapId, List<Picture> pictures,
+	public Place(String name, String adress, String description,int mapid, List<Picture> pictures,
 			List<Comment> comments) {
 		this.id = idPlace;
 		this.name = name;
 		this.adress = adress;
 		this.description = description;
-		this.mapId = mapId;
+		this.mapid = mapid;
 		this.pictures = pictures;
 		this.comments = comments;
 		idPlace++;
@@ -74,12 +74,12 @@ public class Place {
 		this.comments = comments;
 	}
 	
-	public int getMapId() {
-		return mapId;
+	public int getMapid() {
+		return mapid;
 	}
 
-	public void setMapId(int mapId) {
-		this.mapId = mapId;
+	public void setMapId(int mapid) {
+		this.mapid = mapid;
 	}
 
 	public static int getCpt() {

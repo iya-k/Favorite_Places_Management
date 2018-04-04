@@ -76,7 +76,7 @@ public class EventDAO extends DAO<Event>{
 				builder.add(index,type,Integer.toString(i));
 			}
 		}else{
-			builder.add(index,"mapId",Integer.toString(id));
+			builder.add(index,"mapid",Integer.toString(id));
 		}
 		
 		// verifier si correspond a mapID donne en param
@@ -85,6 +85,7 @@ public class EventDAO extends DAO<Event>{
 		    GetResponse response = itemResponse.getResponse();
 		    eventList.add(mapper.readValue(response.getSourceAsBytes(),Event.class));
 		}
+		// un parcour pour aller chercher les pic and comments
 		return eventList;
 	}
 

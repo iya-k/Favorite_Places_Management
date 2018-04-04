@@ -39,7 +39,6 @@ public class PlaceDAO extends DAO<Place>{
 	@Override
 	public boolean delete(String index, String type, Place place) {
 		DeleteResponse response = client.prepareDelete(index,type,Integer.toString(place.getId())).get();
-		// delete selon condition et id
 		return false;
 	}
 
@@ -60,6 +59,7 @@ public class PlaceDAO extends DAO<Place>{
 		GetResponse response = client.prepareGet(index,type,Integer.toString(place.getId())).get();
 		return (mapper.readValue(response.getSourceAsBytes(),Place.class));
 	}
+	
 	@Override
 	public List<Place> findAll(String index, String type,int id)throws JsonParseException, JsonMappingException, IOException{
 		MultiGetResponse multiGetItemResponses;
@@ -70,18 +70,14 @@ public class PlaceDAO extends DAO<Place>{
 				builder.add(index,type,Integer.toString(i));
 			}
 		}else{
-			builder.add(index,"mapId",Integer.toString(id));
+			builder.add(index,"mapid",Integer.toString(id));
 		}
-		
-		// verifier si correspond a mapID donne en param
 		multiGetItemResponses = builder.get();
 		for (MultiGetItemResponse itemResponse : multiGetItemResponses) { 
 		    GetResponse response = itemResponse.getResponse();
 		    placeList.add(mapper.readValue(response.getSourceAsBytes(),Place.class));
-		    /*if (response.isExists()) {                      
-		        String json = response.getSourceAsString(); 
-		    }*/
 		}
+		// un parcour pour aller chercher les pic and comments
 		return placeList;
 	}
 }
