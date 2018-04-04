@@ -5,6 +5,41 @@
     <artifactId>jetty-jersey</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
+    <build>
+        <sourceDirectory>jetty-jersey-master/src/main/java</sourceDirectory>
+        <scriptSourceDirectory>jetty-jersey-master/src/main/scripts</scriptSourceDirectory>
+        <testSourceDirectory>jetty-jersey-master/src/test/java</testSourceDirectory>
+        <resources>
+          <resource>
+            <directory>jetty-jersey-master/res</directory>
+          </resource>
+        </resources>
+        <testResources>
+          <testResource>
+            <directory>jetty-jersey-master/src/test/resources</directory>
+          </testResource>
+        </testResources>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.0.2</version>
+                <configuration>
+                    <archive>
+                        <manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
+                    </archive>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
     <dependencies>
         <!-- Jetty -->
         <dependency>
