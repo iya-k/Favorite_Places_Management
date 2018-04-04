@@ -69,7 +69,8 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public static int getCpt(){
+
+	public static  int getCpt() {
 		return cpt;
 	}
 }

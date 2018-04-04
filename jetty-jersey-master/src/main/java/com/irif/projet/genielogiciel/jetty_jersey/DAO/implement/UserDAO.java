@@ -2,35 +2,24 @@ package com.irif.projet.genielogiciel.jetty_jersey.DAO.implement;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.irif.projet.genielogiciel.jetty_jersey.DAO.DAO;
 import com.irif.projet.genielogiciel.jetty_jersey.model.User;
 
-import org.elasticsearch.action.admin.indices.create.CreateIndexRequestBuilder;
 import org.elasticsearch.action.delete.DeleteResponse;
 import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.get.MultiGetItemResponse;
 import org.elasticsearch.action.get.MultiGetRequestBuilder;
 import org.elasticsearch.action.get.MultiGetResponse;
 import org.elasticsearch.action.index.IndexRequestBuilder;
-import org.elasticsearch.action.index.IndexResponse;
-import org.elasticsearch.action.search.SearchRequestBuilder;
-import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.update.UpdateRequest;
-import org.elasticsearch.client.Client;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.xcontent.XContentType;
-import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.node.Node;
-import org.elasticsearch.search.SearchHit;
 
 public class UserDAO extends DAO<User>{
 
@@ -72,14 +61,18 @@ public class UserDAO extends DAO<User>{
 	
 	
 	@Override
-	public List<User> findAll(String index,String type) throws JsonParseException, JsonMappingException, IOException{
+	public List<User> findAll(String index,String type,int id) throws JsonParseException, JsonMappingException, IOException{
 		MultiGetResponse multiGetItemResponses;
 		MultiGetRequestBuilder builder = client.prepareMultiGet();
 		List<User> usersList = new ArrayList<User>();
-		
-		for(int i =1; i <= User.getCpt();i++){
-			builder.add(index,type,Integer.toString(i));
+		if(id==0){
+			for(int i =1; i <= User.getCpt();i++){
+				builder.add(index,type,Integer.toString(i));
+			}
+		}else{
+			builder.add(index,type,Integer.toString(id));
 		}
+		
 		
 		multiGetItemResponses = builder.get();
 		for (MultiGetItemResponse itemResponse : multiGetItemResponses) { 

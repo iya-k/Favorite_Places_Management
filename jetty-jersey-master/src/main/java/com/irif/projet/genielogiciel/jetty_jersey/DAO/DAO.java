@@ -46,11 +46,16 @@ public abstract class DAO<T>{
 	  
 	  public abstract T find(String index, String type,T obj) throws JsonParseException, JsonMappingException, IOException;
 	  /**
-	  * find method
-	  * @param id
-	  * @return T list corresponding to the id
-	  */
-	  public abstract List<T> findAll(String index,String type)throws JsonParseException, JsonMappingException, IOException;
+	   * 
+	   * @param index
+	   * @param type
+	   * @param id if id=0 no matching with id else matching with id
+	   * @return T list corresponding to the id
+	   * @throws JsonParseException
+	   * @throws JsonMappingException
+	   * @throws IOException
+	   */
+	  public abstract List<T> findAll(String index,String type,int id)throws JsonParseException, JsonMappingException, IOException;
 	 
 	  
 	  

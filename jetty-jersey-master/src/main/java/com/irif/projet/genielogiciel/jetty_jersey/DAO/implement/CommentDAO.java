@@ -41,7 +41,9 @@ public class CommentDAO extends DAO<Comment>{
 	}
 
 	@Override
-	public List<Comment> findAll(String index, String type) throws JsonParseException, JsonMappingException, IOException{
+	public List<Comment> findAll(String index, String type, int id)
+			throws JsonParseException, JsonMappingException, IOException {
+		// TODO Auto-generated method stub
 		return null;
 	}
 }

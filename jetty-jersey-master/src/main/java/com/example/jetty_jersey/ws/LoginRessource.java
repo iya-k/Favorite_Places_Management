@@ -38,7 +38,7 @@ public class LoginRessource {
 		ok = false;
 		List<User> users;
 		try {
-			users = userDao.findAll(login, Constants.USERS);
+			users = userDao.findAll(login, Constants.USERS,0);
 			for (User u : users) {
 				System.out.println(u.toString());
 				if (u.getName().equals(login)) {
@@ -71,7 +71,7 @@ public class LoginRessource {
 
 	@DELETE
 	@Path("/{id}")
-	public boolean deleteUser(User user) {
+	public boolean deleteUser(User user){
 		ok = userDao.delete(String.valueOf(user.getId()),Constants.USERS, user);
 		return ok;
 	}

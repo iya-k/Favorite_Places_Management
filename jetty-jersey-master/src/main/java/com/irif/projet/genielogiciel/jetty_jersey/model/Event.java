@@ -7,9 +7,9 @@ public class Event extends Place{
 	private Date begin;
 	private Date end;
 
-	public Event(int id, String name, String adress, String description, List<Picture> pictures,
+	public Event(int id, String name, String adress, String description,int mapId, List<Picture> pictures,
 			List<Comment> comments,Date begin, Date end) {
-		super(id, name, adress, description, pictures, comments);
+		super(name, adress, description,mapId, pictures, comments);
 		this.begin = begin;
 		this.end = end;
 	}

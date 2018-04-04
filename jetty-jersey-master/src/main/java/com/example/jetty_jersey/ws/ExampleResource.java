@@ -3,6 +3,7 @@ package com.example.jetty_jersey.ws;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import javax.ws.rs.Consumes;
@@ -15,6 +16,9 @@ import javax.ws.rs.core.MediaType;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.irif.projet.genielogiciel.jetty_jersey.DAO.AbstractDAOFactory;
 import com.irif.projet.genielogiciel.jetty_jersey.DAO.DAO;
+import com.irif.projet.genielogiciel.jetty_jersey.model.Comment;
+import com.irif.projet.genielogiciel.jetty_jersey.model.Picture;
+import com.irif.projet.genielogiciel.jetty_jersey.model.Place;
 import com.irif.projet.genielogiciel.jetty_jersey.model.User;
 
 @Path("/example")
@@ -45,13 +49,18 @@ public class ExampleResource {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/test")
-	public void getDAOexample() {
+	public ExampleClass getDAOexample() {
 		//Test
 		//findAllTest();
 		//findTest();
 		//updateTest();
-		createTest();
+		//createTest();
+		deletePlaceTest();
+		//createPlaceTest();
+		ExampleClass instance = new ExampleClass();
+		instance.field = "creer";
 		//deleteTest();
+		return instance;
 	}
 	
 	public static void createTest(){
@@ -97,11 +106,29 @@ public class ExampleResource {
 		try {
 			AbstractDAOFactory aDAOF = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
 			DAO<User> userDAO =aDAOF.getUserDAO();
-			ArrayList<User> usersList=(ArrayList)userDAO.findAll("userdb","user");
+			ArrayList<User> usersList=(ArrayList)userDAO.findAll("userdb","user",0);
 			System.out.println("findAll Test : \n"+usersList);
 		}catch(IOException e){
 			e.printStackTrace();
 		}
+	}
+	
+	public static void createPlaceTest(){
+		try {
+			Place pl =new Place("diderot","5 Rue Thomas Mann, 75013 Paris","universite",2, null,null);
+			AbstractDAOFactory aDAOF = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
+			DAO<Place> placeDAO =aDAOF.getPlaceDAO();
+			placeDAO.create("placedb","place",pl);			
+		}catch(JsonProcessingException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void deletePlaceTest(){
+		Place pl =new Place("diderot","5 Rue Thomas Mann, 75013 Paris","universite",2, null,null);
+		AbstractDAOFactory aDAOF = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
+		DAO<Place> placeDAO =aDAOF.getPlaceDAO();
+		placeDAO.delete("placedb","place",pl);
 	}
 
 }

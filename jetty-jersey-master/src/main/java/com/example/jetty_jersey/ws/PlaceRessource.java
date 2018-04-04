@@ -37,7 +37,7 @@ public class PlaceRessource {
 	public List<Place> getPlaces(@PathParam("index")String index) {
     	List<Place> retour = null;
 		try {
-			retour = placeDao.findAll(index, Constants.PLACES);
+			retour = placeDao.findAll(index, Constants.PLACES,0);
 		} catch (IOException e) {
 			registerException(e);
 		}

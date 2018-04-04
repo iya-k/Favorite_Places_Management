@@ -33,7 +33,7 @@ public class MapRessource {
 	public List<Map> getMaps(@PathParam("index")String index) {
     	List<Map> retour = null;
 		try {
-			retour = mapDao.findAll(index, Constants.MAPS);
+			retour = mapDao.findAll(index, Constants.MAPS,0);
 		} catch (IOException e) {
 			registerException(e);
 		}
@@ -47,7 +47,7 @@ public class MapRessource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Map getMap(Map map){
 		try {
-			map = mapDao.find(String.valueOf(map.getMapId()), Constants.MAPS, map);
+			map = mapDao.find(String.valueOf(map.getId()), Constants.MAPS, map);
 		} catch (IOException e) {
 			registerException(e);
 		}
@@ -59,7 +59,7 @@ public class MapRessource {
 	public boolean addMap(Map map) {
 		ok = false;
 		 try {
-			ok = mapDao.create(String.valueOf(map.getMapId()),Constants.MAPS,map);
+			ok = mapDao.create(String.valueOf(map.getId()),Constants.MAPS,map);
 		} catch (JsonProcessingException e) {
 			// TODO Auto-generated catch block
 			registerException(e);
@@ -71,7 +71,7 @@ public class MapRessource {
 	@DELETE
 	@Path("/{id_map}")
 	public boolean deleteMap(Map map) {
-		ok = mapDao.delete(String.valueOf(map.getMapId()),Constants.MAPS,map);
+		ok = mapDao.delete(String.valueOf(map.getId()),Constants.MAPS,map);
 		return ok;
 	}
 	

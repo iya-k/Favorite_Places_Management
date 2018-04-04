@@ -38,7 +38,7 @@ public class EventRessource {
 	public List<Event> getEvents(@PathParam("index")String index) {
     	List<Event> retour = null;
 		try {
-			retour = eventDao.findAll(index, Constants.EVENTS);
+			retour = eventDao.findAll(index, Constants.EVENTS,0);
 		} catch (IOException e) {
 			registerException(e);
 		}

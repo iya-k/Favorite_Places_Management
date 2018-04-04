@@ -42,7 +42,8 @@ public class PictureDAO extends DAO<Picture>{
 		return null;
 	}
 	@Override
-	public List<Picture> findAll(String index, String type)throws JsonParseException, JsonMappingException, IOException{
+	public List<Picture> findAll(String index, String type, int id)
+			throws JsonParseException, JsonMappingException, IOException {
 		// TODO Auto-generated method stub
 		return null;
 	}
