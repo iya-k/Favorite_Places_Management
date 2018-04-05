@@ -1,9 +1,10 @@
 package com.irif.projet.genielogiciel.jetty_jersey.model;
 
 public class Map {
-	private static int idMAp = 1;
+	private static int cpt = 1;
 	private int id;
 	private String mapName;
+	private int userid;
 	//private int numberOfPlaces;// A VOIR
 	//private int numberOfEvents;// A VOIR
 	private String privacy;
@@ -12,13 +13,12 @@ public class Map {
 	public Map(){}
 
 
-	public Map(int id, String mapName,/* int numberOfPlaces, int numberOfEvents,*/ String privacy){
+	public Map(int id, String mapName,int userid,String privacy){
 		this.id = id;
 		this.mapName = mapName;
-		//this.numberOfPlaces = numberOfPlaces;
-		//this.numberOfEvents = numberOfEvents;
+		this.userid=userid;
 		this.privacy = privacy;
-		idMAp++;
+		cpt++;
 	}
 
 
@@ -41,26 +41,16 @@ public class Map {
 		this.mapName = mapName;
 	}
 
-/*
-	public int getNumberOfPlaces() {
-		return numberOfPlaces;
+	
+
+	public int getUserid() {
+		return userid;
 	}
 
-
-	public void setNumberOfPlaces(int numberOfPlaces) {
-		this.numberOfPlaces = numberOfPlaces;
+	public void setUserid(int userid) {
+		this.userid = userid;
 	}
 
-
-	public int getNumberOfEvents() {
-		return numberOfEvents;
-	}
-
-
-	public void setNumberOfEvents(int numberOfEvents) {
-		this.numberOfEvents = numberOfEvents;
-	}
-	*/
 
 	public String getPrivacy() {
 		return privacy;
@@ -72,7 +62,7 @@ public class Map {
 	}
 	
 	public static int getCpt() {
-		return idMAp;
+		return cpt;
 	}
 	
 }
