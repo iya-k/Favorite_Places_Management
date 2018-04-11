@@ -1,8 +1,10 @@
 $('#registerSubmit').click(function(event){
-	var fullname = $('#fullname').val();
-	var username = $('#email').val();
+	var firstName = $('#first-name').val();
+	var lastName = $('#last-name').val();
+	var username = $('#username').val();
+	var email = $('#email').val();
 	var password = $('#password').val();
-	var password2 = $('#confirm-password').val();
+	var confirmPassword = $('#confirm-password').val();
 
 	$.ajax({
 		type: 'POST',
@@ -10,10 +12,12 @@ $('#registerSubmit').click(function(event){
 		dataType: 'json',
 		contentType: 'application/json',
 		data: JSON.stringify({
-            'fullname' : fullname,
+            'firstName' : firstName,
+            'lastName' : lastName,
             'username' : username,
+            'email' : email,
             'password' : password,
-            'password2' : password2
+            'confirmPassword' : confirmPassword
         }),
 		success: function(data) {
 			alert("success");

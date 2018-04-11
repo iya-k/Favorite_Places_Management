@@ -2,29 +2,39 @@ package com.example.jetty_jersey.ws.requests;
 
 public class SignUp {
 
-	private String fullname;
+	private String firstName;
+	private String lastName;
+	private String email;
 	private String username;
 	private String password;
-	private String password2;
+	private String confirmPassword;
 	
 	public SignUp() {
 		
 	}
-	
-	public SignUp(String fullname, String username, String password, String password2) {
-		super();
-		this.fullname = fullname;
-		this.username = username;
-		this.password = password;
-		this.password2 = password2;
+
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public String getFullname() {
-		return fullname;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 
-	public void setFullname(String fullname) {
-		this.fullname = fullname;
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getUsername() {
@@ -43,23 +53,25 @@ public class SignUp {
 		this.password = password;
 	}
 
-	public String getPassword2() {
-		return password2;
+	public String getConfirmPassword() {
+		return confirmPassword;
 	}
 
-	public void setPassword2(String password2) {
-		this.password2 = password2;
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "fullname: " + fullname +
+		return "first name: " + firstName +
+				"\nlast name: " + lastName +
+				"\nemail: " + email +
 				"\nusername: " + username +
 				"\npassword: " + password +
-				"\npassword2: " + password2;
+				"\nconfirm password: " + confirmPassword;
 	}
 	
-	public int[] checkFields() {
+	/*public int[] checkFields() {
 		int[] validation = {0, 0, 0, 0, 0};
 		
 		if(
@@ -74,6 +86,6 @@ public class SignUp {
 		}
 		
 		return validation;
-	}
+	}*/
 	
 }

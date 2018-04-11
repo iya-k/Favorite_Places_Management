@@ -17,7 +17,9 @@ import javax.ws.rs.core.MediaType;
 
 import com.example.jetty_jersey.constant.Constants;
 import com.example.jetty_jersey.ws.ExampleResource.ExampleClass;
+import com.example.jetty_jersey.ws.requests.ForgetPassword;
 import com.example.jetty_jersey.ws.requests.Login;
+import com.example.jetty_jersey.ws.requests.ResetPassword;
 import com.example.jetty_jersey.ws.requests.SignUp;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.irif.projet.genielogiciel.jetty_jersey.DAO.AbstractDAOFactory;
@@ -127,4 +129,27 @@ public class LoginRessource {
     	
 		return status;
 	}
+
+	@POST
+	@Path("/forget_password")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public int forgetPassword(ForgetPassword forgetPasswordRequest){
+		int status = 0;
+
+		System.out.println(forgetPasswordRequest.toString());
+
+		return status;
+	}
+
+	@POST
+	@Path("/reset_password")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public int resetPassword(ResetPassword resetPasswordRequest){
+		int status = 0;
+
+		System.out.println(resetPasswordRequest.toString());
+
+		return status;
+	}
+
 }

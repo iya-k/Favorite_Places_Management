@@ -2,6 +2,8 @@ _.templateSettings.variable = "rc";
 
 var new_place_coordinate;
 
+var add_place_autority = false;
+
 //iCheck for checkbox and radio inputs
 $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
 checkboxClass: 'icheckbox_minimal-blue',
@@ -77,20 +79,22 @@ function initMap() {
    * 
    */
   google.maps.event.addListener(map, 'click', function(event){
-    new_place_coordinate = {
-      "lat" : event.latLng.lat(), 
-      "lng" : event.latLng.lng()
-    };
+    if(add_place_autority){
+      new_place_coordinate = {
+        "lat" : event.latLng.lat(), 
+        "lng" : event.latLng.lng()
+      };
 
-    $("#markers").show();
-    $("#markers").css('top', (event.pixel.y - 60));
-    $("#markers").css('left', (event.pixel.x - 85));
-    // popupAddPlaceModel(data);
+      $("#markers").show();
+      $("#markers").css('top', (event.pixel.y - 60));
+      $("#markers").css('left', (event.pixel.x - 85));
+      // popupAddPlaceModel(data);
 
-    /*addMarker({coords: {
-      lat: latitude,
-      lng: longitude
-    }});*/
+      /*addMarker({coords: {
+        lat: latitude,
+        lng: longitude
+      }});*/ 
+    }
   });
 
   for(i=0; i<markers.length; i++){
@@ -127,10 +131,12 @@ function initMap() {
 }
 
 $("#markers [marker-target]").click(function(){
-
-  $("#markers").hide();
-  console.log($(this).attr('marker-target'));
-  popupAddPlaceModel(new_place_coordinate);
+  if(add_place_autority){
+    $("#markers").hide();
+    console.log($(this).attr('marker-target'));
+    popupAddPlaceModel(new_place_coordinate);
+    add_place_autority = false;
+  }
 });
 
 /****************************************************************/
@@ -179,7 +185,8 @@ $("#index-map").click(function(){
 });
 
 $("#add-place").click(function(){
-	popupAddPlaceModel({});
+  add_place_autority = true;
+	// popupAddPlaceModel({});
 });
 
 $("#edit-map").click(function(){
