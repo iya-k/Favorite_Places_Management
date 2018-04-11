@@ -1,27 +1,24 @@
 package com.irif.projet.genielogiciel.jetty_jersey.model;
 
 public class Picture {
-	private static int cpt = 1;
-	private int pictureid;
+	private String pictureid;
+	private String placeid;
 	private String picturename;
 	private String url;
-	private int placeid;
 
 
-	public Picture(String picturename, String url,int placeid) {
-		this.pictureid = cpt;
+	public Picture(String picturename, String url,String placeid) {
 		this.picturename = picturename;
 		this.url = url;
 		this.placeid =placeid;
-		cpt++;
 	}
 
 
-	public int getPictureid() {
+	public String getPictureid() {
 		return pictureid;
 	}
 
-	public void setPictureid(int pictureid) {
+	public void setPictureid(String pictureid) {
 		this.pictureid = pictureid;
 	}
 
@@ -42,18 +39,12 @@ public class Picture {
 		this.url = url;
 	}
 	
-	public int getPlaceid() {
+	public String getPlaceid() {
 		return placeid;
 	}
 
-	public void setPlaceid(int placeid) {
+	public void setPlaceid(String placeid) {
 		this.placeid = placeid;
 	}
-	
-	public static int getCpt() {
-		return cpt;
-	}
-
-	
 	
 }

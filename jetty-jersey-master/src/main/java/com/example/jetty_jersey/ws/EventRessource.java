@@ -37,12 +37,11 @@ public class EventRessource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Event> getEvents(@PathParam("index")String index) {
     	List<Event> retour = null;
-		try {
+		/*try {
 			retour = eventDao.findAll(index, Constants.EVENTS,0);
 		} catch (IOException e) {
 			registerException(e);
-		}
-
+		}*/
 		return retour;
 	}
 
@@ -50,33 +49,32 @@ public class EventRessource {
 	@Path("/{id_event}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Event getEvent(Event event){
-		try {
+		/*try {
 			event = eventDao.find(String.valueOf(event.getId()), Constants.EVENTS, event);
 		} catch (IOException e) {
 			registerException(e);
-		}
+		}*/
 		return event;
 	}
 	
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
-	public boolean addEvent(Event event) {
+	public boolean addEvent(Event event){
 		ok = false;
-		 try {
+		/* try {
 			ok = eventDao.create(String.valueOf(event.getId()),Constants.EVENTS,event);
 		} catch (JsonProcessingException e) {
 			// TODO Auto-generated catch block
 			registerException(e);
-		}
-		
+		}*/
 		return ok;
 	}
 
 	@DELETE
 	@Path("/{id_event}")
-	public boolean deleteEvent(Event event) {
-		ok = eventDao.delete(String.valueOf(event.getId()),Constants.EVENTS,event);
-		return ok;
+	public boolean deleteEvent(Event event){
+		//ok = eventDao.delete(String.valueOf(event.getId()),event);
+		return false;
 	}
     
     @POST

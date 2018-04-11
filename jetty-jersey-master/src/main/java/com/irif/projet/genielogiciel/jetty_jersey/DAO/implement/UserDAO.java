@@ -1,87 +1,101 @@
 package com.irif.projet.genielogiciel.jetty_jersey.DAO.implement;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ExecutionException;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.irif.projet.genielogiciel.jetty_jersey.DAO.DAO;
 import com.irif.projet.genielogiciel.jetty_jersey.model.User;
 
-import org.elasticsearch.action.delete.DeleteResponse;
-import org.elasticsearch.action.get.GetResponse;
-import org.elasticsearch.action.get.MultiGetItemResponse;
-import org.elasticsearch.action.get.MultiGetRequestBuilder;
-import org.elasticsearch.action.get.MultiGetResponse;
-import org.elasticsearch.action.index.IndexRequestBuilder;
-import org.elasticsearch.action.update.UpdateRequest;
+import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.client.transport.TransportClient;
-import org.elasticsearch.common.xcontent.XContentType;
+import org.elasticsearch.index.query.MultiMatchQueryBuilder.Type;
+import org.elasticsearch.index.query.Operator;
+import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.index.reindex.BulkByScrollResponse;
+import org.elasticsearch.index.reindex.DeleteByQueryAction;
+import org.elasticsearch.search.SearchHit;
 
 public class UserDAO extends DAO<User>{
 
 	
-	public UserDAO(TransportClient client) {
+	public UserDAO(TransportClient client){
 		super(client);
 	}
-	
-	@Override
-	public boolean create(String index,String type,User user) throws JsonProcessingException{
-		byte[] json = this.mapper.writeValueAsBytes(user);
-		IndexRequestBuilder indexRequest = client.prepareIndex(index,type)
-                                                 .setId(Integer.toString(user.getId()))
-                                                 .setSource(json,XContentType.JSON);
-		return (indexRequest.execute().actionGet().getId().equals(Integer.toString(user.getId())));
+	/**
+	* 
+    * @param index type User
+	* @return  SearchResponse
+	*/
+	public SearchResponse getSearchResponse(String index, String type, User user){
+		SearchResponse response = client.prepareSearch(index)
+                .setTypes(type)
+                .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
+                .setQuery(QueryBuilders.matchQuery("username",user.getUsername()))
+                .get();
+		return response;
 	}
-
+	/**
+	* 
+    * @param index type User
+	* @return  user_id
+	*/
 	@Override
-	public boolean delete(String index,String type,User user){
-		DeleteResponse response = client.prepareDelete(index,type,Integer.toString(user.getId())).get();
-		return false;
-	}
-	@Override
-	public boolean update(String index,String type,User user) throws JsonProcessingException, InterruptedException, ExecutionException{
-		UpdateRequest updateRequest = new UpdateRequest();
-		updateRequest.index(index);
-		updateRequest.type(type);
-		updateRequest.id(Integer.toString(user.getId()));
-		byte[] json = this.mapper.writeValueAsBytes(user);
-		updateRequest.doc(json,XContentType.JSON);
-		client.update(updateRequest).get();
-		return false;
-	}
-	@Override
-	public User find(String index, String type,User user) throws JsonParseException, JsonMappingException, IOException{
-		GetResponse response = client.prepareGet(index,type,Integer.toString(user.getId())).get();
-		return (mapper.readValue(response.getSourceAsBytes(),User.class));
-	}
-	
-	
-	@Override
-	public List<User> findAll(String index,String type,int id) throws JsonParseException, JsonMappingException, IOException{
-		MultiGetResponse multiGetItemResponses;
-		MultiGetRequestBuilder builder = client.prepareMultiGet();
-		List<User> usersList = new ArrayList<User>();
-		if(id==0){
-			for(int i =1; i <= User.getCpt();i++){
-				builder.add(index,type,Integer.toString(i));
-			}
-		}else{
-			builder.add(index,type,Integer.toString(id));
+	public String getId(String index, String type, User user){
+		String id = "";
+		try {
+			id = getSearchResponse(index,type,user).getHits().getHits()[0].getId();
+		}catch(ArrayIndexOutOfBoundsException e){
+			e.printStackTrace();
 		}
+		return(id);
+	}
+	/**
+	* look at the existence of a user
+    * @param index type User
+	* @return  boolean
+	*/
+	@Override
+	public boolean exist(String index, String type, User user){
 		
+		return ( 0 < getSearchResponse(index,type,user).getHits().getHits().length);
+	}
+	
+	
+	/**
+	* connection method
+    * @param index type userName password
+	* @return  user
+	*/
+	public User connect(String index, String type,String userName, String password){
+		User user=null;
+		String query = userName+" "+password;
 		
-		multiGetItemResponses = builder.get();
-		for (MultiGetItemResponse itemResponse : multiGetItemResponses) { 
-		    GetResponse response = itemResponse.getResponse();
-		    usersList.add(mapper.readValue(response.getSourceAsBytes(),User.class));
-		    /*if (response.isExists()) {                      
-		        String json = response.getSourceAsString(); 
-		    }*/
-		}
-		return usersList;
-	}	
+		SearchResponse response = client.prepareSearch(index)
+                                  .setTypes(type)
+                                  .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
+                                  .setQuery(QueryBuilders.multiMatchQuery(query,"username","password")
+                                		                 .type(Type.CROSS_FIELDS)
+                                		                 .operator(Operator.AND)).get();
+		client.admin().indices().prepareRefresh(index).get();
+		
+		SearchHit[] res = response.getHits().getHits();
+		if(res.length == 1)
+			user = (User)super.getObj(res[0],User.class);
+		return (user);
+	}
+	
+	/**
+	* delete method
+    * @param index user
+	* @return  status
+	*/
+	@Override
+	public int delete(String index,User user){
+		BulkByScrollResponse response = DeleteByQueryAction.INSTANCE.newRequestBuilder(client)
+			                            .filter(QueryBuilders.matchQuery("username",user.getUsername())) 
+			                            .source(index)                                  
+			                            .get();                                             
+		client.admin().indices().prepareRefresh(index).get();
+		
+		return((int)response.getDeleted());
+	}
 }

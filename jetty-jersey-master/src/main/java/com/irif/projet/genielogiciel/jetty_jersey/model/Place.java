@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Place {
 	private static int idPlace = 1;
-	private int id;
+	private String id;
 	private String name;
 	private String adress;
 	private String description;
@@ -16,7 +16,6 @@ public class Place {
 	
 	public Place(String name, String adress, String description,int mapid, List<Picture> pictures,
 			List<Comment> comments) {
-		this.id = idPlace;
 		this.name = name;
 		this.adress = adress;
 		this.description = description;
@@ -26,11 +25,11 @@ public class Place {
 		idPlace++;
 	}
 
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

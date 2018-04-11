@@ -1,27 +1,24 @@
 package com.irif.projet.genielogiciel.jetty_jersey.model;
 
 public class Comment {
-	private static int cpt = 1;
-	private int commentid;
+	private String commentid;
+	private String placeid;
 	private String comment;
-	private int placeid;
 	//add likes for comments and pictures future extension
 	
 	
-	public Comment(String comment,int placeid) {
-		this.commentid = cpt;
-		this.comment = comment;
+	public Comment(String comment,String placeid) {
 		this.placeid= placeid;
-		cpt++;
+		this.comment = comment;
 	}
 
 
-	public int getCommentid() {
+	public String getCommentid() {
 		return commentid;
 	}
 
 
-	public void setCommentid(int commentid) {
+	public void setCommentid(String commentid) {
 		this.commentid = commentid;
 	}
 
@@ -35,21 +32,12 @@ public class Comment {
 		this.comment = comment;
 	}
 	
-	public int getPlaceid() {
+	public String getPlaceid() {
 		return placeid;
 	}
 
-	public void setPlaceid(int placeid) {
+	public void setPlaceid(String placeid) {
 		this.placeid = placeid;
 	}
-	
-	public static int getCpt() {
-		return cpt;
-	}
-	
-	
-	
-	
-	
 	
 }

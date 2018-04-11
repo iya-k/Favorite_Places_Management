@@ -11,9 +11,12 @@ import org.elasticsearch.action.get.MultiGetItemResponse;
 import org.elasticsearch.action.get.MultiGetRequestBuilder;
 import org.elasticsearch.action.get.MultiGetResponse;
 import org.elasticsearch.action.index.IndexRequestBuilder;
+import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.action.update.UpdateRequest;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.xcontent.XContentType;
+import org.elasticsearch.index.query.QueryBuilders;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -29,57 +32,26 @@ public class PictureDAO extends DAO<Picture>{
 	public PictureDAO(TransportClient client) {
 		super(client);
 	}
-
 	@Override
-	public boolean create(String index, String type, Picture picture) throws JsonProcessingException {
-		byte[] json = this.mapper.writeValueAsBytes(picture);
-		IndexRequestBuilder indexRequest = client.prepareIndex(index,type)
-                                                 .setId(Integer.toString(picture.getPictureid()))
-                                                 .setSource(json,XContentType.JSON);
-		return (indexRequest.execute().actionGet().getId().equals(Integer.toString(picture.getPictureid())));
+	public boolean exist(String index, String type, Picture pi) {
+		Picture picture = (Picture)pi;
+		
+		SearchResponse response = client.prepareSearch(index)
+                .setTypes(type)
+                .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
+                .setQuery(QueryBuilders.matchQuery("picturename",picture.getPicturename()))
+                .get();
+		return (0 < response.getHits().getHits().length);
 	}
-
+	
 	@Override
-	public boolean delete(String index, String type, Picture picture) {
-		DeleteResponse response = client.prepareDelete(index,type,Integer.toString(picture.getPictureid())).get();
-		return false;
-	}
-
-	@Override
-	public boolean update(String index, String type, Picture picture) throws JsonProcessingException, InterruptedException, ExecutionException {
-		UpdateRequest updateRequest = new UpdateRequest();
-		updateRequest.index(index);
-		updateRequest.type(type);
-		updateRequest.id(Integer.toString(picture.getPictureid()));
-		byte[] json = this.mapper.writeValueAsBytes(picture);
-		updateRequest.doc(json,XContentType.JSON);
-		client.update(updateRequest).get();
-		return false;
+	public int delete(String index, Picture picture) {
+		//DeleteResponse response = client.prepareDelete(index,type,Integer.toString(picture.getPictureid())).get();
+		return 0;
 	}
 	@Override
-	public Picture find(String index, String type, Picture picture)
-			throws JsonParseException, JsonMappingException, IOException {
-		GetResponse response = client.prepareGet(index,type,Integer.toString(picture.getPictureid())).get();
-		return (mapper.readValue(response.getSourceAsBytes(),Picture.class));
-	}
-	@Override
-	public List<Picture> findAll(String index, String type, int id)
-			throws JsonParseException, JsonMappingException, IOException {
-		MultiGetResponse multiGetItemResponses;
-		MultiGetRequestBuilder builder = client.prepareMultiGet();
-		List<Picture> picureList = new ArrayList<Picture>();
-		if(id==0){
-			for(int i =1; i <= Picture.getCpt();i++){
-				builder.add(index,type,Integer.toString(i));
-			}
-		}else{
-			builder.add(index,"placeid",Integer.toString(id));
-		}
-		multiGetItemResponses = builder.get();
-		for (MultiGetItemResponse itemResponse : multiGetItemResponses) { 
-		    GetResponse response = itemResponse.getResponse();
-		    picureList.add(mapper.readValue(response.getSourceAsBytes(),Picture.class));
-		}
-		return picureList;
+	public String getId(String index, String type, Picture obj) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

@@ -11,9 +11,12 @@ import org.elasticsearch.action.get.MultiGetItemResponse;
 import org.elasticsearch.action.get.MultiGetRequestBuilder;
 import org.elasticsearch.action.get.MultiGetResponse;
 import org.elasticsearch.action.index.IndexRequestBuilder;
+import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.action.update.UpdateRequest;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.xcontent.XContentType;
+import org.elasticsearch.index.query.QueryBuilders;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -28,59 +31,29 @@ public class CommentDAO extends DAO<Comment>{
 	public CommentDAO(TransportClient client) {
 		super(client);
 	}
-
+	
 	@Override
-	public boolean create(String index, String type, Comment comment) throws JsonProcessingException {
-		byte[] json = this.mapper.writeValueAsBytes(comment);
-		IndexRequestBuilder indexRequest = client.prepareIndex(index,type)
-                                                 .setId(Integer.toString(comment.getCommentid()))
-                                                 .setSource(json,XContentType.JSON);
-		return (indexRequest.execute().actionGet().getId().equals(Integer.toString(comment.getCommentid())));
+	public boolean exist(String index, String type, Comment com){
+		Comment comment = (Comment)com;
+		SearchResponse response = client.prepareSearch(index)
+                .setTypes(type)
+                .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
+                .setQuery(QueryBuilders.matchQuery("comment",comment.getComment()))
+                .get();
+		return (0<response.getHits().getHits().length);
+	}
+	
+		
+	@Override
+	public int delete(String index, Comment comment) {
+		//DeleteResponse response = client.prepareDelete(index,type,Integer.toString(comment.getCommentid())).get();
+		return 0;
 	}
 
 	@Override
-	public boolean delete(String index, String type, Comment comment) {
-		DeleteResponse response = client.prepareDelete(index,type,Integer.toString(comment.getCommentid())).get();
-		return false;
+	public String getId(String index, String type, Comment obj) {
+		// TODO Auto-generated method stub
+		return null;
 	}
-
-	@Override
-	public boolean update(String index, String type, Comment comment) throws JsonProcessingException, InterruptedException, ExecutionException {
-		UpdateRequest updateRequest = new UpdateRequest();
-		updateRequest.index(index);
-		updateRequest.type(type);
-		updateRequest.id(Integer.toString(comment.getCommentid()));
-		byte[] json = this.mapper.writeValueAsBytes(comment);
-		updateRequest.doc(json,XContentType.JSON);
-		client.update(updateRequest).get();
-		return false;
-	}
-
-	@Override
-	public Comment find(String index, String type, Comment comment)
-			throws JsonParseException, JsonMappingException, IOException {
-		GetResponse response = client.prepareGet(index,type,Integer.toString(comment.getCommentid())).get();
-		return (mapper.readValue(response.getSourceAsBytes(),Comment.class));
-	}
-
-	@Override
-	public List<Comment> findAll(String index, String type, int id)
-			throws JsonParseException, JsonMappingException, IOException {
-		MultiGetResponse multiGetItemResponses;
-		MultiGetRequestBuilder builder = client.prepareMultiGet();
-		List<Comment> commentList = new ArrayList<Comment>();
-		if(id==0){
-			for(int i =1; i <= Comment.getCpt();i++){
-				builder.add(index,type,Integer.toString(i));
-			}
-		}else{
-			builder.add(index,"placeid",Integer.toString(id));
-		}
-		multiGetItemResponses = builder.get();
-		for (MultiGetItemResponse itemResponse : multiGetItemResponses) { 
-		    GetResponse response = itemResponse.getResponse();
-		    commentList.add(mapper.readValue(response.getSourceAsBytes(),Comment.class));
-		}
-		return commentList;
-	}
+	
 }

@@ -62,37 +62,8 @@ public class ExampleResource {
 		//deleteTest();
 		return instance;
 	}
-	
-	public static void createTest(){
-		try {
-			User usr = new User("Jojo", "Julien", "TEST", "chic@univ-paris-diderot.com", "1*2+3/4");
-			AbstractDAOFactory aDAOF = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
-			DAO<User> userDAO =aDAOF.getUserDAO();
-			userDAO.create("userdb","user",usr);			
-		}catch(JsonProcessingException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public static void deleteTest(){
-		User usr = new User("Jojo", "Julien", "TEST", "chic@univ-paris-diderot.com", "1*2+3/4");
-		AbstractDAOFactory aDAOF = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
-		DAO<User> userDAO =aDAOF.getUserDAO();
-		userDAO.delete("userdb","user",usr);
-	}
-	
-	public static void updateTest(){
-		try {
-			User usr = new User("Jojo_123", "Julien_123", "TEST123", "chic@univ-paris-diderot.com", "1*2+3/4");
-			AbstractDAOFactory aDAOF = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
-			DAO<User> userDAO =aDAOF.getUserDAO();
-			userDAO.update("userdb","user",usr);			
-		}catch(JsonProcessingException | InterruptedException | ExecutionException e){
-			e.printStackTrace();
-		}
-	}
 	public static void findTest(){
-		try {
+		/*try {
 			User usr = new User("Jojo_123", "Julien_123", "TEST123", "chic@univ-paris-diderot.com", "1*2+3/4");
 			AbstractDAOFactory aDAOF = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
 			DAO<User> userDAO =aDAOF.getUserDAO();
@@ -100,35 +71,25 @@ public class ExampleResource {
 			System.out.println("Name test : "+test.getFirstname());
 		}catch(IOException e){
 			e.printStackTrace();
-		}
-	}
-	public static void findAllTest(){
-		try {
-			AbstractDAOFactory aDAOF = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
-			DAO<User> userDAO =aDAOF.getUserDAO();
-			ArrayList<User> usersList=(ArrayList)userDAO.findAll("userdb","user",0);
-			System.out.println("findAll Test : \n"+usersList);
-		}catch(IOException e){
-			e.printStackTrace();
-		}
+		}*/
 	}
 	
 	public static void createPlaceTest(){
-		try {
+		/*try {
 			Place pl =new Place("diderot","5 Rue Thomas Mann, 75013 Paris","universite",2, null,null);
 			AbstractDAOFactory aDAOF = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
 			DAO<Place> placeDAO =aDAOF.getPlaceDAO();
 			placeDAO.create("placedb","place",pl);			
 		}catch(JsonProcessingException e) {
 			e.printStackTrace();
-		}
+		}*/
 	}
 	
 	public static void deletePlaceTest(){
 		Place pl =new Place("diderot","5 Rue Thomas Mann, 75013 Paris","universite",2, null,null);
 		AbstractDAOFactory aDAOF = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
 		DAO<Place> placeDAO =aDAOF.getPlaceDAO();
-		placeDAO.delete("placedb","place",pl);
+		placeDAO.delete("placedb",pl);
 	}
 
 }

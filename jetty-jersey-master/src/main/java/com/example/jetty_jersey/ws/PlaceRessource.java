@@ -36,12 +36,11 @@ public class PlaceRessource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Place> getPlaces(@PathParam("index")String index) {
     	List<Place> retour = null;
-		try {
-			retour = placeDao.findAll(index, Constants.PLACES,0);
+		/*try {
+			/retour = placeDao.findAll(index, Constants.PLACES,0);
 		} catch (IOException e) {
 			registerException(e);
-		}
-
+		}*/
 		return retour;
 	}
 
@@ -50,11 +49,11 @@ public class PlaceRessource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	//@Produces(MediaType.APPLICATION_JSON)
 	public Place getPlace(Place place){
-		try {
+		/*try {
 			place = placeDao.find(String.valueOf(place.getId()), Constants.PLACES, place);
-		} catch (IOException e) {
+		}catch (IOException e) {
 			registerException(e);
-		}
+		}*/
 		return place;
 	}
 	
@@ -62,12 +61,12 @@ public class PlaceRessource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public boolean addPlace(Place place) {
 		ok = false;
-		 try {
+		/* try {
 			ok = placeDao.create(String.valueOf(place.getId()),Constants.PLACES,place);
 		} catch (JsonProcessingException e) {
 			// TODO Auto-generated catch block
 			registerException(e);
-		}
+		}*/
 		
 		return ok;
 	}
@@ -75,8 +74,8 @@ public class PlaceRessource {
 	@DELETE
 	@Path("/{id_place}")
 	public boolean deletePlace(Place place) {
-		ok = placeDao.delete(String.valueOf(place.getId()),Constants.PLACES,place);
-		return ok;
+		//ok = placeDao.delete(String.valueOf(place.getId()),place);
+		return false;
 	}
     
     @POST

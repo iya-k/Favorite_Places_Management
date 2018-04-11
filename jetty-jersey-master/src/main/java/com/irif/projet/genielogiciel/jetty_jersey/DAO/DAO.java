@@ -1,9 +1,23 @@
 package com.irif.projet.genielogiciel.jetty_jersey.DAO;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
+
+import org.elasticsearch.action.index.IndexRequestBuilder;
+import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.action.search.SearchType;
+import org.elasticsearch.action.update.UpdateRequest;
 import org.elasticsearch.client.transport.TransportClient;
+import org.elasticsearch.common.xcontent.XContentType;
+import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.index.reindex.BulkByScrollResponse;
+import org.elasticsearch.index.reindex.DeleteByQueryAction;
+import org.elasticsearch.search.SearchHit;
+
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -18,33 +32,106 @@ public abstract class DAO<T>{
 
 	  
 	  public DAO(TransportClient client){
-	    this.client = client;
-	    this.mapper = new ObjectMapper();
+		  this.client = client;
+		  this.mapper = new ObjectMapper();
+	  }
+	  
+	  
+	  public String getCurrentDateTime(String mode){
+		  Date dNow = new Date();
+		  SimpleDateFormat ft;
+		  String date = "";
+		  
+		  if(mode.equals("yyyyMMddhhmmss")){
+			  ft = new SimpleDateFormat(mode);
+		  }else{
+			  ft = new SimpleDateFormat("yyyy/MM/dd/hh:mm:ss");
+		  }
+		  date = ft.format(dNow);
+		  return date;
+	  }
+	  
+	  public T getObj(SearchHit hit,Class<T> t){
+		  T obj = null;
+		  try{
+			  obj = mapper.readValue(hit.getSourceAsString().getBytes(),t);
+		  }catch (IOException e){
+			  //e.printStackTrace();
+		  }
+		  return obj;
+	  }
+	  
+	  public abstract boolean exist(String index,String type,T obj);
+	 
+	  public abstract String getId(String index, String type, T obj);
+	  /**
+		* delete method
+	    * @param obj
+		* @return boolean if deleted true else false
+		*/
+	  public abstract int delete(String index,T obj);
+	  
+	  /**
+	   * creation method
+	   * @param obj
+	   * @return boolean if created true else false
+	  */
+	  public int add(String index,String type,T obj){
+			int res = 0;
+			try{
+				if(!exist(index,type,obj)){
+					byte[] json = this.mapper.writeValueAsBytes(obj);
+					
+					IndexRequestBuilder indexRequest = client.prepareIndex(index,type)
+							                                 .setSource(json,XContentType.JSON);
+					indexRequest.execute().actionGet();
+					client.admin().indices().prepareRefresh(index).get();
+					res = 1;
+				}
+			}catch(JsonProcessingException e){
+				res = -1;
+				//e.printStackTrace();
+			}
+			return res;
+	  }
+     /**
+     * update method
+     * @param obj
+     * @return boolean if updated true else false
+	 */
+	  public int update(String index,String type,T obj){
+		  int status = 0;
+		 try {
+		  		byte[] json = this.mapper.writeValueAsBytes(obj);
+		  		UpdateRequest updateRequest = new UpdateRequest();
+		  		updateRequest.index(index);
+		  		updateRequest.type(type);
+		  		updateRequest.id(getId(index,type,obj));
+		  		updateRequest.doc(json,XContentType.JSON);
+		  		client.update(updateRequest).get();
+		  		client.admin().indices().prepareRefresh(index).get();
+				status = 1;
+		}catch (InterruptedException | ExecutionException | IOException e){
+			e.printStackTrace();
+				status = -1;
+		}
+			return status;
 	  }
 	  
 	  /**
-	  * creation method
-	  * @param obj
-	  * @return boolean if created true else false
-	  */
-	  public abstract boolean create(String index,String type,T obj) throws JsonProcessingException;
-
-	  /**
-	  * delete method
-	  * @param obj
-	  * @return boolean if deleted true else false
-	  */
-	  public abstract boolean delete(String index,String type,T obj);
-
-	  /**
-	  * update method
-	  * @param obj
-	  * @return boolean if updated true else false
-	  */
-	  public abstract boolean update(String index,String type,T obj) throws JsonProcessingException, InterruptedException, ExecutionException;
-
-	  
-	  public abstract T find(String index, String type,T obj) throws JsonParseException, JsonMappingException, IOException;
+		* update method
+		* @param obj
+		* @return boolean if updated true else false
+		*/
+	  public boolean deleteIndex(String index){
+		  
+			BulkByScrollResponse response = DeleteByQueryAction.INSTANCE.newRequestBuilder(client)
+				                            .filter(QueryBuilders.matchAllQuery()) 
+				                            .source(index)                                  
+				                            .get();
+			client.admin().indices().prepareRefresh(index).get();
+			return (0 < response.getDeleted());
+	  }	  
 	  /**
 	   * 
 	   * @param index
@@ -55,8 +142,17 @@ public abstract class DAO<T>{
 	   * @throws JsonMappingException
 	   * @throws IOException
 	   */
-	  public abstract List<T> findAll(String index,String type,int id)throws JsonParseException, JsonMappingException, IOException;
-	 
-	  
+	  public List<T> findAll(String index,String type,Class<T> t){
+			 List<T> res = new ArrayList<T>();
+			 SearchResponse response = client.prepareSearch(index)
+		                                     .setTypes(type)
+		                                     .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
+		                                     .get();
+			 SearchHit[] searchHit = response.getHits().getHits();
+			 for(int i = 0; i < searchHit.length;i++) {
+				 res.add(getObj(searchHit[i],t));
+			 }
+			return res;
+	  }
 	  
 	}
