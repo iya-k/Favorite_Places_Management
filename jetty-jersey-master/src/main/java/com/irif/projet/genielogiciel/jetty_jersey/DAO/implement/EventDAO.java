@@ -16,7 +16,9 @@ import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.action.update.UpdateRequest;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.xcontent.XContentType;
+import org.elasticsearch.index.query.Operator;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.index.query.MultiMatchQueryBuilder.Type;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -30,6 +32,18 @@ public class EventDAO extends DAO<Event>{
 
 	public EventDAO(TransportClient client) {
 		super(client);
+	}
+	@Override
+	public SearchResponse getSearchResponse(String index, String type, Event obj) {
+		String query = " "; 
+
+		SearchResponse response = client.prepareSearch(index)
+				.setTypes(type)
+				.setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
+				.setQuery(QueryBuilders.multiMatchQuery(query,"placeid","mapid")
+						.type(Type.CROSS_FIELDS)
+						.operator(Operator.AND)).get();
+		return response;
 	}
 	
 	@Override
@@ -52,6 +66,16 @@ public class EventDAO extends DAO<Event>{
 
 	@Override
 	public String getId(String index, String type, Event obj) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public Event find(String index, String type, Class<Event> t, String id, Object obj) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public List<Event> findAllById(String index, String type, String id, String query, Class<Event> t) {
 		// TODO Auto-generated method stub
 		return null;
 	}

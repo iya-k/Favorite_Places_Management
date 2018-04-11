@@ -1,17 +1,15 @@
 package com.irif.projet.genielogiciel.jetty_jersey.model;
 
 import java.util.Date;
-import java.util.List;
 
 public class Event extends Place{
 	private Date begin;
 	private Date end;
 
-	public Event(int id, String name, String adress, String description,int mapId, List<Picture> pictures,
-			List<Comment> comments,Date begin, Date end) {
-		super(name, adress, description,mapId, pictures, comments);
-		this.begin = begin;
-		this.end = end;
+	public Event(String eventid,String mapid,String name,String adress,String longitude,String latitude,String description,Date beginDate, Date endDate){
+		super(eventid, mapid, name, adress, longitude, latitude, description);
+		this.begin = beginDate;
+		this.end = endDate;
 	}
 
 	public Date getBegin() {

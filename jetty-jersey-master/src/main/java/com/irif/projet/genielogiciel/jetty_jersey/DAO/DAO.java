@@ -22,6 +22,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.irif.projet.genielogiciel.jetty_jersey.model.User;
 
 public abstract class DAO<T>{
 	  protected TransportClient client;
@@ -36,21 +37,6 @@ public abstract class DAO<T>{
 		  this.mapper = new ObjectMapper();
 	  }
 	  
-	  
-	  public String getCurrentDateTime(String mode){
-		  Date dNow = new Date();
-		  SimpleDateFormat ft;
-		  String date = "";
-		  
-		  if(mode.equals("yyyyMMddhhmmss")){
-			  ft = new SimpleDateFormat(mode);
-		  }else{
-			  ft = new SimpleDateFormat("yyyy/MM/dd/hh:mm:ss");
-		  }
-		  date = ft.format(dNow);
-		  return date;
-	  }
-	  
 	  public T getObj(SearchHit hit,Class<T> t){
 		  T obj = null;
 		  try{
@@ -60,6 +46,15 @@ public abstract class DAO<T>{
 		  }
 		  return obj;
 	  }
+	  
+	  public abstract T find(String index,String type,Class<T> t,String id, Object obj);
+	  
+	  /**
+		* 
+	    * @param index type User
+		* @return  SearchResponse
+		*/
+	  public abstract SearchResponse getSearchResponse(String index, String type, T obj);
 	  
 	  public abstract boolean exist(String index,String type,T obj);
 	 
@@ -71,6 +66,9 @@ public abstract class DAO<T>{
 		*/
 	  public abstract int delete(String index,T obj);
 	  
+	  
+	  public abstract List<T> findAllById(String index,String type,String id,String query, Class<T> t);
+	  
 	  /**
 	   * creation method
 	   * @param obj
@@ -80,8 +78,8 @@ public abstract class DAO<T>{
 			int res = 0;
 			try{
 				if(!exist(index,type,obj)){
-					byte[] json = this.mapper.writeValueAsBytes(obj);
 					
+					byte[] json = this.mapper.writeValueAsBytes(obj);
 					IndexRequestBuilder indexRequest = client.prepareIndex(index,type)
 							                                 .setSource(json,XContentType.JSON);
 					indexRequest.execute().actionGet();

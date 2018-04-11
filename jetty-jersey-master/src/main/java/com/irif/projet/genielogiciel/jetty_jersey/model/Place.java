@@ -1,36 +1,49 @@
 package com.irif.projet.genielogiciel.jetty_jersey.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Place {
-	private static int idPlace = 1;
-	private String id;
+	private String placeid;
+	private String mapid;
 	private String name;
 	private String adress;
+	private String longitude;
+	private String latitude;
 	private String description;
-	private int mapid; //id de la map sur lequel est placer
+	private String dateDeCreation;
 	private List<Picture> pictures;
 	private List<Comment> comments;
 	
 	public Place(){}
 	
-	public Place(String name, String adress, String description,int mapid, List<Picture> pictures,
-			List<Comment> comments) {
+	public Place(String placeid,String mapid,String name,String adress,String longitude,String latitude,String description){	
+		this.placeid = placeid;
+		this.mapid = mapid;
 		this.name = name;
 		this.adress = adress;
 		this.description = description;
 		this.mapid = mapid;
-		this.pictures = pictures;
-		this.comments = comments;
-		idPlace++;
+		this.dateDeCreation = Map.getCurrentDateTime("yyyy/MM/dd/hh:mm:ss");
+		this.pictures = new ArrayList<Picture>();
+		this.comments =new ArrayList<Comment>();
+	}
+	
+	
+	public String getPlaceid() {
+		return placeid;
 	}
 
-	public String getId() {
-		return id;
+	public void setPlaceid(String placeid) {
+		this.placeid = placeid;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public String getMapid() {
+		return mapid;
+	}
+
+	public void setMapid(String mapid) {
+		this.mapid = mapid;
 	}
 
 	public String getName() {
@@ -47,6 +60,22 @@ public class Place {
 
 	public void setAdress(String adress) {
 		this.adress = adress;
+	}
+
+	public String getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
+	}
+
+	public String getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(String latitude) {
+		this.latitude = latitude;
 	}
 
 	public String getDescription() {
@@ -72,19 +101,8 @@ public class Place {
 	public void setComments(List<Comment> comments) {
 		this.comments = comments;
 	}
+
 	
-	public int getMapid() {
-		return mapid;
-	}
-
-	public void setMapId(int mapid) {
-		this.mapid = mapid;
-	}
-
-	public static int getCpt() {
-		return idPlace;
-	}
-
 	
 	
 }

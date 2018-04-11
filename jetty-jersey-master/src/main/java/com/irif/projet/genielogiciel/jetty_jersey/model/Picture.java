@@ -5,12 +5,13 @@ public class Picture {
 	private String placeid;
 	private String picturename;
 	private String url;
-
+	private String dateDeCreation;
 
 	public Picture(String picturename, String url,String placeid) {
 		this.picturename = picturename;
 		this.url = url;
 		this.placeid =placeid;
+		this.dateDeCreation =  Map.getCurrentDateTime("yyyy/MM/dd/hh:mm:ss"); 
 	}
 
 
