@@ -190,3 +190,15 @@ $("[data-widget='add-map']").click(function(){
 	popupAddMapModel();
 });
 
+$('#radio-event').on('ifChecked', function(event) {
+    $("#begin-date-group").show();
+    $("#end-date-group").show();
+});
+ 
+$("#radio-place").on("ifChecked", function(event) {
+    $("#begin-date-group").hide();
+    $("#end-date-group").hide();
+});
+ 
+//Date range picker
+// $('#reservation').daterangepicker();
