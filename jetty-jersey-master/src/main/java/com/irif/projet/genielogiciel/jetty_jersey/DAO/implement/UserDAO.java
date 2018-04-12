@@ -9,8 +9,8 @@ import java.util.List;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.client.transport.TransportClient;
-import org.elasticsearch.index.IndexNotFoundException;
 import org.elasticsearch.index.query.MultiMatchQueryBuilder.Type;
+import org.elasticsearch.index.IndexNotFoundException;
 import org.elasticsearch.index.query.Operator;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.reindex.BulkByScrollResponse;
@@ -26,20 +26,20 @@ public class UserDAO extends DAO<User>{
 	@Override
 	public SearchResponse getSearchResponse(String index, String type, User user) {
 		SearchResponse response = null;
-		try{
+		try {
 			response = client.prepareSearch(index)
-					.setTypes(type)
-					.setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
-					.setQuery(QueryBuilders.matchQuery("username",user.getUsername()))
-					.get();
+				.setTypes(type)
+				.setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
+				.setQuery(QueryBuilders.matchQuery("username",user.getUsername()))
+				.get();
 		}catch(IndexNotFoundException e){
-			//e.printStackTrace();
 			client.admin().indices().prepareCreate(index).get();
+			//e.printStackTrace();
 		}
 		return response;
 	}
 	/**
-	 * 
+	 *
 	 * @param index type User
 	 * @return  user_id
 	 */
@@ -47,8 +47,10 @@ public class UserDAO extends DAO<User>{
 	public String getId(String index, String type, User user){
 		String id = "";
 		try {
+
 			id = getSearchResponse(index,type,user).getHits().getHits()[0].getId();
-		}catch(ArrayIndexOutOfBoundsException e){
+
+		}catch(ArrayIndexOutOfBoundsException | NullPointerException e){
 			e.printStackTrace();
 		}
 		return(id);
@@ -60,10 +62,8 @@ public class UserDAO extends DAO<User>{
 	 */
 	@Override
 	public boolean exist(String index, String type, User user){
-		
-		SearchResponse response =  getSearchResponse(index,type,user);
-		boolean res = response != null && 0 <response.getHits().getHits().length;
-		
+		SearchResponse response = getSearchResponse(index,type,user);
+		boolean res = response != null && 0 < response.getHits().getHits().length;
 		return (res);
 	}
 
@@ -87,7 +87,7 @@ public class UserDAO extends DAO<User>{
 
 		SearchHit[] res = response.getHits().getHits();
 		if(res.length == 1)
-			user = super.getObj(res[0],User.class);
+			user = (User)super.getObj(res[0],User.class);
 		return (user);
 	}
 
@@ -99,21 +99,21 @@ public class UserDAO extends DAO<User>{
 	@Override
 	public int delete(String index,User user){
 		BulkByScrollResponse response = DeleteByQueryAction.INSTANCE.newRequestBuilder(client)
-				.filter(QueryBuilders.matchQuery("username",user.getUsername())) 
-				.source(index)                                  
-				.get();                                             
+				.filter(QueryBuilders.matchQuery("username",user.getUsername()))
+				.source(index)
+				.get();
 		client.admin().indices().prepareRefresh(index).get();
 
 		return((int)response.getDeleted());
 	}
 	@Override
-	public User find(String index, String type, Class<User> t, String id, Object obj) {
+	public User find(String index, String type, Class<User> t, String userid) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 	@Override
-	public List<User> findAllById(String index, String type, String id, String query, Class<User> t) {
+	public List<User> findAllById(String index, String type, String query, Class<User> t) {
 		// TODO Auto-generated method stub
 		return null;
 	}

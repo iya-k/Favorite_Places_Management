@@ -30,40 +30,88 @@ public class LoginRessource {
     User usr = new User("Jojo12345", "Jean", "CHIC", "jojo@free.com", "p1a2r3i4s5");//temporaire
     User usr1 = new User("Jo", "Joris", "Mahieu", "mahieu@free.com", "3210");//idem
 
-    public void test(int status) {
-        switch (status) {
-            case 1://create user
-                userDao.add(INDEX, TYPE, usr);
-                break;
-            case 2://connect
-                current_user = ((UserDAO) userDao).connect(INDEX, TYPE, usr.getUsername(), usr.getPassword());
-                break;
-            case 3: //delete index
-                userDao.deleteIndex(INDEX);
-                break;
-            case 4://delete user
-                userDao.delete(INDEX, usr);
-                break;
-            case 5://update user
-                current_user = ((UserDAO) userDao).connect(INDEX, TYPE, usr.getUsername(), usr.getPassword());
-                if (current_user != null) {
-                    //current_user.setUsername("Charles");
-                    current_user.setLastname("Charles");
-                    //current_user.setFirstname("Louis123");
-                    userDao.update(INDEX, TYPE, current_user);
-                }
-                break;
-            case 6://get all users
-                List<User> list = userDao.findAll(INDEX, TYPE, User.class);
-                for (int i = 0; i < list.size(); i++) {
-                    System.out.println("User : " + list.get(i));
-                }
 
+    public void addMap(String userid,int n){
+  Map map;
+  DAO<Map> mapDao = daoFact.getMapDAO();
+  for(int i = 0; i < n; i++){
+    map = new Map(userid,"map"+i,"public","root"+i+".jpg");
+    mapDao.add("mapdb","map",map);
+  }
+}
+
+
+public void test(int status) {
+    switch(status){
+      case 1 ://create user
+        userDao.add(INDEX,TYPE,usr);
+        break;
+      case 2 ://connect
+        current_user = ((UserDAO)userDao).connect(INDEX,TYPE,usr.getUsername(),usr.getPassword());
+        DAO<Map> mapDao5 = daoFact.getMapDAO();
+        Map map6 = mapDao5.find("homemapdb","homemap",Map.class,userDao.getId(INDEX,TYPE,current_user));
+        System.out.println("Map trouvé : "+map6);
+        break;
+      case 3 : //delete index
+        userDao.deleteIndex(INDEX);
+        break;
+      case 4 ://delete user
+        userDao.delete(INDEX,usr);
+        break;
+      case 5 ://update user
+        current_user = ((UserDAO)userDao).connect(INDEX,TYPE,usr.getUsername(),usr.getPassword());
+        if(current_user != null) {
+          //current_user.setUsername("Charles");
+          current_user.setLastname("Charles");
+          //current_user.setFirstname("Louis123");
+          userDao.update(INDEX, TYPE,current_user);
         }
-
+        break;
+      case 6 ://get all users
+        List<User> list = userDao.findAll(INDEX,TYPE,User.class);
+          for(int i = 0; i < list.size();i++) {
+            System.out.println("User : "+list.get(i));
+          }
+          break;
+      case 7://create Map
+        current_user = ((UserDAO)userDao).connect(INDEX,TYPE,usr.getUsername(),usr.getPassword());
+        Map map = new Map(userDao.getId(INDEX,TYPE,current_user),"map1","private","mapimg.jpg");
+        DAO<Map> mapDao = daoFact.getMapDAO();
+        mapDao.add("mapdb","map",map);
+        break;
+      case 8 ://delete map
+        DAO<Map> mapDao1 = daoFact.getMapDAO();
+        mapDao1.deleteIndex("mapdb");
+        break;
+      case 9 ://find map
+        DAO<Map> mapDao2 = daoFact.getMapDAO();
+        Map map1 = mapDao2.find("mapdb", "map",Map.class,userDao.getId(INDEX,TYPE,current_user));
+        System.out.println(map1);
+        break;
+      case 10://create homemap
+        current_user = ((UserDAO)userDao).connect(INDEX,TYPE,usr.getUsername(),usr.getPassword());
+        DAO<Map> mapDao3 = daoFact.getMapDAO();
+        Map map4 = new Map("root","rootmap","public","root.jpg");
+        mapDao3.add("homemapdb","homemap",map4);
+        break;
+      case 11://find public map
+        DAO<Map> mapDao4 = daoFact.getMapDAO();
+        Map map5 = mapDao4.find("homemapdb","homemap",Map.class,"root");
+        System.out.println("Test_Map : "+map5);
+        break;
+      case 12://findAllById
+        DAO<Map> mapDao7 = daoFact.getMapDAO();
+        current_user = ((UserDAO)userDao).connect(INDEX,TYPE,usr.getUsername(),usr.getPassword());
+        String userid = userDao.getId(INDEX,TYPE,current_user);
+        addMap(userid,10);
+        List<Map> list1 = mapDao7.findAllById("mapdb","map",userid+" public",Map.class);
+        for(int i = 0; i < list1.size();i++) {
+          System.out.println("Test_findById : "+list1.get(i));
+        }
+        break;
     }
 
-
+  }
     private static void registerException(Exception e) {
         Logger.getLogger(LoginRessource.class.getName()).log(Level.SEVERE, null, e);
     }
@@ -107,7 +155,7 @@ public class LoginRessource {
     		current_user = ((UserDAO)userDao).connect(INDEX,TYPE,usr.getUsername(),usr.getPassword());
     	}
     	status = current_user == null?0:1;
-    	
+
     	switch(status) {
 			case 0:System.out.println("Echec");break;
 			case 1:System.out.println("Reussite");break;
