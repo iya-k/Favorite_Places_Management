@@ -3,8 +3,6 @@ package com.irif.projet.genielogiciel.jetty_jersey.model;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import com.irif.projet.genielogiciel.jetty_jersey.DAO.DAO;
-
 public class Map{
 
 	private String mapid;
@@ -86,6 +84,7 @@ public class Map{
 		this.creationdate = creationdate;
 	}
 	
+	@Override
 	public String toString() {
 		return this.mapname+" "+this.userid+" "+this.mode;
 	}
