@@ -102,7 +102,7 @@ public class LoginRessource {
     @Consumes(MediaType.APPLICATION_JSON)
     public int signIn(Login loginRequest) {
         int status = 0;
-        test(5);
+        test(1);
     	/*if(loginRequest != null) {
     		current_user = ((UserDAO)userDao).connect(INDEX,TYPE,usr.getUsername(),usr.getPassword());
     	}
