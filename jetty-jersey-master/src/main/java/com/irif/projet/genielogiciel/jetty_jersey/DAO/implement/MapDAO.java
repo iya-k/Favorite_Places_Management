@@ -1,21 +1,10 @@
 package com.irif.projet.genielogiciel.jetty_jersey.DAO.implement;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
-
-import org.elasticsearch.action.delete.DeleteResponse;
-import org.elasticsearch.action.get.GetResponse;
-import org.elasticsearch.action.get.MultiGetItemResponse;
-import org.elasticsearch.action.get.MultiGetRequestBuilder;
-import org.elasticsearch.action.get.MultiGetResponse;
-import org.elasticsearch.action.index.IndexRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.SearchType;
-import org.elasticsearch.action.update.UpdateRequest;
 import org.elasticsearch.client.transport.TransportClient;
-import org.elasticsearch.common.xcontent.XContentType;
 import org.elasticsearch.index.query.Operator;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.IndexNotFoundException;
@@ -24,13 +13,8 @@ import org.elasticsearch.index.reindex.BulkByScrollResponse;
 import org.elasticsearch.index.reindex.DeleteByQueryAction;
 import org.elasticsearch.search.SearchHit;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.irif.projet.genielogiciel.jetty_jersey.DAO.DAO;
 import com.irif.projet.genielogiciel.jetty_jersey.model.Map;
-import com.irif.projet.genielogiciel.jetty_jersey.model.Place;
-import com.irif.projet.genielogiciel.jetty_jersey.model.User;
 
 public class MapDAO extends DAO<Map>{
 
@@ -48,7 +32,8 @@ public class MapDAO extends DAO<Map>{
 							.type(Type.CROSS_FIELDS)
 							.operator(Operator.AND)).get();
 		}catch(IndexNotFoundException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
+			client.admin().indices().prepareCreate(index).get();
 		}
 		return response;
 	}
@@ -61,11 +46,10 @@ public class MapDAO extends DAO<Map>{
 	
 	@Override
 	public boolean exist(String index, String type, Map map){
-		SearchResponse response = getSearchResponse(index,type,map);
-		boolean b1 = response != null;
-		boolean b2 = (response != null)?0 < response.getHits().getHits().length:false;
-
-		return (b1 && b2);
+		SearchResponse response =  getSearchResponse(index,type,map);
+		boolean res = response != null && 0 <response.getHits().getHits().length;
+		
+		return (res);
 	}
 
 
@@ -90,13 +74,13 @@ public class MapDAO extends DAO<Map>{
 		SearchHit[] res = response.getHits().getHits();
 		
 		if(res.length == 1) {
-			map =(Map)super.getObj(res[0],mapclass);
+			map =super.getObj(res[0],mapclass);
 		}else{
 			query = "root public";
 			response = getResponse(index, type, query, "userid", "mode");
 			res = response.getHits().getHits();
 			if(res.length == 1)
-				map =(Map)super.getObj(res[0],mapclass);
+				map =super.getObj(res[0],mapclass);
 		}
 		return map;
 	}

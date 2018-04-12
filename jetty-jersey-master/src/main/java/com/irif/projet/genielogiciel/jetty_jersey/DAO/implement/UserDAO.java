@@ -9,6 +9,7 @@ import java.util.List;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.client.transport.TransportClient;
+import org.elasticsearch.index.IndexNotFoundException;
 import org.elasticsearch.index.query.MultiMatchQueryBuilder.Type;
 import org.elasticsearch.index.query.Operator;
 import org.elasticsearch.index.query.QueryBuilders;
@@ -24,11 +25,17 @@ public class UserDAO extends DAO<User>{
 	}
 	@Override
 	public SearchResponse getSearchResponse(String index, String type, User user) {
-		SearchResponse response = client.prepareSearch(index)
-				.setTypes(type)
-				.setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
-				.setQuery(QueryBuilders.matchQuery("username",user.getUsername()))
-				.get();
+		SearchResponse response = null;
+		try{
+			response = client.prepareSearch(index)
+					.setTypes(type)
+					.setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
+					.setQuery(QueryBuilders.matchQuery("username",user.getUsername()))
+					.get();
+		}catch(IndexNotFoundException e){
+			//e.printStackTrace();
+			client.admin().indices().prepareCreate(index).get();
+		}
 		return response;
 	}
 	/**
@@ -53,8 +60,11 @@ public class UserDAO extends DAO<User>{
 	 */
 	@Override
 	public boolean exist(String index, String type, User user){
-
-		return ( 0 < getSearchResponse(index,type,user).getHits().getHits().length);
+		
+		SearchResponse response =  getSearchResponse(index,type,user);
+		boolean res = response != null && 0 <response.getHits().getHits().length;
+		
+		return (res);
 	}
 
 
@@ -77,7 +87,7 @@ public class UserDAO extends DAO<User>{
 
 		SearchHit[] res = response.getHits().getHits();
 		if(res.length == 1)
-			user = (User)super.getObj(res[0],User.class);
+			user = super.getObj(res[0],User.class);
 		return (user);
 	}
 
