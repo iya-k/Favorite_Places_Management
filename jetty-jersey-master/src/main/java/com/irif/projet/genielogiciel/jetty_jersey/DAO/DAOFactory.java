@@ -31,7 +31,7 @@ public class DAOFactory extends AbstractDAOFactory{
 	@Override
 	public DAO getUserDAO() {
 		if(userDAO == null) {
-			userDAO = new UserDAO(client);
+			userDAO = new UserDAO(client,getMapDAO());
 		}
 		return userDAO;
 	}
@@ -39,7 +39,7 @@ public class DAOFactory extends AbstractDAOFactory{
 	@Override
 	public DAO getMapDAO() {
 		if(mapDAO == null) {
-			mapDAO = new MapDAO(client);
+			mapDAO = new MapDAO(client, getPlaceDAO());
 		}
 		return mapDAO;
 	}
@@ -47,7 +47,7 @@ public class DAOFactory extends AbstractDAOFactory{
 	@Override
 	public DAO getPlaceDAO() {
 		if(placeDAO == null) {
-			placeDAO = new PlaceDAO(client);
+			placeDAO = new PlaceDAO(client, getPictureDAO());
 		}
 		return placeDAO;
 	}

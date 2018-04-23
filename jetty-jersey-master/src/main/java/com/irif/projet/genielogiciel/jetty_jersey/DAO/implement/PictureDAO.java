@@ -36,7 +36,7 @@ public class PictureDAO extends DAO<Picture>{
 	}
 	@Override
 	public SearchResponse getSearchResponse(String index, String type, Picture picture) {
-		String query = " ";
+		String query = " "; 
 
 		SearchResponse response = client.prepareSearch(index)
 				.setTypes(type)
@@ -49,7 +49,7 @@ public class PictureDAO extends DAO<Picture>{
 	@Override
 	public boolean exist(String index, String type, Picture pi) {
 		Picture picture = (Picture)pi;
-
+		
 		SearchResponse response = client.prepareSearch(index)
                 .setTypes(type)
                 .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
@@ -57,7 +57,7 @@ public class PictureDAO extends DAO<Picture>{
                 .get();
 		return (0 < response.getHits().getHits().length);
 	}
-
+	
 	@Override
 	public int delete(String index, Picture picture) {
 		//DeleteResponse response = client.prepareDelete(index,type,Integer.toString(picture.getPictureid())).get();

@@ -2,6 +2,7 @@ package com.irif.projet.genielogiciel.jetty_jersey.DAO.implement;
 
 
 import com.irif.projet.genielogiciel.jetty_jersey.DAO.DAO;
+import com.irif.projet.genielogiciel.jetty_jersey.model.Map;
 import com.irif.projet.genielogiciel.jetty_jersey.model.User;
 
 import java.util.List;
@@ -18,10 +19,12 @@ import org.elasticsearch.index.reindex.DeleteByQueryAction;
 import org.elasticsearch.search.SearchHit;
 
 public class UserDAO extends DAO<User>{
+	private DAO<Map> mapdao;
 
 
-	public UserDAO(TransportClient client){
+	public UserDAO(TransportClient client,DAO<Map> mapdao){
 		super(client);
+		this.mapdao = mapdao;
 	}
 	@Override
 	public SearchResponse getSearchResponse(String index, String type, User user) {
@@ -39,7 +42,7 @@ public class UserDAO extends DAO<User>{
 		return response;
 	}
 	/**
-	 *
+	 * 
 	 * @param index type User
 	 * @return  user_id
 	 */
@@ -47,9 +50,9 @@ public class UserDAO extends DAO<User>{
 	public String getId(String index, String type, User user){
 		String id = "";
 		try {
-
+			
 			id = getSearchResponse(index,type,user).getHits().getHits()[0].getId();
-
+			
 		}catch(ArrayIndexOutOfBoundsException | NullPointerException e){
 			e.printStackTrace();
 		}
@@ -99,9 +102,9 @@ public class UserDAO extends DAO<User>{
 	@Override
 	public int delete(String index,User user){
 		BulkByScrollResponse response = DeleteByQueryAction.INSTANCE.newRequestBuilder(client)
-				.filter(QueryBuilders.matchQuery("username",user.getUsername()))
-				.source(index)
-				.get();
+				.filter(QueryBuilders.matchQuery("username",user.getUsername())) 
+				.source(index)                                  
+				.get();                                             
 		client.admin().indices().prepareRefresh(index).get();
 
 		return((int)response.getDeleted());
@@ -111,7 +114,7 @@ public class UserDAO extends DAO<User>{
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
 	@Override
 	public List<User> findAllById(String index, String type, String query, Class<User> t) {
 		// TODO Auto-generated method stub

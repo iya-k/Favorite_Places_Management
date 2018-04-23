@@ -35,7 +35,7 @@ public class EventDAO extends DAO<Event>{
 	}
 	@Override
 	public SearchResponse getSearchResponse(String index, String type, Event obj) {
-		String query = " ";
+		String query = " "; 
 
 		SearchResponse response = client.prepareSearch(index)
 				.setTypes(type)
@@ -45,7 +45,7 @@ public class EventDAO extends DAO<Event>{
 						.operator(Operator.AND)).get();
 		return response;
 	}
-
+	
 	@Override
 	public boolean exist(String index, String type,Event e) {
 		Event event = (Event)e;
@@ -56,8 +56,8 @@ public class EventDAO extends DAO<Event>{
                 .get();
 		return (0<response.getHits().getHits().length);
 	}
-
-
+	
+	
 	@Override
 	public int delete(String index, Event event) {
 		//DeleteResponse response = client.prepareDelete(index,type,Integer.toString(event.getId())).get();

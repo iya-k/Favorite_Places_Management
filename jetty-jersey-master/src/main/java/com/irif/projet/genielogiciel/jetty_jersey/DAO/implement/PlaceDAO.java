@@ -25,19 +25,21 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.irif.projet.genielogiciel.jetty_jersey.DAO.DAO;
 import com.irif.projet.genielogiciel.jetty_jersey.model.Map;
+import com.irif.projet.genielogiciel.jetty_jersey.model.Picture;
 import com.irif.projet.genielogiciel.jetty_jersey.model.Place;
 import com.irif.projet.genielogiciel.jetty_jersey.model.User;
 
 public class PlaceDAO extends DAO<Place>{
+	private DAO <Picture> picturedao;
 
-
-	public PlaceDAO(TransportClient client) {
+	public PlaceDAO(TransportClient client, DAO<Picture> picturedao) {
 		super(client);
+		this.picturedao = picturedao;
 	}
-
+	
 	@Override
 	public SearchResponse getSearchResponse(String index, String type, Place place){
-		String query = " ";
+		String query = " "; 
 
 		SearchResponse response = client.prepareSearch(index)
 				.setTypes(type)
@@ -79,7 +81,7 @@ public class PlaceDAO extends DAO<Place>{
 	}
 
 	@Override
-	public List<Place> findAllById(String index, String type, String query, Class<Place> t){
+	public List<Place> findAllById(String index, String type, String query, Class<Place> t) {
 		// TODO Auto-generated method stub
 		return null;
 	}

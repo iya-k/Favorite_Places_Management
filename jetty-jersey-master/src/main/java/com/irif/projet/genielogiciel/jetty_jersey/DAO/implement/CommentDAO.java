@@ -36,7 +36,7 @@ public class CommentDAO extends DAO<Comment>{
 	}
 	@Override
 	public SearchResponse getSearchResponse(String index, String type, Comment obj){
-		String query = " ";
+		String query = " "; 
 
 		SearchResponse response = client.prepareSearch(index)
 				.setTypes(type)
