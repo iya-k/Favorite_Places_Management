@@ -63,13 +63,20 @@ public class MapDAO extends DAO<Map>{
 
 	@Override
 	public int delete(String index, Map map){
-		
+		String mapname = map.getMapname();
 		BulkByScrollResponse response = DeleteByQueryAction.INSTANCE.newRequestBuilder(client)
 				.filter(QueryBuilders.matchQuery("mapname",map.getMapname())) 
 				.source(index)                                  
 				.get();                                             
 		client.admin().indices().prepareRefresh(index).get();
-		return((int)response.getDeleted());
+		int estEffectue = (int)response.getDeleted();
+		if (estEffectue == 1) {
+			List<Place> listPlace = placedao.findAllById("placedb", "place", mapname, Place.class);
+			for (int i = 0; i < listPlace.size(); i++) {
+				placedao.delete("placedb", listPlace.get(i));
+			}
+		}
+		return estEffectue;
 	}
 
 	@Override

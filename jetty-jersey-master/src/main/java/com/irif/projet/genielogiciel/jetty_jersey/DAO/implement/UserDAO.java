@@ -101,13 +101,20 @@ public class UserDAO extends DAO<User>{
 	 */
 	@Override
 	public int delete(String index,User user){
+		String username = user.getUsername();
 		BulkByScrollResponse response = DeleteByQueryAction.INSTANCE.newRequestBuilder(client)
 				.filter(QueryBuilders.matchQuery("username",user.getUsername())) 
 				.source(index)                                  
 				.get();                                             
 		client.admin().indices().prepareRefresh(index).get();
-
-		return((int)response.getDeleted());
+		int estEffectue = (int)response.getDeleted();
+		if (estEffectue == 1) {
+			List<Map> listMap = mapdao.findAllById("mapdb", "map", username, Map.class);
+			for (int i = 0; i < listMap.size(); i++) {
+				mapdao.delete("mapdb", listMap.get(i));
+			}
+		}
+		return estEffectue;
 	}
 	@Override
 	public User find(String index, String type, Class<User> t, String userid) {
