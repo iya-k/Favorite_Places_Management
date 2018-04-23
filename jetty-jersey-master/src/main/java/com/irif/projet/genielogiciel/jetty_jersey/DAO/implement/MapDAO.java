@@ -84,7 +84,7 @@ public class MapDAO extends DAO<Map>{
 		SearchHit[] res = response.getHits().getHits();
 		
 		if(res.length == 1) {
-			map =(Map)super.getObj(res[0],mapclass);
+			map =(Map)super.getObj(res[0],Map.class);
 		}else{
 			map = new Map(userid,userid+"map","public","root.jpg");
 			add("mapdb","map",map);

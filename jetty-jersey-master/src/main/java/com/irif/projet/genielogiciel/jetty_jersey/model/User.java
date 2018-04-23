@@ -11,13 +11,7 @@ public class User {
 
 	public User(){}
 		
-	public User(SignUp signUpRequest) {
-		username = signUpRequest.getUsername();
-		firstname = signUpRequest.getFirstName();
-		lastname = signUpRequest.getLastName();
-		email = signUpRequest.getEmail();
-		password = signUpRequest.getPassword();
-	}
+	public User(SignUp SignUpRequest) {}
 	
 	public User(String username,String firstname,String lastname,String email,String password){
 		this.username=username;
@@ -66,7 +60,6 @@ public class User {
 		this.password = password;
 	}
 	
-	@Override
 	public String toString(){
 		String res = "Username : "+username + " password : "+ password;
 		return res;

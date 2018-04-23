@@ -3,7 +3,6 @@ package com.irif.projet.genielogiciel.jetty_jersey.model;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import com.irif.projet.genielogiciel.jetty_jersey.DAO.DAO;
 
 public class Map{
 	private String userid;
@@ -27,8 +26,8 @@ public class Map{
 		date = ft.format(dNow);
 		return date;
 	}
-
-
+	
+	
 	public Map(String userid,String mapname,String mode,String mapimg){
 		this.userid =userid;
 		this.mapname = mapname;
@@ -36,7 +35,7 @@ public class Map{
 		this.mapimg = mapimg;
 		this.creationdate = Map.getCurrentDateTime("yyyy/MM/dd/hh:mm:ss");
 	}
-
+	
 	public String getUserid() {
 		return userid;
 	}
@@ -75,7 +74,7 @@ public class Map{
 	public void setCreationdate(String creationdate) {
 		this.creationdate = creationdate;
 	}
-
+	
 	public String toString() {
 		return this.mapname+" "+this.userid+" "+this.mode;
 	}
