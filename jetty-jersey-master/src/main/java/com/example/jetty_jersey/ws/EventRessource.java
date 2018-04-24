@@ -1,9 +1,6 @@
 package com.example.jetty_jersey.ws;
 
-import java.io.IOException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -16,7 +13,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import com.example.jetty_jersey.constant.Constants;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.irif.projet.genielogiciel.jetty_jersey.DAO.AbstractDAOFactory;
 import com.irif.projet.genielogiciel.jetty_jersey.DAO.DAO;
 import com.irif.projet.genielogiciel.jetty_jersey.model.Event;
@@ -26,55 +22,43 @@ public class EventRessource {
 
 	AbstractDAOFactory daoFact = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
 	DAO<Event> eventDao = daoFact.getEventDAO();
-	boolean ok;
 
-    private static void registerException(Exception e) {
-        Logger.getLogger(MapRessource.class.getName()).log(Level.SEVERE, null, e);
-    }
-
+	//list of events of map
     @Path("/"+Constants.EVENTS)
     @GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Event> getEvents(@PathParam("index")String index) {
+	public List<Event> getEvents(@PathParam("q")String q) {
     	List<Event> retour = null;
-		/*try {
-			retour = eventDao.findAll(index, Constants.EVENTS,0);
-		} catch (IOException e) {
-			registerException(e);
-		}*/
+			retour = eventDao.findAllById(Constants.eINDEX, Constants.eTYPE, q);
 		return retour;
 	}
 
+    //detail d'un event
 	@GET
 	@Path("/{id_event}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Event getEvent(Event event){
-		/*try {
-			event = eventDao.find(String.valueOf(event.getId()), Constants.EVENTS, event);
-		} catch (IOException e) {
-			registerException(e);
-		}*/
+	public Event getEvent(@PathParam("q")String q){
+			Event event = eventDao.find(Constants.eINDEX, Constants.eTYPE, q);
 		return event;
 	}
 	
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
-	public boolean addEvent(Event event){
-		ok = false;
-		/* try {
-			ok = eventDao.create(String.valueOf(event.getId()),Constants.EVENTS,event);
-		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			registerException(e);
-		}*/
-		return ok;
+	public int addEvent(Event event){
+			return eventDao.add(Constants.eINDEX, Constants.eTYPE,event);
+	}
+	
+	 @POST
+	 @Path("/{id_map}")
+	 @Consumes(MediaType.APPLICATION_JSON)
+	 public int updateEvent(Event event) {
+		 return eventDao.update(Constants.eINDEX, Constants.eTYPE, event);
 	}
 
 	@DELETE
 	@Path("/{id_event}")
-	public boolean deleteEvent(Event event){
-		//ok = eventDao.delete(String.valueOf(event.getId()),event);
-		return false;
+	public boolean deleteEvent(@PathParam("index")String index){
+		return eventDao.deleteIndex(index);
 	}
     
     @POST

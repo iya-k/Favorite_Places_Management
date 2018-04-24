@@ -10,37 +10,37 @@ public abstract class AbstractDAOFactory {
 
 
 	/**
-	 * 
+	 *
 	 * @return an object User interact with DB
 	 */
 	public abstract DAO getUserDAO();
 
 	/**
-	 * 
+	 *
 	 * @return an object Map interact with DB
 	 */
 	public abstract DAO getMapDAO();
 
 	/**
-	 * 
+	 *
 	 * @return an object Place interact with DB
 	 */
 	public abstract DAO getPlaceDAO();
 
 	/**
-	 * 
+	 *
 	 * @return an object Event interact with DB
 	 */
 	public abstract DAO getEventDAO();
 
 	/**
-	 * 
+	 *
 	 * @return an object Comment interact with DB
 	 */
 	public abstract DAO getCommentDAO();
 
 	/**
-	 * 
+	 *
 	 * @return an object Picture interact with DB
 	 */
 	public abstract DAO getPictureDAO();
@@ -48,10 +48,10 @@ public abstract class AbstractDAOFactory {
 
 	//M�thode permettant de r�cup�rer les Factory
 	/**
-	 * 
+	 *
 	 * @param type : type of factory desired
 	 * @return factory corresponding to the type
-	 * @throws UnknownHostException 
+	 * @throws UnknownHostException
 	 */
 	public static AbstractDAOFactory getFactory(int type){
 			try {

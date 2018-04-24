@@ -1,33 +1,26 @@
 package com.irif.projet.genielogiciel.jetty_jersey.model;
 
-public class Picture {
-	private String pictureid;
-	private String placeid;
+public class Picture{
+	// cle url placeid unique
 	private String picturename;
 	private String url;
 	private String dateDeCreation;
+	private String placeid;
+
+	public Picture() {}
 
 	public Picture(String picturename, String url,String placeid) {
 		this.picturename = picturename;
 		this.url = url;
 		this.placeid =placeid;
-		this.dateDeCreation =  Map.getCurrentDateTime("yyyy/MM/dd/hh:mm:ss"); 
+		this.dateDeCreation =  Map.getCurrentDateTime("yyyy/MM/dd/hh:mm:ss");
 	}
 
-
-	public String getPictureid() {
-		return pictureid;
-	}
-
-	public void setPictureid(String pictureid) {
-		this.pictureid = pictureid;
-	}
-
-	public String getPicturename() {
+	public String getPicturename(){
 		return picturename;
 	}
 
-	public void setPicturename(String picturename) {
+	public void setPicturename(String picturename){
 		this.picturename = picturename;
 	}
 
@@ -39,7 +32,7 @@ public class Picture {
 	public void setUrl(String url) {
 		this.url = url;
 	}
-	
+
 	public String getPlaceid() {
 		return placeid;
 	}
@@ -47,5 +40,17 @@ public class Picture {
 	public void setPlaceid(String placeid) {
 		this.placeid = placeid;
 	}
-	
+
+	public String getDateDeCreation() {
+		return dateDeCreation;
+	}
+
+	public void setDateDeCreation(String dateDeCreation) {
+		this.dateDeCreation = dateDeCreation;
+	}
+
+	public String toString() {
+		return("Picture_name : "+picturename+" url : "+url+" placeid : "+placeid);
+	}
+
 }

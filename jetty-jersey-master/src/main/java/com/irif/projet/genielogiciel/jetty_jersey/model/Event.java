@@ -6,8 +6,8 @@ public class Event extends Place{
 	private Date begin;
 	private Date end;
 
-	public Event(String eventid,String mapid,String name,String adress,String longitude,String latitude,String description,Date beginDate, Date endDate){
-		super(eventid, mapid, name, adress, longitude, latitude, description);
+	public Event(String mapname,String placename,String longitude,String latitude,String description,Date beginDate, Date endDate){
+		super(mapname, placename,longitude, latitude, description);
 		this.begin = beginDate;
 		this.end = endDate;
 	}
@@ -27,8 +27,8 @@ public class Event extends Place{
 	public void setEnd(Date end) {
 		this.end = end;
 	}
-	
-	
-	
-	
+
+
+
+
 }

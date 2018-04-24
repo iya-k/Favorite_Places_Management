@@ -3,63 +3,42 @@ package com.irif.projet.genielogiciel.jetty_jersey.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Place {
-	private String placeid;
-	private String mapid;
-	private String name;
-	private String adress;
+public class Place{
+	private String mapname;
+	private String placename;
 	private String longitude;
 	private String latitude;
 	private String description;
 	private String dateDeCreation;
 	private List<Picture> pictures;
 	private List<Comment> comments;
-	
+
 	public Place(){}
-	
-	public Place(String placeid,String mapid,String name,String adress,String longitude,String latitude,String description){	
-		this.placeid = placeid;
-		this.mapid = mapid;
-		this.name = name;
-		this.adress = adress;
+
+	public Place(String mapname,String placename,String longitude,String latitude,String description){
+		this.mapname = mapname;
+		this.placename = placename;
+		this.longitude = longitude;
+		this.latitude = latitude;
 		this.description = description;
-		this.mapid = mapid;
 		this.dateDeCreation = Map.getCurrentDateTime("yyyy/MM/dd/hh:mm:ss");
 		this.pictures = new ArrayList<Picture>();
 		this.comments =new ArrayList<Comment>();
 	}
-	
-	
-	public String getPlaceid() {
-		return placeid;
+
+	public String getMapname(){
+		return mapname;
 	}
 
-	public void setPlaceid(String placeid) {
-		this.placeid = placeid;
+	public void setMapname(String mapname){
+		this.mapname = mapname;
+	}
+	public String getPlacename() {
+		return placename;
 	}
 
-	public String getMapid() {
-		return mapid;
-	}
-
-	public void setMapid(String mapid) {
-		this.mapid = mapid;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getAdress() {
-		return adress;
-	}
-
-	public void setAdress(String adress) {
-		this.adress = adress;
+	public void setPlacename(String placename) {
+		this.placename = placename;
 	}
 
 	public String getLongitude() {
@@ -86,6 +65,14 @@ public class Place {
 		this.description = description;
 	}
 
+	public String getDateDeCreation(){
+		return dateDeCreation;
+	}
+
+	public void setDateDeCreation(String dateDeCreation){
+		this.dateDeCreation = dateDeCreation;
+	}
+
 	public List<Picture> getPictures() {
 		return pictures;
 	}
@@ -102,7 +89,8 @@ public class Place {
 		this.comments = comments;
 	}
 
-	
-	
-	
+	public String toString() {
+		return("Mapname : "+mapname+", placename : "+ placename);
+	}
+
 }

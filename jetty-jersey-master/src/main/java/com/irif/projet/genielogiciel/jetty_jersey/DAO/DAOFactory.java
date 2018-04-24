@@ -20,46 +20,46 @@ public class DAOFactory extends AbstractDAOFactory{
 	private static EventDAO eventDAO;
 	private static CommentDAO commentDAO;
 	private static PictureDAO pictureDAO;
-	
-	
-	
+
+
+
 	public void initClient() throws UnknownHostException {
 			client = new PreBuiltTransportClient(Settings.EMPTY)
 					.addTransportAddress(new TransportAddress(InetAddress.getByName(IP),PORT));
 	}
-	
+
 	@Override
 	public DAO getUserDAO() {
 		if(userDAO == null) {
-			userDAO = new UserDAO(client);
+			userDAO = new UserDAO(client,getMapDAO());
 		}
 		return userDAO;
 	}
-	
+
 	@Override
 	public DAO getMapDAO() {
 		if(mapDAO == null) {
-			mapDAO = new MapDAO(client);
+			mapDAO = new MapDAO(client, getPlaceDAO(),getEventDAO());
 		}
 		return mapDAO;
 	}
-	
+
 	@Override
 	public DAO getPlaceDAO() {
 		if(placeDAO == null) {
-			placeDAO = new PlaceDAO(client);
+			placeDAO = new PlaceDAO(client, getPictureDAO());
 		}
 		return placeDAO;
 	}
 	@Override
 	public DAO getEventDAO() {
 		if(eventDAO == null) {
-			eventDAO = new EventDAO(client);
+			eventDAO = new EventDAO(client, getPictureDAO());
 		}
 		return eventDAO;
 	}
-	
-	
+
+
 	@Override
 	public DAO getCommentDAO() {
 		if(commentDAO == null) {
@@ -67,7 +67,7 @@ public class DAOFactory extends AbstractDAOFactory{
 		}
 		return commentDAO;
 	}
-	
+
 	@Override
 	public DAO getPictureDAO() {
 		if(pictureDAO == null) {

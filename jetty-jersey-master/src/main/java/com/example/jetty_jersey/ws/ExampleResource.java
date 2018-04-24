@@ -1,11 +1,5 @@
 package com.example.jetty_jersey.ws;
 
-import java.io.IOException;
-import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ExecutionException;
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -13,13 +7,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.irif.projet.genielogiciel.jetty_jersey.DAO.AbstractDAOFactory;
 import com.irif.projet.genielogiciel.jetty_jersey.DAO.DAO;
-import com.irif.projet.genielogiciel.jetty_jersey.model.Comment;
-import com.irif.projet.genielogiciel.jetty_jersey.model.Picture;
 import com.irif.projet.genielogiciel.jetty_jersey.model.Place;
-import com.irif.projet.genielogiciel.jetty_jersey.model.User;
 
 @Path("/example")
 public class ExampleResource {
@@ -86,10 +76,10 @@ public class ExampleResource {
 	}
 	
 	public static void deletePlaceTest(){
-		Place pl =new Place("diderot","5 Rue Thomas Mann, 75013 Paris","universite",2, null,null);
+		//Place pl =new Place("diderot","5 Rue Thomas Mann, 75013 Paris","universite",2, null,null);
 		AbstractDAOFactory aDAOF = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
 		DAO<Place> placeDAO =aDAOF.getPlaceDAO();
-		placeDAO.delete("placedb",pl);
+		//placeDAO.delete("placedb",pl);
 	}
 
 }

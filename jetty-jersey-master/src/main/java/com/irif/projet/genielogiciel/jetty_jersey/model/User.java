@@ -12,15 +12,15 @@ public class User {
 	private String password;
 
 	public User(){}
-		
-	public User(SignUp signUpRequest) {
-		username = signUpRequest.getUsername();
-		firstname = signUpRequest.getFirstName();
-		lastname = signUpRequest.getLastName();
-		email = signUpRequest.getEmail();
-		password = signUpRequest.getPassword();
+
+	public User(SignUp SignUpRequest) {
+		this.username = SignUpRequest.getUsername();
+		this.firstname = SignUpRequest.getFirstName();
+		this.lastname = SignUpRequest.getLastName();
+		this.email = SignUpRequest.getEmail();
+		this.password = SignUpRequest.getPassword();
 	}
-	
+
 	public User(String username,String firstname,String lastname,String email,String password){
 		this.username=username;
 		this.firstname=firstname;
@@ -67,10 +67,10 @@ public class User {
 	public void setPassword(String password){
 		this.password = password;
 	}
-	
+
 	public String toString(){
 		String res = "Username : "+username + " password : "+ password;
 		return res;
 	}
-	
+
 }
