@@ -29,6 +29,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.irif.projet.genielogiciel.jetty_jersey.DAO.DAO;
 import com.irif.projet.genielogiciel.jetty_jersey.model.Map;
+import com.irif.projet.genielogiciel.jetty_jersey.model.Picture;
 import com.irif.projet.genielogiciel.jetty_jersey.model.Place;
 import com.irif.projet.genielogiciel.jetty_jersey.model.User;
 
@@ -38,7 +39,6 @@ public class PlaceDAO extends DAO<Place>{
 	public PlaceDAO(TransportClient client) {
 		super(client);
 	}
-
 
 
 	@Override
@@ -58,8 +58,14 @@ public class PlaceDAO extends DAO<Place>{
 		}
 		return response;
 	}
+	
+	
+	
 	@Override
 	public boolean exist(String index, String type, Place place){
+		
+		//TODO: Check that the start date isn't over yet
+		
 		String query = place.getMapname()+" "+
 				place.getPlacename()+" "+
 				place.getLongitude()+" "+
@@ -101,6 +107,8 @@ public class PlaceDAO extends DAO<Place>{
 		client.admin().indices().prepareRefresh(index).get();
 		return((int)response.getDeleted());
 	}
+	
+	
 	@Override
 	public Place find(String index, String type, String query){
 		Place place = null;

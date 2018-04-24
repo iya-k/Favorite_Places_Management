@@ -98,20 +98,20 @@ public abstract class DAO<T>{
      * @return boolean if updated true else false
 	 */
 	  public int update(String index,String type,T obj){
-		  int status = 0;
+		 int status = 0;
 		 try {
-		  		byte[] json = this.mapper.writeValueAsBytes(obj);
-		  		UpdateRequest updateRequest = new UpdateRequest();
-		  		updateRequest.index(index);
-		  		updateRequest.type(type);
-		  		updateRequest.id(getId(index,type,obj));
-		  		updateRequest.doc(json,XContentType.JSON);
-		  		client.update(updateRequest).get();
-		  		client.admin().indices().prepareRefresh(index).get();
-				status = 1;
+		  	byte[] json = this.mapper.writeValueAsBytes(obj);
+		  	UpdateRequest updateRequest = new UpdateRequest();
+		  	updateRequest.index(index);
+		  	updateRequest.type(type);
+		  	updateRequest.id(getId(index,type,obj));
+		  	updateRequest.doc(json,XContentType.JSON);
+		  	client.update(updateRequest).get();
+		  	client.admin().indices().prepareRefresh(index).get();
+			status = 1;
 		}catch (InterruptedException | ExecutionException | IOException e){
 			e.printStackTrace();
-				status = -1;
+			status = -1;
 		}
 			return status;
 	  }

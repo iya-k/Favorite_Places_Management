@@ -102,7 +102,7 @@ public class MapDAO extends DAO<Map>{
 	public Map find(String index, String type, String query){
 		Map map = null;
 		Class cl = Map.class;
-		SearchResponse response = getResponse(index, type,query,"userid","mapname",Operator.OR);
+		SearchResponse response = getResponse(index, type,query,"userid","mapname",Operator.AND);
 		SearchHit[] res = response.getHits().getHits();
 
 		if(res.length == 1) {
