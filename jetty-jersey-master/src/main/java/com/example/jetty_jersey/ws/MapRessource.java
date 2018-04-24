@@ -8,6 +8,9 @@ import com.irif.projet.genielogiciel.jetty_jersey.model.Map;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import java.util.List;
 
@@ -81,9 +84,12 @@ public class MapRessource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("/add_map")
 	public int addMap(MapRequest mapRequest) {
-
 		System.out.println(mapRequest.toString());
-
+        try {
+            mapRequest.saveImage(); // save received image in a server
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 		return 0;
 	}
 }

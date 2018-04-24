@@ -12,6 +12,8 @@ public class PlaceRequest {
     private String message;
     private String startDate;
     private String endDate;
+    private String images[];
+    private String imagesPath[] = null;
 
     public PlaceRequest() {
 
@@ -57,6 +59,14 @@ public class PlaceRequest {
         this.message = message;
     }
 
+    public String[] getImages() {
+        return images;
+    }
+
+    public void setImages(String[] images) {
+        this.images = images;
+    }
+
     public String getStartDate() {
         return startDate;
     }
@@ -71,6 +81,13 @@ public class PlaceRequest {
 
     public void setEndDate(String endDate) {
         this.endDate = endDate;
+    }
+
+    public void saveImages(){
+        imagesPath = new String[images.length];
+        for(int i=0; i<imagesPath.length; i++){
+            imagesPath[i] = MapRequest.saveImage(images[i], "dist/img/place");
+        }
     }
 
     @Override

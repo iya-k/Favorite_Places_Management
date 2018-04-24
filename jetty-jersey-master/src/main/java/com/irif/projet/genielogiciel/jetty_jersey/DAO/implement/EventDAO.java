@@ -27,6 +27,7 @@ public class EventDAO extends DAO<Event>{
 		super(client);
 		this.pictures = pictures;
 	}
+	
 	@Override
 	public SearchResponse getSearchResponse(String index, String type, String query) {
 
@@ -87,12 +88,11 @@ public class EventDAO extends DAO<Event>{
 		}
 		return(id);
 	}
+	
 	@Override
 	public Event find(String index, String type, String query) {
 		Event event = null;
 		Class cl = Event.class;
-		//TODO:CHECK THIS
-		//SearchResponse response =  getSearchResponse(index,type,query,"beginDate","endDate", Operator.AND);
 		SearchResponse response =  getSearchResponse(index,type,query);
 		SearchHit[] res = response.getHits().getHits();
 		if(res.length == 1) {
@@ -100,6 +100,7 @@ public class EventDAO extends DAO<Event>{
 		}
 		return event;
 	}
+	
 	@Override
 	public List<Event> findAllById(String index, String type, String query) {
 		Class<Event> cl = Event.class;
