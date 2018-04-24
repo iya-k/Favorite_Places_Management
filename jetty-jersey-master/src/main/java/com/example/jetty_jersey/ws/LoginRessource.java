@@ -50,7 +50,7 @@ public void test(int status) {
         current_user = ((UserDAO)userDao).connect(Constants.uINDEX,Constants.uTYPE,usr.getUsername(),usr.getPassword());
         DAO<Map> mapDao5 = daoFact.getMapDAO();
         Map map6 = mapDao5.find("homemapdb","homemap",userDao.getId(Constants.uINDEX,Constants.uTYPE,current_user));
-        System.out.println("Map trouvé : "+map6);
+        System.out.println("Map trouve : "+map6);
         break;
       case 3 : //delete index
         userDao.deleteIndex(Constants.uINDEX);

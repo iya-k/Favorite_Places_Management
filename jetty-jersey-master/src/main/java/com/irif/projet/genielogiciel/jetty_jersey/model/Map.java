@@ -1,7 +1,9 @@
 package com.irif.projet.genielogiciel.jetty_jersey.model;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import com.irif.projet.genielogiciel.jetty_jersey.DAO.DAO;
 
@@ -11,7 +13,8 @@ public class Map{
 	private String mode;
 	private String creationdate;
 	private String mapimg;
-
+	private List<Place> placeList;
+	private List<Event> eventList;
 
 	public Map(){}
 
@@ -35,6 +38,8 @@ public class Map{
 		this.mode = mode;
 		this.mapimg = mapimg;
 		this.creationdate = Map.getCurrentDateTime("yyyy/MM/dd/hh:mm:ss");
+		this.placeList = new ArrayList<>();
+		this.eventList = new ArrayList<>();
 	}
 
 	public String getUserid() {
@@ -76,7 +81,25 @@ public class Map{
 		this.creationdate = creationdate;
 	}
 
+	
+	public void setPlacelist(List<Place> placeList){
+		this.placeList = placeList;
+	}
+	
+	public void setEventlist(List<Event> eventList){
+		this.eventList = eventList;
+	}
+	
+	public List<Place> getPlaceList(){
+		return placeList;
+	}
+	
+	public List<Event> getEventList(){
+		return eventList;
+	}
+	
 	public String toString() {
 		return this.mapname+" "+this.userid+" "+this.mode;
 	}
+	
 }
