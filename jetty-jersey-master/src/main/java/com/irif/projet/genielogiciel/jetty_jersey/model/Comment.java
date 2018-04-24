@@ -3,12 +3,12 @@ package com.irif.projet.genielogiciel.jetty_jersey.model;
 public class Comment {
 	private String commentid;
 	private String placeid;
+	private String eventid; // one of id != null 
 	private String comment;
 	private String dateDeCreation;
-	//add likes for comments and pictures future extension
 
 
-	public Comment(String comment,String placeid) {
+	public Comment(String comment,String placeid,String evenid) {
 		this.placeid= placeid;
 		this.comment = comment;
 		this.dateDeCreation =  Map.getCurrentDateTime("yyyy/MM/dd/hh:mm:ss");
@@ -42,4 +42,21 @@ public class Comment {
 		this.placeid = placeid;
 	}
 
+	public String getEventid() {
+		return eventid;
+	}
+
+	public void setEventid(String eventid) {
+		this.eventid = eventid;
+	}
+
+	public String getDateDeCreation() {
+		return dateDeCreation;
+	}
+
+	public void setDateDeCreation(String dateDeCreation) {
+		this.dateDeCreation = dateDeCreation;
+	}
+
 }
+
