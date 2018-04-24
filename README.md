@@ -42,8 +42,8 @@ Maven -> Update Project.
 | Page          | Function                             |
 | ------------- |:------------------------------------:|
 | map_show      | Homepage - View your current map     |
-| ___           | ____                                 |
-| ____          | ___                                  |
+| login         | Login with your approved credentials |
+| register      | Create your account                  |
 
 
 * Clicking on the **Plus Sign** in the bottom right hand corner of the screen will display a **menu** where you'll be able to select one of the following :
