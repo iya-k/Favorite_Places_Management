@@ -1,5 +1,7 @@
 package com.irif.projet.genielogiciel.jetty_jersey.model;
 
+import java.util.ArrayList;
+
 import com.example.jetty_jersey.ws.requests.SignUp;
 
 public class User {
@@ -10,9 +12,9 @@ public class User {
 	private String password;
 
 	public User(){}
-		
+
 	public User(SignUp SignUpRequest) {}
-	
+
 	public User(String username,String firstname,String lastname,String email,String password){
 		this.username=username;
 		this.firstname=firstname;
@@ -59,10 +61,10 @@ public class User {
 	public void setPassword(String password){
 		this.password = password;
 	}
-	
+
 	public String toString(){
 		String res = "Username : "+username + " password : "+ password;
 		return res;
 	}
-	
+
 }

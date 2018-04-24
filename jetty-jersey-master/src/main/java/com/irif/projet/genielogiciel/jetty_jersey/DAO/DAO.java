@@ -47,14 +47,14 @@ public abstract class DAO<T>{
 		  return obj;
 	  }
 
-	  public abstract T find(String index,String type,Class<T> t,String userid);
+	  public abstract T find(String index,String type,String query);
 
 	  /**
 		*
 	    * @param index type User
 		* @return  SearchResponse
 		*/
-	  public abstract SearchResponse getSearchResponse(String index, String type, T obj);
+	  public abstract SearchResponse getSearchResponse(String index, String type, String query);
 
 	  public abstract boolean exist(String index,String type,T obj);
 
@@ -67,7 +67,7 @@ public abstract class DAO<T>{
 	  public abstract int delete(String index,T obj);
 
 
-	  public abstract List<T> findAllById(String index,String type,String query,Class<T> t);
+	  public abstract List<T> findAllById(String index,String type,String query);
 
 	  /**
 	   * creation method

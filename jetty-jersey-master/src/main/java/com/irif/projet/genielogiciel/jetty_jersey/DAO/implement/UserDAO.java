@@ -3,6 +3,7 @@ package com.irif.projet.genielogiciel.jetty_jersey.DAO.implement;
 
 import com.irif.projet.genielogiciel.jetty_jersey.DAO.DAO;
 import com.irif.projet.genielogiciel.jetty_jersey.model.Map;
+import com.irif.projet.genielogiciel.jetty_jersey.model.Place;
 import com.irif.projet.genielogiciel.jetty_jersey.model.User;
 
 import java.util.List;
@@ -21,19 +22,18 @@ import org.elasticsearch.search.SearchHit;
 public class UserDAO extends DAO<User>{
 	private DAO<Map> mapdao;
 
-
-	public UserDAO(TransportClient client,DAO<Map> mapdao){
+	public UserDAO(TransportClient client){
 		super(client);
-		this.mapdao = mapdao;
 	}
+
 	@Override
-	public SearchResponse getSearchResponse(String index, String type, User user) {
+	public SearchResponse getSearchResponse(String index, String type,String query) {
 		SearchResponse response = null;
 		try {
 			response = client.prepareSearch(index)
 				.setTypes(type)
 				.setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
-				.setQuery(QueryBuilders.matchQuery("username",user.getUsername()))
+				.setQuery(QueryBuilders.matchQuery("username",query))
 				.get();
 		}catch(IndexNotFoundException e){
 			client.admin().indices().prepareCreate(index).get();
@@ -42,7 +42,7 @@ public class UserDAO extends DAO<User>{
 		return response;
 	}
 	/**
-	 * 
+	 *
 	 * @param index type User
 	 * @return  user_id
 	 */
@@ -50,9 +50,8 @@ public class UserDAO extends DAO<User>{
 	public String getId(String index, String type, User user){
 		String id = "";
 		try {
-			
-			id = getSearchResponse(index,type,user).getHits().getHits()[0].getId();
-			
+			String query = user.getUsername();
+			id = getSearchResponse(index,type,query).getHits().getHits()[0].getId();
 		}catch(ArrayIndexOutOfBoundsException | NullPointerException e){
 			e.printStackTrace();
 		}
@@ -65,7 +64,8 @@ public class UserDAO extends DAO<User>{
 	 */
 	@Override
 	public boolean exist(String index, String type, User user){
-		SearchResponse response = getSearchResponse(index,type,user);
+		String query = user.getUsername();
+		SearchResponse response = getSearchResponse(index,type,query);
 		boolean res = response != null && 0 < response.getHits().getHits().length;
 		return (res);
 	}
@@ -101,12 +101,12 @@ public class UserDAO extends DAO<User>{
 	 */
 	@Override
 	public int delete(String index,User user){
-		String username = user.getUsername();
 		BulkByScrollResponse response = DeleteByQueryAction.INSTANCE.newRequestBuilder(client)
-				.filter(QueryBuilders.matchQuery("username",user.getUsername())) 
-				.source(index)                                  
-				.get();                                             
+				.filter(QueryBuilders.matchQuery("username",user.getUsername()))
+				.source(index)
+				.get();
 		client.admin().indices().prepareRefresh(index).get();
+		/*
 		int estEffectue = (int)response.getDeleted();
 		if (estEffectue == 1) {
 			List<Map> listMap = mapdao.findAllById("mapdb", "map", username, Map.class);
@@ -114,16 +114,23 @@ public class UserDAO extends DAO<User>{
 				mapdao.delete("mapdb", listMap.get(i));
 			}
 		}
-		return estEffectue;
+		*/
+		return((int)response.getDeleted());
 	}
 	@Override
-	public User find(String index, String type, Class<User> t, String userid) {
-		// TODO Auto-generated method stub
-		return null;
+	public User find(String index, String type, String query){
+		User user = null;
+		Class cl = User.class;
+		SearchResponse response =  getSearchResponse(index,type,query);
+		SearchHit[] res = response.getHits().getHits();
+		if(res.length == 1){
+			user =(User)super.getObj(res[0],cl);
+		}
+		return user;
 	}
-	
+
 	@Override
-	public List<User> findAllById(String index, String type, String query, Class<User> t) {
+	public List<User> findAllById(String index, String type, String query) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -7,15 +7,16 @@ public class Picture{
 	private String dateDeCreation;
 	private String placeid;
 
-	
+	public Picture() {}
+
 	public Picture(String picturename, String url,String placeid) {
 		this.picturename = picturename;
 		this.url = url;
 		this.placeid =placeid;
 		this.dateDeCreation =  Map.getCurrentDateTime("yyyy/MM/dd/hh:mm:ss");
 	}
-	
-	public String getPicturename() {
+
+	public String getPicturename(){
 		return picturename;
 	}
 
@@ -31,7 +32,7 @@ public class Picture{
 	public void setUrl(String url) {
 		this.url = url;
 	}
-	
+
 	public String getPlaceid() {
 		return placeid;
 	}
@@ -39,7 +40,7 @@ public class Picture{
 	public void setPlaceid(String placeid) {
 		this.placeid = placeid;
 	}
-	
+
 	public String getDateDeCreation() {
 		return dateDeCreation;
 	}
@@ -47,5 +48,9 @@ public class Picture{
 	public void setDateDeCreation(String dateDeCreation) {
 		this.dateDeCreation = dateDeCreation;
 	}
-	
+
+	public String toString() {
+		return("Picture_name : "+picturename+" url : "+url+" placeid : "+placeid);
+	}
+
 }

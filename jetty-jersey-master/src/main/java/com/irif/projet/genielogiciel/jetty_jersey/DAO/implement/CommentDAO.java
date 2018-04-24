@@ -35,9 +35,7 @@ public class CommentDAO extends DAO<Comment>{
 		super(client);
 	}
 	@Override
-	public SearchResponse getSearchResponse(String index, String type, Comment obj){
-		String query = " "; 
-
+	public SearchResponse getSearchResponse(String index, String type, String query){
 		SearchResponse response = client.prepareSearch(index)
 				.setTypes(type)
 				.setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
@@ -70,12 +68,12 @@ public class CommentDAO extends DAO<Comment>{
 		return null;
 	}
 	@Override
-	public Comment find(String index, String type, Class<Comment> t, String userid) {
+	public Comment find(String index, String type, String userid) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
-	public List<Comment> findAllById(String index, String type, String query, Class<Comment> t) {
+	public List<Comment> findAllById(String index, String type, String query) {
 		// TODO Auto-generated method stub
 		return null;
 	}
