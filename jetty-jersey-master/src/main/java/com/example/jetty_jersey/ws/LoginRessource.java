@@ -8,6 +8,7 @@ import com.example.jetty_jersey.ws.requests.SignUp;
 import com.irif.projet.genielogiciel.jetty_jersey.DAO.AbstractDAOFactory;
 import com.irif.projet.genielogiciel.jetty_jersey.DAO.DAO;
 import com.irif.projet.genielogiciel.jetty_jersey.DAO.implement.UserDAO;
+import com.irif.projet.genielogiciel.jetty_jersey.model.Map;
 import com.irif.projet.genielogiciel.jetty_jersey.model.User;
 
 import javax.ws.rs.Consumes;
@@ -21,8 +22,6 @@ import java.util.logging.Logger;
 
 @Path("/" + Constants.USERS)
 public class LoginRessource {
-    private static final String INDEX = "userdb";
-    private static final String TYPE = "user";
     private User current_user;
     AbstractDAOFactory daoFact = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
     DAO<User> userDao = daoFact.getUserDAO();
@@ -44,38 +43,38 @@ public class LoginRessource {
 public void test(int status) {
     switch(status){
       case 1 ://create user
-        userDao.add(INDEX,TYPE,usr);
+        userDao.add(Constants.uINDEX,Constants.uTYPE,usr);
         break;
       case 2 ://connect
-        current_user = ((UserDAO)userDao).connect(INDEX,TYPE,usr.getUsername(),usr.getPassword());
+        current_user = ((UserDAO)userDao).connect(Constants.uINDEX,Constants.uTYPE,usr.getUsername(),usr.getPassword());
         DAO<Map> mapDao5 = daoFact.getMapDAO();
-        Map map6 = mapDao5.find("homemapdb","homemap",Map.class,userDao.getId(INDEX,TYPE,current_user));
+        Map map6 = mapDao5.find("homemapdb","homemap",userDao.getId(Constants.uINDEX,Constants.uTYPE,current_user));
         System.out.println("Map trouvé : "+map6);
         break;
       case 3 : //delete index
-        userDao.deleteIndex(INDEX);
+        userDao.deleteIndex(Constants.uINDEX);
         break;
       case 4 ://delete user
-        userDao.delete(INDEX,usr);
+        userDao.delete(Constants.uINDEX,usr);
         break;
       case 5 ://update user
-        current_user = ((UserDAO)userDao).connect(INDEX,TYPE,usr.getUsername(),usr.getPassword());
+        current_user = ((UserDAO)userDao).connect(Constants.uINDEX,Constants.uTYPE,usr.getUsername(),usr.getPassword());
         if(current_user != null) {
           //current_user.setUsername("Charles");
           current_user.setLastname("Charles");
           //current_user.setFirstname("Louis123");
-          userDao.update(INDEX, TYPE,current_user);
+          userDao.update(Constants.uINDEX, Constants.uTYPE,current_user);
         }
         break;
       case 6 ://get all users
-        List<User> list = userDao.findAll(INDEX,TYPE,User.class);
+        List<User> list = userDao.findAll(Constants.uINDEX,Constants.uTYPE,User.class);
           for(int i = 0; i < list.size();i++) {
             System.out.println("User : "+list.get(i));
           }
           break;
       case 7://create Map
-        current_user = ((UserDAO)userDao).connect(INDEX,TYPE,usr.getUsername(),usr.getPassword());
-        Map map = new Map(userDao.getId(INDEX,TYPE,current_user),"map1","private","mapimg.jpg");
+        current_user = ((UserDAO)userDao).connect(Constants.uINDEX,Constants.uTYPE,usr.getUsername(),usr.getPassword());
+        Map map = new Map(userDao.getId(Constants.uINDEX,Constants.uTYPE,current_user),"map1","private","mapimg.jpg");
         DAO<Map> mapDao = daoFact.getMapDAO();
         mapDao.add("mapdb","map",map);
         break;
@@ -85,26 +84,26 @@ public void test(int status) {
         break;
       case 9 ://find map
         DAO<Map> mapDao2 = daoFact.getMapDAO();
-        Map map1 = mapDao2.find("mapdb", "map",Map.class,userDao.getId(INDEX,TYPE,current_user));
+        Map map1 = mapDao2.find("mapdb", "map",userDao.getId(Constants.uINDEX,Constants.uTYPE,current_user));
         System.out.println(map1);
         break;
       case 10://create homemap
-        current_user = ((UserDAO)userDao).connect(INDEX,TYPE,usr.getUsername(),usr.getPassword());
+        current_user = ((UserDAO)userDao).connect(Constants.uINDEX,Constants.uTYPE,usr.getUsername(),usr.getPassword());
         DAO<Map> mapDao3 = daoFact.getMapDAO();
         Map map4 = new Map("root","rootmap","public","root.jpg");
         mapDao3.add("homemapdb","homemap",map4);
         break;
       case 11://find public map
         DAO<Map> mapDao4 = daoFact.getMapDAO();
-        Map map5 = mapDao4.find("homemapdb","homemap",Map.class,"root");
+        Map map5 = mapDao4.find("homemapdb","homemap","root");
         System.out.println("Test_Map : "+map5);
         break;
       case 12://findAllById
         DAO<Map> mapDao7 = daoFact.getMapDAO();
-        current_user = ((UserDAO)userDao).connect(INDEX,TYPE,usr.getUsername(),usr.getPassword());
-        String userid = userDao.getId(INDEX,TYPE,current_user);
+        current_user = ((UserDAO)userDao).connect(Constants.uINDEX,Constants.uTYPE,usr.getUsername(),usr.getPassword());
+        String userid = userDao.getId(Constants.uINDEX,Constants.uTYPE,current_user);
         addMap(userid,10);
-        List<Map> list1 = mapDao7.findAllById("mapdb","map",userid+" public",Map.class);
+        List<Map> list1 = mapDao7.findAllById("mapdb","map",userid+" public");
         for(int i = 0; i < list1.size();i++) {
           System.out.println("Test_findById : "+list1.get(i));
         }
@@ -112,10 +111,6 @@ public void test(int status) {
     }
 
   }
-    private static void registerException(Exception e) {
-        Logger.getLogger(LoginRessource.class.getName()).log(Level.SEVERE, null, e);
-    }
-
 
     @POST
     @Path("/register")
@@ -128,7 +123,7 @@ public void test(int status) {
 
         if (signUpRequest != null) {
             user = new User(signUpRequest);
-            status = userDao.add(INDEX, TYPE, user);
+            status = userDao.add(Constants.uINDEX, Constants.uTYPE, user);
         }
         switch (status) {
             case -1:
@@ -168,7 +163,7 @@ public void test(int status) {
     public int deleteUser(User user) {
         int status = 0;
         if (user != null) {
-            status = userDao.delete(INDEX, usr);
+            status = userDao.delete(Constants.uINDEX, usr);
         }
 
         switch (status) {

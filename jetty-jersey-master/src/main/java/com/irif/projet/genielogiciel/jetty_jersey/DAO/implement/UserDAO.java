@@ -3,7 +3,6 @@ package com.irif.projet.genielogiciel.jetty_jersey.DAO.implement;
 
 import com.irif.projet.genielogiciel.jetty_jersey.DAO.DAO;
 import com.irif.projet.genielogiciel.jetty_jersey.model.Map;
-import com.irif.projet.genielogiciel.jetty_jersey.model.Place;
 import com.irif.projet.genielogiciel.jetty_jersey.model.User;
 
 import java.util.List;

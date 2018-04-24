@@ -8,72 +8,51 @@ import com.irif.projet.genielogiciel.jetty_jersey.model.Place;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
+import java.util.List;
 @Path("/id_map")
 public class PlaceRessource {
     AbstractDAOFactory daoFact = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
     DAO<Place> placeDao = daoFact.getPlaceDAO();
-    boolean ok;
-
-    private static void registerException(Exception e) {
-        Logger.getLogger(MapRessource.class.getName()).log(Level.SEVERE, null, e);
-    }
+    int ok;
 
     @Path("/" + Constants.PLACES)
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Place> getPlaces(@PathParam("index") String index) {
+    public List<Place> getPlaces(@PathParam("query") String query) {
         List<Place> retour = null;
-		/*try {
-			/retour = placeDao.findAll(index, Constants.PLACES,0);
-		} catch (IOException e) {
-			registerException(e);
-		}*/
+		retour = placeDao.findAllById(Constants.pINDEX, Constants.pTYPE, query);
         return retour;
     }
-
+    
     @GET
     @Path("/{id_place}")
     @Consumes(MediaType.APPLICATION_JSON)
-    //@Produces(MediaType.APPLICATION_JSON)
-    public Place getPlace(Place place) {
-		/*try {
-			place = placeDao.find(String.valueOf(place.getId()), Constants.PLACES, place);
-		}catch (IOException e) {
-			registerException(e);
-		}*/
-        return place;
+    //detail d'une place
+    public Place getPlace(@PathParam("query")String query) {
+			return placeDao.find(Constants.pINDEX, Constants.pTYPE, query);
     }
 
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
-    public boolean addPlace(Place place) {
-        ok = false;
-		/* try {
-			ok = placeDao.create(String.valueOf(place.getId()),Constants.PLACES,place);
-		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			registerException(e);
-		}*/
-
+    public int addPlace(Place place) {
+		 ok = placeDao.add(Constants.pINDEX, Constants.pTYPE,place);
         return ok;
     }
 
-    @DELETE
+    
+    @POST
     @Path("/{id_place}")
-    public boolean deletePlace(Place place) {
-        //ok = placeDao.delete(String.valueOf(place.getId()),place);
-        return false;
+    @Consumes(MediaType.APPLICATION_JSON)
+    public int updatePlace(Place place) {
+		 return placeDao.update(Constants.pINDEX, Constants.pTYPE, place);
     }
 
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Path("/testP")
-    public void retrievePlace() {
-        System.out.println(Constants.PLACES);
+    
+    @DELETE
+    @Path("/{id_place}")
+    public boolean deletePlace(@PathParam("index")String index) {
+        return placeDao.deleteIndex(index);
     }
 
     @POST

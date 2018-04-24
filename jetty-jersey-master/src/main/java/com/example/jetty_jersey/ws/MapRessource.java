@@ -5,93 +5,65 @@ import com.example.jetty_jersey.ws.requests.MapRequest;
 import com.irif.projet.genielogiciel.jetty_jersey.DAO.AbstractDAOFactory;
 import com.irif.projet.genielogiciel.jetty_jersey.DAO.DAO;
 import com.irif.projet.genielogiciel.jetty_jersey.model.Map;
-import com.irif.projet.genielogiciel.jetty_jersey.model.User;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import java.util.List;
 
 
 @Path("/"+Constants.MAPS)
 public class MapRessource {
-    private final String INDEX = "mapdb";
-    private final String TYPE = "map";
-
+    
     AbstractDAOFactory daoFact = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
     DAO<Map> mapDao = daoFact.getMapDAO();
     Map retour = null;
-    boolean ok;
+    int ok;
 
-    private static void registerException(Exception e) {
-        Logger.getLogger(MapRessource.class.getName()).log(Level.SEVERE, null, e);
-    }
-
-    @Path("/homemap")
+    @Path("/id_map")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public int getHomeMap(User user) {
-        int status = 0;
-        if (user != null) {
-
+    public Map getMap(@PathParam("q")String q) {
+         Map status = null;
+        if (q != "") {
+        	status = mapDao.find(Constants.mINDEX, Constants.mTYPE, q);
         }
         return status;
     }
-    /*@Path("/list")
+    @Path("/list")
     @GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Map> getMaps(@PathParam("index")String index) {
+	public List<Map> getMaps(@PathParam("q")String q) {
     	List<Map> retour = null;
-		*//*try {
-			retour = mapDao.findAll(index, Constants.MAPS,0);
-		} catch (IOException e) {
-			registerException(e);
-		}*//*
-		return retour;
-	}*/
+    	if (q != "") {
+			retour = mapDao.findAllById(Constants.mINDEX, Constants.mTYPE, q);
+    	}
 
-    @GET
-    @Path("/{id_map}")
-    //@Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Map getMap(Map map) {
-		/*try {
-			map = mapDao.find(String.valueOf(map.getId()), Constants.MAPS, map);
-		} catch (IOException e) {
-			registerException(e);
-		}*/
-        return map;
-    }
+		return retour;
+	}
 
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
-    public boolean addMap(Map map) {
-        ok = false;
-		/* try {
-			ok = mapDao.create(String.valueOf(map.getId()),Constants.MAPS,map);
-		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			registerException(e);
-		}*/
+    public int addMap(Map obj) {
+		ok = mapDao.add(Constants.mINDEX, Constants.mTYPE, obj);
 
         return ok;
     }
 
+    @POST
+    @Path("/{id_map}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public int updateMap(Map map) {
+		 return mapDao.update(Constants.mINDEX, Constants.mTYPE, map);
+    }
+    
     @DELETE
     @Path("/{id_map}")
-    public boolean deleteMap(Map map) {
-        //ok = mapDao.delete(String.valueOf(map.getId()),map);
-        return false;
+    public boolean deleteMap(@PathParam("index")String index) {
+        return mapDao.deleteIndex(index);
     }
 
     @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Path("/test")
-    public void retrieve() {
-        System.out.println(Constants.MAPS);
-    }
-
-    @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/add_map")
     public int addMap(MapRequest mapRequest) {
