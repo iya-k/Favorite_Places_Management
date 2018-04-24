@@ -37,6 +37,14 @@
                     </archive>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>8</source>
+                    <target>8</target>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
@@ -95,5 +103,11 @@
     		<artifactId>jackson-databind</artifactId>
     		<version>2.9.4</version>
 		</dependency>
+        <!-- https://mvnrepository.com/artifact/org.glassfish.jersey.media/jersey-media-multipart -->
+        <dependency>
+            <groupId>org.glassfish.jersey.media</groupId>
+            <artifactId>jersey-media-multipart</artifactId>
+            <version>2.27</version>
+        </dependency>
     </dependencies>
 </project>

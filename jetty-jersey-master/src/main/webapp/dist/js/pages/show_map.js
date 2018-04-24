@@ -1,60 +1,103 @@
-$("#submitAddMap").click(function(event){
+function getBase64(fileInput, base64Input) {
+	var reader = new FileReader();
+	reader.onload = function(){
+		base64Input.val(reader.result);
+	}
+    reader.readAsDataURL(fileInput.get(0).files[0]);
+}
 
-	var data = {
-		'name' : $("#map-name").val(),
-		'privacy' : $("#map-privacy").val()
-	};
+function getBase64ManyImages(fileInput, base64Input) {
+    $.each(fileInput.get(0).files, function(index, file){
+        var reader = new FileReader();
+        reader.onload = function(){
+            var oldVal = "";
+            if(base64Input.val().length != 0){
+                oldVal = base64Input.val() + "|";
+            }
+            base64Input.val(oldVal + reader.result);
+        }
 
-	/*var name = $("#map-name").val();
-	var privacy = $("#map-privacy").val();
-	var file = $("#map-images-form");
-	var image = null;
-	if(file.prop("files").length > 0){
-		var image = $("#map-images-form").prop("files")[0].__proto__;
-		console.log("image: " + image);
-	}*/
+        reader.readAsDataURL(file);
+    });
+}
 
-	$.ajax({
-		type: 'PUT',
-		url: '../ws/maps/add_map',
-		dataType: 'json',
-		contentType: 'application/json',
-		data: JSON.stringify(data),
-		success: function(data) {
-			alert("success");
-		},
-		fail: function(data){
-			alert("fail");
-		}
-	});
+$("#submitAddMap").click(function(event) {
+    var fileInput = $("#map-images-form");
+    var base64Input = $("#map-image-base64");
 
-	event.preventDefault();
+    var data = {
+        'name': $("#map-name").val(),
+        'privacy': $("#map-privacy").val(),
+        'image': base64Input.val()
+    };
+
+    if(data.image.length != 0){
+        $.ajax({
+            type: 'PUT',
+            url: '../ws/maps/add_map',
+            dataType: 'json',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function(data) {
+                console.log("success");
+            },
+            fail: function(data) {
+                console.log("fail");
+            }
+        });
+        base64Input.val("");
+    }
+
+    event.preventDefault();
 });
 
-$("#submitAddPlace").click(function(event){
-	var data = {
-		'type' : place_type,
-		'lat' : $("#place-lat").val(),
-		'lng' : $("#place-lng").val(),
-		'name' : $("#place-name").val(),
-		'message' : $("#place-message-form").val(),
-		'startDate' : $("#begin-date").val(),
-		'endDate' : $("#end-date").val()
-	}
+$("#submitAddPlace").click(function(event) {
+    var fileInput = $("#place-images-form");
+    var base64Input = $("#place-image-base64");
 
-	$.ajax({
-		type: 'POST',
-		url: '../ws/id_map/add_place',
-		dataType: 'json',
-		contentType: 'application/json',
-		data: JSON.stringify(data),
-		success: function(data) {
-			alert("success");
-		},
-		fail: function(data){
-			alert("fail");
-		}
-	});
+    var data = {
+        'type': place_type,
+        'lat': $("#place-lat").val(),
+        'lng': $("#place-lng").val(),
+        'name': $("#place-name").val(),
+        'message': $("#place-message-form").val(),
+        'images' : base64Input.val().split("|"),
+        'startDate': $("#begin-date").val(),
+        'endDate': $("#end-date").val()
+    }
 
-	event.preventDefault();
+    if(data.images.length != 0){
+        $.ajax({
+            type: 'POST',
+            url: '../ws/id_map/add_place',
+            dataType: 'json',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function(data) {
+                console.log("success")
+            },
+            fail: function(data) {
+                console.log("fail");
+            }
+        });
+        base64Input.val("");
+    }
+    
+    event.preventDefault();
+});
+
+$("#map-images-form").change(function(event){
+    var fileInput = $("#map-images-form");
+    var base64Input = $("#map-image-base64");
+    getBase64(fileInput, base64Input);
+
+    event.preventDefault(); 
+});
+
+$("#place-images-form").change(function(event){
+    var fileInput = $("#place-images-form");
+    var base64Input = $("#place-image-base64");
+    getBase64ManyImages(fileInput, base64Input);
+
+    event.preventDefault(); 
 });

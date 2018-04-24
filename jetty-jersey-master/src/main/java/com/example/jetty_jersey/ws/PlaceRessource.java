@@ -81,6 +81,8 @@ public class PlaceRessource {
     @Path("/add_place")
     public int addPlace(PlaceRequest placeRequest) {
         System.out.println(placeRequest.toString());
+        placeRequest.saveImages();
+
         return 0;
     }
 }
