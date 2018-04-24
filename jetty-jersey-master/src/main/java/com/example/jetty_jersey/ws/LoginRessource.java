@@ -41,9 +41,10 @@ public class LoginRessource {
 
 
 public void test(int status) {
+	System.out.println("methode test");
     switch(status){
       case 1 ://create user
-        userDao.add(Constants.uINDEX,Constants.uTYPE,usr);
+        userDao.add(Constants.uINDEX,Constants.uTYPE,usr1);
         break;
       case 2 ://connect
         current_user = ((UserDAO)userDao).connect(Constants.uINDEX,Constants.uTYPE,usr.getUsername(),usr.getPassword());
@@ -118,9 +119,7 @@ public void test(int status) {
     public int signUp(SignUp signUpRequest) {
         int status = 0;
         User user;
-
         System.out.println(signUpRequest.toString());
-
         if (signUpRequest != null) {
             user = new User(signUpRequest);
             status = userDao.add(Constants.uINDEX, Constants.uTYPE, user);
@@ -136,7 +135,6 @@ public void test(int status) {
                 System.out.println("Reussite");
                 break;
         }
-
         return status;
     }
 
@@ -145,16 +143,16 @@ public void test(int status) {
     @Consumes(MediaType.APPLICATION_JSON)
     public int signIn(Login loginRequest) {
         int status = 0;
-        test(1);
-    	/*if(loginRequest != null) {
-    		current_user = ((UserDAO)userDao).connect(INDEX,TYPE,usr.getUsername(),usr.getPassword());
+        System.out.println("login");
+    	if(loginRequest != null) {
+    		current_user = ((UserDAO)userDao).connect(Constants.uINDEX,Constants.uTYPE,loginRequest.getUsername(),loginRequest.getPassword());
     	}
     	status = current_user == null?0:1;
 
     	switch(status) {
 			case 0:System.out.println("Echec");break;
 			case 1:System.out.println("Reussite");break;
-    	}*/
+    	}
         return status;
     }
 
