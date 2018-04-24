@@ -21,8 +21,9 @@ import org.elasticsearch.search.SearchHit;
 public class UserDAO extends DAO<User>{
 	private DAO<Map> mapdao;
 
-	public UserDAO(TransportClient client){
+	public UserDAO(TransportClient client, DAO<Map> mapdao){
 		super(client);
+		this.mapdao = mapdao;
 	}
 
 	@Override
@@ -89,7 +90,7 @@ public class UserDAO extends DAO<User>{
 
 		SearchHit[] res = response.getHits().getHits();
 		if(res.length == 1)
-			user = (User)super.getObj(res[0],User.class);
+			user = super.getObj(res[0],User.class);
 		return (user);
 	}
 
@@ -123,7 +124,7 @@ public class UserDAO extends DAO<User>{
 		SearchResponse response =  getSearchResponse(index,type,query);
 		SearchHit[] res = response.getHits().getHits();
 		if(res.length == 1){
-			user =(User)super.getObj(res[0],cl);
+			user =super.getObj(res[0],cl);
 		}
 		return user;
 	}

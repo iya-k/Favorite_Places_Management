@@ -39,7 +39,7 @@ public class DAOFactory extends AbstractDAOFactory{
 	@Override
 	public DAO getMapDAO() {
 		if(mapDAO == null) {
-			mapDAO = new MapDAO(client, getPlaceDAO());
+			mapDAO = new MapDAO(client, getPlaceDAO(),getEventDAO());
 		}
 		return mapDAO;
 	}
