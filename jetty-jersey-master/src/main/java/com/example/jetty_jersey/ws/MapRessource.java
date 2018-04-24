@@ -5,13 +5,14 @@ import com.example.jetty_jersey.ws.requests.MapRequest;
 import com.irif.projet.genielogiciel.jetty_jersey.DAO.AbstractDAOFactory;
 import com.irif.projet.genielogiciel.jetty_jersey.DAO.DAO;
 import com.irif.projet.genielogiciel.jetty_jersey.model.Map;
+import com.irif.projet.genielogiciel.jetty_jersey.model.User;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import java.util.List;
 
 
@@ -85,11 +86,29 @@ public class MapRessource {
 	@Path("/add_map")
 	public int addMap(MapRequest mapRequest) {
 		System.out.println(mapRequest.toString());
-        try {
-            mapRequest.saveImage(); // save received image in a server
-        } catch (IOException e) {
-            e.printStackTrace();
+		int status = 0;
+        Map map;
+        if (mapRequest != null) {
+        	try {
+        		String imageName = "userid_"+mapRequest.getName()+Constants.getCurrentDateTime("yyyyMMddhhmmss");
+                mapRequest.saveImage(imageName); // save received image in a server
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            map = new Map(mapRequest, "userid");// userid
+            status = mapDao.add(Constants.uINDEX, Constants.uTYPE, map);
         }
-		return 0;
+        switch (status) {
+            case -1:
+                System.out.println("Exception");
+                break;
+            case 0:
+                System.out.println("Echec");
+                break;
+            case 1:
+                System.out.println("Reussite");
+                break;
+        }
+        return status;
 	}
 }

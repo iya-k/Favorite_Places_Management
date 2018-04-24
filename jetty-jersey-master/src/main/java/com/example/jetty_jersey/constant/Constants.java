@@ -1,5 +1,8 @@
 package com.example.jetty_jersey.constant;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class Constants {
 
 	public static final String USERS = "users";
@@ -24,6 +27,19 @@ public class Constants {
     public static final String piTYPE = "picture";
     
 
+    public static String getCurrentDateTime(String format){
+		Date dNow = new Date();
+		SimpleDateFormat ft;
+		String date = "";
+		if(format.equals("yyyyMMddhhmmss")){
+			ft = new SimpleDateFormat(format);
+		}else{
+			ft = new SimpleDateFormat("yyyy/MM/dd/hh:mm:ss");
+		}
+		date = ft.format(dNow);
+		return date;
+	}
+    
 	public Constants() {
 		
 	}

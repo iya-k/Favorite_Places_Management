@@ -143,7 +143,7 @@ public void test(int status) {
     @Consumes(MediaType.APPLICATION_JSON)
     public int signIn(Login loginRequest) {
         int status = 0;
-        System.out.println("login");
+        System.out.println("login ["+loginRequest+" ]");
     	if(loginRequest != null) {
     		current_user = ((UserDAO)userDao).connect(Constants.uINDEX,Constants.uTYPE,loginRequest.getUsername(),loginRequest.getPassword());
     	}

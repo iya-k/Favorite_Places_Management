@@ -49,13 +49,13 @@ public class MapRequest {
         this.image = image;
     }
 
-    public void saveImage() throws IOException {
+    public void saveImage(String picturename) throws IOException {
         if(!image.isEmpty()){
-            imagePath = saveImage(image, "dist/img/map");
+            imagePath = saveImage(image, "dist/img/map",picturename);
         }
     }
 
-    public static String saveImage(String image, String mainPath){
+    public static String saveImage(String image, String mainPath, String picturename){
         String imageType = "image/jpg";
 
         String[] base64Image = image.split(",");
@@ -75,7 +75,7 @@ public class MapRequest {
             }
 
             String projectPath = "jetty-jersey-master/src/main/webapp/";
-            String imageName = "/image" + (new Random()).nextInt(1000) + extension; // generate image name
+            String imageName = "/image" + picturename + extension; // generate image name
             String imagePath = mainPath + imageName;
 
             try (FileOutputStream imageOutFile = new FileOutputStream(projectPath + imagePath)) {

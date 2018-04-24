@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.example.jetty_jersey.ws.requests.MapRequest;
 import com.irif.projet.genielogiciel.jetty_jersey.DAO.DAO;
 
 public class Map{
@@ -37,6 +38,21 @@ public class Map{
 		this.mapname = mapname;
 		this.mode = mode;
 		this.mapimg = mapimg;
+		this.creationdate = Map.getCurrentDateTime("yyyy/MM/dd/hh:mm:ss");
+		this.placeList = new ArrayList<>();
+		this.eventList = new ArrayList<>();
+	}
+	
+	public Map(MapRequest mapRequest, String username){
+		this.userid = username;//userid
+		this.mapname = mapRequest.getName();
+		this.mode = "public";
+		if(mapRequest.getPrivacy()==1){
+			this.mode = "private";
+		}else if(mapRequest.getPrivacy()==2){
+			this.mode = "friends";
+		}
+		this.mapimg = mapRequest.getPathFile();
 		this.creationdate = Map.getCurrentDateTime("yyyy/MM/dd/hh:mm:ss");
 		this.placeList = new ArrayList<>();
 		this.eventList = new ArrayList<>();
