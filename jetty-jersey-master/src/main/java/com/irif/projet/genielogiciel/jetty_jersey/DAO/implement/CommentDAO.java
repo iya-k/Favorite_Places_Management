@@ -21,7 +21,7 @@ public class CommentDAO extends DAO<Comment>{
 		SearchResponse response = client.prepareSearch(index)
 				.setTypes(type)
 				.setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
-				.setQuery(QueryBuilders.multiMatchQuery(query,"placeid","mapid")
+				.setQuery(QueryBuilders.multiMatchQuery(query,"commentid","userid","placeid","eventid")
 						.type(Type.CROSS_FIELDS)
 						.operator(Operator.AND)).get();
 		return response;
