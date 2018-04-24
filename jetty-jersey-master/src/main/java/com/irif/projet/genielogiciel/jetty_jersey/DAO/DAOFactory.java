@@ -54,7 +54,7 @@ public class DAOFactory extends AbstractDAOFactory{
 	@Override
 	public DAO getEventDAO() {
 		if(eventDAO == null) {
-			eventDAO = new EventDAO(client);
+			eventDAO = new EventDAO(client, getPictureDAO());
 		}
 		return eventDAO;
 	}
