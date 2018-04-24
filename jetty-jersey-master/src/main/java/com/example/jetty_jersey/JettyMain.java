@@ -1,5 +1,6 @@
 package com.example.jetty_jersey;
 
+import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.server.handler.ContextHandler;
@@ -11,8 +12,6 @@ import org.glassfish.jersey.filter.LoggingFilter;
 import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.servlet.ServletContainer;
-
-import java.util.ArrayList;
 
 public class JettyMain {
 
@@ -41,52 +40,24 @@ public class JettyMain {
         handlerWebServices.setContextPath("/ws");
         handlerWebServices.addServlet(servletHolder, "/*");
 
-        String[] pages = {
-                "home.html",
-                "pages/login.html",
-                "pages/register.html",
-                "pages/forget_password.html",
-                "pages/reset_password.html",
-                "pages/show_map.html",
-                "pages/index_map.html"
-        };
+		// Add a handler for resources (/*)
+		ResourceHandler handlerPortal = new ResourceHandler();
+		handlerPortal.setResourceBase("jetty-jersey-master/src/main/webapp");
+		handlerPortal.setDirectoriesListed(false);
+		handlerPortal.setWelcomeFiles(new String[] { "/pages/login.html" });
+		ContextHandler handlerPortalCtx = new ContextHandler();
+		handlerPortalCtx.setContextPath("/");
+		handlerPortalCtx.setHandler(handlerPortal);
 
-        String[] paths = {
-                "/",
-                "/login",
-                "/register",
-                "/forget_password",
-                "/reset_password",
-                "/map_show",
-                "/map_index"
-        };
-
-        // Add a handler for resources (/*)
-        ArrayList<ResourceHandler> handlerPortals = new ArrayList<ResourceHandler>();
-        ArrayList<ContextHandler> handlerPortalCtxs = new ArrayList<ContextHandler>();
-
-        for (int i = 0; i < pages.length; i++) {
-            ResourceHandler handlerPortal = new ResourceHandler();
-            handlerPortal.setResourceBase("jetty-jersey-master/src/main/webapp");
-            handlerPortal.setDirectoriesListed(false);
-            handlerPortal.setWelcomeFiles(new String[] {pages[i]});
-            ContextHandler handlerPortalCtx = new ContextHandler();
-            handlerPortalCtx.setContextPath(paths[i]);
-            handlerPortalCtx.setHandler(handlerPortal);
-
-            handlerPortals.add(handlerPortal);
-            handlerPortalCtxs.add(handlerPortalCtx);
-        }
-
-        // Activate handlers
-        ContextHandlerCollection contexts = new ContextHandlerCollection();
-        contexts.addHandler(handlerWebServices);
-        for (ContextHandler contextHandler : handlerPortalCtxs) {
-            contexts.addHandler(contextHandler);
-        }
-        server.setHandler(contexts);
-
+		// Activate handlers
+		ContextHandlerCollection contexts = new ContextHandlerCollection();
+		contexts.setHandlers(new Handler[] { handlerWebServices, handlerPortalCtx });
+		server.setHandler(contexts);
         // Start server
-        server.start();
+        try {
+        	server.start();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
     }
 }
