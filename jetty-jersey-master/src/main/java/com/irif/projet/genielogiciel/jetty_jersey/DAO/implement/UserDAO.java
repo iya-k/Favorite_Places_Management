@@ -101,6 +101,7 @@ public class UserDAO extends DAO<User>{
 	 */
 	@Override
 	public int delete(String index,User user){
+		String username = user.getUsername();
 		BulkByScrollResponse response = DeleteByQueryAction.INSTANCE.newRequestBuilder(client)
 				.filter(QueryBuilders.matchQuery("username",user.getUsername()))
 				.source(index)

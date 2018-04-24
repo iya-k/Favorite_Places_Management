@@ -13,7 +13,13 @@ public class User {
 
 	public User(){}
 
-	public User(SignUp SignUpRequest) {}
+	public User(SignUp SignUpRequest) {
+		this.username = SignUpRequest.getUsername();
+		this.firstname = SignUpRequest.getFirstName();
+		this.lastname = SignUpRequest.getLastName();
+		this.email = SignUpRequest.getEmail();
+		this.password = SignUpRequest.getPassword();
+	}
 
 	public User(String username,String firstname,String lastname,String email,String password){
 		this.username=username;
