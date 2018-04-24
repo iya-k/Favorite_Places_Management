@@ -1,21 +1,11 @@
 package com.irif.projet.genielogiciel.jetty_jersey.DAO.implement;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
-import org.elasticsearch.action.delete.DeleteResponse;
-import org.elasticsearch.action.get.GetResponse;
-import org.elasticsearch.action.get.MultiGetItemResponse;
-import org.elasticsearch.action.get.MultiGetRequestBuilder;
-import org.elasticsearch.action.get.MultiGetResponse;
-import org.elasticsearch.action.index.IndexRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.SearchType;
-import org.elasticsearch.action.update.UpdateRequest;
 import org.elasticsearch.client.transport.TransportClient;
-import org.elasticsearch.common.xcontent.XContentType;
 import org.elasticsearch.index.query.Operator;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.IndexNotFoundException;
@@ -24,19 +14,19 @@ import org.elasticsearch.index.reindex.BulkByScrollResponse;
 import org.elasticsearch.index.reindex.DeleteByQueryAction;
 import org.elasticsearch.search.SearchHit;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.irif.projet.genielogiciel.jetty_jersey.DAO.DAO;
+import com.irif.projet.genielogiciel.jetty_jersey.model.Event;
 import com.irif.projet.genielogiciel.jetty_jersey.model.Map;
 import com.irif.projet.genielogiciel.jetty_jersey.model.Place;
-import com.irif.projet.genielogiciel.jetty_jersey.model.User;
 
 public class MapDAO extends DAO<Map>{
 	private DAO<Place> placedao;
+	private DAO<Event> eventdao;
 
-	public MapDAO(TransportClient client) {
+	public MapDAO(TransportClient client, DAO <Place> placedao,DAO<Event> eventdao ) {
 		super(client);
+		this.placedao = placedao;
+		this.eventdao = eventdao;
 	}
 
 	private SearchResponse getResponse(String index, String type,String query,String att1, String att2,Operator op) {
@@ -106,7 +96,7 @@ public class MapDAO extends DAO<Map>{
 		SearchHit[] res = response.getHits().getHits();
 
 		if(res.length == 1) {
-			map =(Map)super.getObj(res[0],cl);
+			map =super.getObj(res[0],cl);
 		}else{
 			map = new Map(query,query+"map","public","root.jpg");
 			add("mapdb","map",map);

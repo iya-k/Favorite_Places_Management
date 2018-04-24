@@ -1,9 +1,7 @@
 package com.irif.projet.genielogiciel.jetty_jersey.DAO;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -22,7 +20,6 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.irif.projet.genielogiciel.jetty_jersey.model.User;
 
 public abstract class DAO<T>{
 	  protected TransportClient client;
