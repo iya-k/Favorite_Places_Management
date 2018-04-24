@@ -2,11 +2,11 @@ package com.irif.projet.genielogiciel.jetty_jersey.model;
 
 public class Comment {
 	private String commentid;
+	private String userid; 
 	private String placeid;
-	private String eventid; // one of id != null 
+	private String eventid; // one of id(placeid | eventid) != null 
 	private String comment;
 	private String dateDeCreation;
-
 
 	public Comment(String comment,String placeid,String evenid) {
 		this.placeid= placeid;
@@ -56,6 +56,14 @@ public class Comment {
 
 	public void setDateDeCreation(String dateDeCreation) {
 		this.dateDeCreation = dateDeCreation;
+	}
+
+	public String getUserid() {
+		return userid;
+	}
+
+	public void setUserid(String userid) {
+		this.userid = userid;
 	}
 
 }
