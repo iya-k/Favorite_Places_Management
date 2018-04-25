@@ -59,8 +59,17 @@ public class PlaceRessource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/add_place")
     public int addPlace(PlaceRequest placeRequest) {
-        System.out.println(placeRequest.toString());
-        placeRequest.saveImages();
+    	if(placeRequest!=null){
+    		if(placeRequest.getType() ==1){
+    			//place
+    		}else{
+    			//event
+    		}
+    		System.out.println(placeRequest.toString());
+            String imageName = "userid_"+"mapid_"+placeRequest.getName()+Constants.getCurrentDateTime("yyyyMMddhhmmss");
+            placeRequest.saveImages(imageName);
+    	}
+        
 
         return 0;
     }

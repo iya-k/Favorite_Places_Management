@@ -66,10 +66,12 @@ public abstract class DAO<T>{
 
 	  public abstract List<T> findAllById(String index,String type,String query);
 
-	  /**
-	   * creation method
-	   * @param obj
-	   * @return boolean if created true else false
+	 /**
+	  * 
+	  * @param index
+	  * @param type
+	  * @param obj
+	  * @return :
 	  */
 	  public int add(String index,String type,T obj){
 			int res = 0;
@@ -89,11 +91,14 @@ public abstract class DAO<T>{
 			}
 			return res;
 	  }
-     /**
-     * update method
-     * @param obj
-     * @return boolean if updated true else false
-	 */
+     
+	  /**
+	   * 
+	   * @param index
+	   * @param type
+	   * @param obj
+	   * @return
+	   */
 	  public int update(String index,String type,T obj){
 		 int status = 0;
 		 try {

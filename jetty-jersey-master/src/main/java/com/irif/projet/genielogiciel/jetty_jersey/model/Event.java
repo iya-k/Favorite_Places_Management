@@ -6,6 +6,8 @@ public class Event extends Place{
 	private Date begin;
 	private Date end;
 
+	public Event(){}
+	
 	public Event(String mapname,String placename,String longitude,String latitude,String description,Date beginDate, Date endDate){
 		super(mapname, placename,longitude, latitude, description);
 		this.begin = beginDate;

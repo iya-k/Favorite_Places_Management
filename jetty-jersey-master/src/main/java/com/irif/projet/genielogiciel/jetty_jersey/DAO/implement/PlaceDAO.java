@@ -44,14 +44,14 @@ public class PlaceDAO extends DAO<Place>{
 		}
 		return response;
 	}
-	
-	
-	
+
+
+
 	@Override
 	public boolean exist(String index, String type, Place place){
-		
+
 		//TODO: Check that the start date isn't over yet
-		
+
 		String query = place.getMapname()+" "+
 				place.getPlacename()+" "+
 				place.getLongitude()+" "+
@@ -88,13 +88,13 @@ public class PlaceDAO extends DAO<Place>{
 				.filter(QueryBuilders.multiMatchQuery(query,"mapname","placename","longitude","latitude")
 						.type(Type.CROSS_FIELDS)
 						.operator(Operator.AND))
-				.source(index)
-				.get();
+						.source(index)
+						.get();
 		client.admin().indices().prepareRefresh(index).get();
 		return((int)response.getDeleted());
 	}
-	
-	
+
+
 	@Override
 	public Place find(String index, String type, String query){
 		Place place = null;
@@ -109,15 +109,21 @@ public class PlaceDAO extends DAO<Place>{
 
 	@Override
 	public List<Place> findAllById(String index, String type, String query){
-		 Class<Place> cl = Place.class;
+		Class<Place> cl = Place.class;
 		List<Place> placeList = new ArrayList<>();
-		SearchResponse response =  client.prepareSearch(index).setTypes(type)
-				                  .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
-					              .setQuery(QueryBuilders.matchQuery("mapname",query)).get();
-		SearchHit[] res = response.getHits().getHits();
-		 for(int i = 0; i < res.length;i++) {
-			 placeList.add(getObj(res[i],cl));
-		 }
+		try {
+			SearchResponse response =  client.prepareSearch(index).setTypes(type)
+					.setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
+					.setQuery(QueryBuilders.matchQuery("mapname",query)).get();
+			SearchHit[] res = response.getHits().getHits();
+			for(int i = 0; i < res.length;i++) {
+				placeList.add(getObj(res[i],cl));
+			}
+		}catch(IndexNotFoundException e){
+			client.admin().indices().prepareCreate(index).get();
+			//e.printStackTrace();
+		}
+
 		return placeList;
 	}
 

@@ -83,10 +83,10 @@ public class PlaceRequest {
         this.endDate = endDate;
     }
 
-    public void saveImages(){
+    public void saveImages(String picturename){
         imagesPath = new String[images.length];
         for(int i=0; i<imagesPath.length; i++){
-            imagesPath[i] = MapRequest.saveImage(images[i], "dist/img/place");
+            imagesPath[i] = MapRequest.saveImage(images[i], "dist/img/place",picturename);
         }
     }
 

@@ -14,6 +14,7 @@ import org.elasticsearch.index.reindex.BulkByScrollResponse;
 import org.elasticsearch.index.reindex.DeleteByQueryAction;
 import org.elasticsearch.search.SearchHit;
 
+import com.example.jetty_jersey.constant.Constants;
 import com.irif.projet.genielogiciel.jetty_jersey.DAO.DAO;
 import com.irif.projet.genielogiciel.jetty_jersey.model.Event;
 import com.irif.projet.genielogiciel.jetty_jersey.model.Map;
@@ -92,15 +93,18 @@ public class MapDAO extends DAO<Map>{
 	public Map find(String index, String type, String query){
 		Map map = null;
 		Class cl = Map.class;
-		SearchResponse response = getResponse(index, type,query,"userid","mapname",Operator.AND);
+		SearchResponse response = getResponse(index, type,query,"userid","mapname",Operator.OR);
 		SearchHit[] res = response.getHits().getHits();
 
 		if(res.length == 1) {
 			map =super.getObj(res[0],cl);
+			map.setPlacelist(placedao.findAllById(Constants.pINDEX,Constants.pTYPE, map.getMapname()));
+			map.setEventlist(eventdao.findAllById(Constants.eINDEX,Constants.eTYPE, map.getMapname()));
 		}else{
 			map = new Map(query,query+"map","public","root.jpg");
-			add("mapdb","map",map);
-			add("homemapdb","homemap",map);
+			if(! (add("mapdb","map",map)==1 && add("homemapdb","homemap",map)==1)){
+				map = null;
+			}
 		}
 
 		return map;
