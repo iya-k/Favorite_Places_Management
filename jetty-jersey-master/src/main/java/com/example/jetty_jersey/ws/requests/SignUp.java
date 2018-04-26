@@ -71,21 +71,14 @@ public class SignUp {
 				"\nconfirm password: " + confirmPassword;
 	}
 	
-	/*public int[] checkFields() {
-		int[] validation = {0, 0, 0, 0, 0};
+	public int checkFields() {
+		//validador
 		
-		if(
-				(fullname.isEmpty()) || 
-				(username.isEmpty()) ||
-				(password.isEmpty()) ||
-				(password.isEmpty())
-			) {
-			
-		}else {
-			
+		if(!Validator.checkName(firstName)) {
+			return 0;
 		}
-		
-		return validation;
-	}*/
+		//si tout est ok
+		return 1;
+	}
 	
 }
