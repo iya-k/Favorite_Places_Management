@@ -57,8 +57,8 @@ public class EventRessource {
 
 	@DELETE
 	@Path("/{id_event}")
-	public boolean deleteEvent(@PathParam("index")String index){
-		return eventDao.deleteIndex(index);
+	public int deleteEvent(Event event){
+		return eventDao.delete(Constants.eINDEX, event);
 	}
     
     @POST

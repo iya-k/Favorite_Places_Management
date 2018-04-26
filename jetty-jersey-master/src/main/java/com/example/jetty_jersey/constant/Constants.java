@@ -40,6 +40,11 @@ public class Constants {
 		return date;
 	}
     
+    public static boolean containANumber(String s)
+	{
+	   return s.matches("[^0-9]*[0-9]+[^0-9]*");
+	}
+    
 	public Constants() {
 		
 	}

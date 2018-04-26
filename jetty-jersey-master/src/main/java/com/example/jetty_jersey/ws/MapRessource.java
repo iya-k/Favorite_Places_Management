@@ -77,8 +77,8 @@ public class MapRessource {
 
 	@DELETE
 	@Path("/{id_map}")
-	public boolean deleteMap(@PathParam("index")String index) {
-		return mapDao.deleteIndex(index);
+	public int deleteMap(Map map) {
+		return mapDao.delete(Constants.mINDEX, map);
 	}
 
 	@POST

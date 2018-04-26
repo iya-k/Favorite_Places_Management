@@ -51,8 +51,8 @@ public class PlaceRessource {
     
     @DELETE
     @Path("/{id_place}")
-    public boolean deletePlace(@PathParam("index")String index) {
-        return placeDao.deleteIndex(index);
+    public int delete(Place place) {
+        return placeDao.delete(Constants.pINDEX, place);
     }
 
     @POST

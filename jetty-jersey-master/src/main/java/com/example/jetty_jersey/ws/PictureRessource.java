@@ -40,8 +40,8 @@ public class PictureRessource {
     
     @DELETE
 	@Path("/{id_picture}")
-	public boolean deletePicture(@PathParam("index")String index){
-		return picDao.deleteIndex(index);
+	public int deletePicture(Picture pic){
+		return picDao.delete(Constants.piTYPE, pic);
 	}
     
     @POST
