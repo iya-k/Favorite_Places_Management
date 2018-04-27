@@ -90,13 +90,13 @@ public class MapRessource {
         Map map;
         if (mapRequest != null) {
         	try {
-        		String imageName = "userid_"+mapRequest.getName()+Constants.getCurrentDateTime("yyyyMMddhhmmss");
+        		String imageName = Constants.getCurrentUser().getUsername()+mapRequest.getName()+Constants.getCurrentDateTime("yyyyMMddhhmmss");
                 mapRequest.saveImage(imageName); // save received image in a server
+                map = new Map(mapRequest,Constants.getUserId());
+                status = mapDao.add(Constants.uINDEX, Constants.uTYPE, map);
             } catch (IOException e) {
-                e.printStackTrace();
+                //e.printStackTrace();
             }
-            map = new Map(mapRequest, "userid");// userid
-            status = mapDao.add(Constants.uINDEX, Constants.uTYPE, map);
         }
         switch (status) {
             case -1:

@@ -3,6 +3,8 @@ package com.irif.projet.genielogiciel.jetty_jersey.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.jetty_jersey.ws.requests.PlaceRequest;
+
 public class Place{
 	private String mapname;
 	private String placename;
@@ -26,6 +28,18 @@ public class Place{
 		this.comments =new ArrayList<Comment>();
 	}
 
+	public Place(PlaceRequest placeRequest, String mapName){
+		this.mapname = mapName;
+		this.placename = placeRequest.getName();
+		this.longitude = placeRequest.getLng()+"";
+		this.latitude = placeRequest.getLat()+"";
+		this.description = placeRequest.getMessage();
+		this.dateDeCreation = Map.getCurrentDateTime("yyyy/MM/dd/hh:mm:ss");
+		this.pictures = new ArrayList<Picture>();
+		this.comments =new ArrayList<Comment>();
+	}
+	
+	
 	public String getMapname(){
 		return mapname;
 	}

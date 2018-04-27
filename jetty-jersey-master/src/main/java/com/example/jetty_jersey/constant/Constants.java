@@ -3,6 +3,8 @@ package com.example.jetty_jersey.constant;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.irif.projet.genielogiciel.jetty_jersey.model.User;
+
 public class Constants {
 
 	public static final String USERS = "users";
@@ -26,6 +28,24 @@ public class Constants {
     public static final String piINDEX = "picturedb";
     public static final String piTYPE = "picture";
     
+    private static User curent_user;
+    private static String userId;
+    
+    public static String getUserId() {
+		return userId;
+	}
+
+	public static void setUserId(String userId) {
+		Constants.userId = userId;
+	}
+
+	public static User getCurrentUser(){
+    	return curent_user;
+    }
+    
+    public static void setCurrentUser(User user){
+    	curent_user = user;
+    } 
 
     public static String getCurrentDateTime(String format){
 		Date dNow = new Date();

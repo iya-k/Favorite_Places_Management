@@ -43,8 +43,8 @@ public class Map{
 		this.eventList = new ArrayList<>();
 	}
 	
-	public Map(MapRequest mapRequest, String username){
-		this.userid = username;//userid
+	public Map(MapRequest mapRequest, String userid){
+		this.userid = userid;//userid
 		this.mapname = mapRequest.getName();
 		this.mode = "public";
 		if(mapRequest.getPrivacy()==1){
