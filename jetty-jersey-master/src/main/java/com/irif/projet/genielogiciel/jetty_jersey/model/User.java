@@ -2,6 +2,10 @@ package com.irif.projet.genielogiciel.jetty_jersey.model;
 
 import java.util.ArrayList;
 
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
+import javax.xml.bind.DatatypeConverter;
+
 import com.example.jetty_jersey.ws.requests.SignUp;
 
 public class User {
@@ -18,7 +22,8 @@ public class User {
 		this.firstname = SignUpRequest.getFirstName();
 		this.lastname = SignUpRequest.getLastName();
 		this.email = SignUpRequest.getEmail();
-		this.password = SignUpRequest.getPassword();
+		this.password = Encrypt(username,SignUpRequest.getPassword());
+		System.out.println("Encodeage "+password);
 	}
 
 	public User(String username,String firstname,String lastname,String email,String password){
@@ -26,8 +31,9 @@ public class User {
 		this.firstname=firstname;
 		this.lastname=lastname;
 		this.email=email;
-		this.password=password;
+		this.password=Encrypt(username,password);
 	}
+	
 	public String getUsername(){
 		return username;
 	}
@@ -72,5 +78,20 @@ public class User {
 		String res = "Username : "+username + " password : "+ password;
 		return res;
 	}
+	
+	public static String Encrypt(String key,String mdp){
+		String res = "";
+        try{
+        	byte[] KeyData = key.getBytes();
+        	SecretKeySpec KS = new SecretKeySpec(KeyData, "Blowfish");
+        	Cipher cipher = Cipher.getInstance("Blowfish");
+        	cipher.init(Cipher.ENCRYPT_MODE, KS);
+            byte[] encrypted = cipher.doFinal(mdp.getBytes());
+            res = DatatypeConverter.printBase64Binary(encrypted);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
 
 }
