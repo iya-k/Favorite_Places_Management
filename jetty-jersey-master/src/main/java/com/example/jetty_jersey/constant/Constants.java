@@ -31,6 +31,8 @@ public class Constants {
     private static User curent_user;
     private static String userId;
     
+    private static String currentMapName;
+    
     public static String getUserId() {
 		return userId;
 	}
@@ -47,7 +49,16 @@ public class Constants {
     	curent_user = user;
     } 
 
-    public static String getCurrentDateTime(String format){
+    
+    public static String getCurrentMapName() {
+		return currentMapName;
+	}
+
+	public static void setCurrentMapName(String currentMapName) {
+		Constants.currentMapName = currentMapName;
+	}
+
+	public static String getCurrentDateTime(String format){
 		Date dNow = new Date();
 		SimpleDateFormat ft;
 		String date = "";

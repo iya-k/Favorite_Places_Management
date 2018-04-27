@@ -91,7 +91,7 @@ public class MapRessource {
         if (mapRequest != null) {
         	try {
         		String imageName = Constants.getCurrentUser().getUsername()+mapRequest.getName()+Constants.getCurrentDateTime("yyyyMMddhhmmss");
-                mapRequest.saveImage(imageName); // save received image in a server
+                mapRequest.saveImage(imageName);
                 map = new Map(mapRequest,Constants.getUserId());
                 status = mapDao.add(Constants.uINDEX, Constants.uTYPE, map);
             } catch (IOException e) {

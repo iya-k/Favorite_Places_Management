@@ -4,6 +4,9 @@ import com.example.jetty_jersey.constant.Constants;
 import com.example.jetty_jersey.ws.requests.PlaceRequest;
 import com.irif.projet.genielogiciel.jetty_jersey.DAO.AbstractDAOFactory;
 import com.irif.projet.genielogiciel.jetty_jersey.DAO.DAO;
+import com.irif.projet.genielogiciel.jetty_jersey.model.Event;
+import com.irif.projet.genielogiciel.jetty_jersey.model.Map;
+import com.irif.projet.genielogiciel.jetty_jersey.model.Picture;
 import com.irif.projet.genielogiciel.jetty_jersey.model.Place;
 
 import javax.ws.rs.*;
@@ -14,6 +17,8 @@ import java.util.List;
 public class PlaceRessource {
     AbstractDAOFactory daoFact = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
     DAO<Place> placeDao = daoFact.getPlaceDAO();
+    DAO<Event> eventDao = daoFact.getEventDAO();
+    DAO<Picture> pictureDao = daoFact.getPictureDAO();
     int ok;
 
     @Path("/" + Constants.PLACES)
@@ -59,18 +64,38 @@ public class PlaceRessource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/add_place")
     public int addPlace(PlaceRequest placeRequest) {
+    	int status = 0;
     	if(placeRequest!=null){
+    		
     		if(placeRequest.getType() ==1){
-    			//place
+    			Place place = new Place(placeRequest, Constants.getCurrentMapName());
+    			status = placeDao.add(Constants.pINDEX, Constants.pTYPE, place);
+    			if(status ==1){
+    				String imageName = Constants.getUserId()+Constants.getCurrentMapName()+placeRequest.getName()+Constants.getCurrentDateTime("yyyyMMddhhmmss");
+                    placeRequest.saveImages(imageName);
+                    Picture pic;
+                    String placeid = placeDao.getId(Constants.pINDEX, Constants.pTYPE, place);
+                    for (int i = 0; i < placeRequest.getImagesPath().length; i++) {
+						pic = new Picture(place.getPlacename(), placeRequest.getImagesPath()[i], placeid);
+					}
+    			}
+    			
     		}else{
-    			//event
+    			Event event  = new Event(placeRequest, Constants.getCurrentMapName());
+    			status = eventDao.add(Constants.eINDEX, Constants.eTYPE, event);
+    			if(status ==1){
+    				String imageName = Constants.getUserId()+Constants.getCurrentMapName()+placeRequest.getName()+Constants.getCurrentDateTime("yyyyMMddhhmmss");
+                    placeRequest.saveImages(imageName);
+                    Picture pic;
+                    String eventid = placeDao.getId(Constants.eINDEX, Constants.eTYPE, event);
+                    for (int i = 0; i < placeRequest.getImagesPath().length; i++) {
+						pic = new Picture(event.getPlacename(), placeRequest.getImagesPath()[i], eventid);
+					}
+    			}
     		}
-    		System.out.println(placeRequest.toString());
-            String imageName = "userid_"+"mapid_"+placeRequest.getName()+Constants.getCurrentDateTime("yyyyMMddhhmmss");
-            placeRequest.saveImages(imageName);
     	}
         
 
-        return 0;
+        return status;
     }
 }

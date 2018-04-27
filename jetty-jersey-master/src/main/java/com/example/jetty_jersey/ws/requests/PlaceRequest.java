@@ -86,8 +86,12 @@ public class PlaceRequest {
     public void saveImages(String picturename){
         imagesPath = new String[images.length];
         for(int i=0; i<imagesPath.length; i++){
-            imagesPath[i] = MapRequest.saveImage(images[i], "dist/img/place",picturename);
+            imagesPath[i] = MapRequest.saveImage(images[i], "dist/img/place",picturename+i);
         }
+    }
+    
+    public String []getImagesPath(){
+    	return imagesPath;
     }
 
     @Override
