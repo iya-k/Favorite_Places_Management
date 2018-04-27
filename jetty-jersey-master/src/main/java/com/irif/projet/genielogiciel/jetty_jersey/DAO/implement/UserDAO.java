@@ -7,6 +7,10 @@ import com.irif.projet.genielogiciel.jetty_jersey.model.User;
 
 import java.util.List;
 
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
+import javax.xml.bind.DatatypeConverter;
+
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.client.transport.TransportClient;
@@ -78,8 +82,9 @@ public class UserDAO extends DAO<User>{
 	 */
 	public User connect(String index, String type,String userName, String password){
 		User user=null;
-		String query = userName+" "+password;
-
+		String encryptpassword =User.Encrypt(userName,password);
+		System.out.println("Test : "+encryptpassword);
+		String query = userName+" "+encryptpassword;
 		SearchResponse response = client.prepareSearch(index)
 				.setTypes(type)
 				.setSearchType(SearchType.DFS_QUERY_THEN_FETCH)

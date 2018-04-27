@@ -12,7 +12,8 @@ $('#loginSubmit').click(function(event){
             'password' : password
         }),
 		success: function(data) {
-			alert("success");
+			//alert("success");
+			location.href = "../pages/show_map.html";
 		},
 		fail: function(data){
 			alert("fail");

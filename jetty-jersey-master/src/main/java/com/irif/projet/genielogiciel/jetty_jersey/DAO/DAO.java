@@ -20,6 +20,8 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.irif.projet.genielogiciel.jetty_jersey.DAO.implement.UserDAO;
+import com.irif.projet.genielogiciel.jetty_jersey.model.User;
 
 public abstract class DAO<T>{
 	  protected TransportClient client;
@@ -77,7 +79,6 @@ public abstract class DAO<T>{
 			int res = 0;
 			try{
 				if(!exist(index,type,obj)){
-
 					byte[] json = this.mapper.writeValueAsBytes(obj);
 					IndexRequestBuilder indexRequest = client.prepareIndex(index,type)
 							                                 .setSource(json,XContentType.JSON);
