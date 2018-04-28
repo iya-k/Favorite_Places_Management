@@ -21,6 +21,12 @@ $('#registerSubmit').click(function(event){
         }),
 		success: function(data) {
 			alert("success");
+			document.getElementById("username").value = "";
+			document.getElementById("first-name").value = "";
+			document.getElementById("email").value = "";
+			document.getElementById("last-name").value = "";
+			document.getElementById("confirm-password").value = "";
+			document.getElementById("password").value = "";
 		},
 		fail: function(data) {
 			alert("fail");
