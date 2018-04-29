@@ -41,7 +41,7 @@ public class JettyMain {
         handlerWebServices.addServlet(servletHolder, "/*");
 
         String[] pages = {
-                "home.html",
+                "pages/home.html",
                 "pages/login.html",
                 "pages/register.html",
                 "pages/forget_password.html",

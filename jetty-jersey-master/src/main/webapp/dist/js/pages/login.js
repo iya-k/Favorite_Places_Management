@@ -12,13 +12,21 @@ $('#loginSubmit').click(function(event){
             'password' : password
         }),
 		success: function(data) {
-			//alert("success");
-			location.href = "../pages/show_map.html";
+			if(data == 1){
+                window.location.replace("http://localhost:8082/map_show/");
+			}else if(data == 0){
+				alert("username or password incorrect");
+			}else{
+				alert("something went wrong,\nplease try again !!");
+			}
 		},
-		fail: function(data){
-			alert("fail");
-		}
-	});
+		fail: function(){
+            alert("something went wrong,\nplease try again !!");
+		},
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            alert("Status: " + textStatus + "\nError: " + errorThrown);
+        }
+    });
 
 	event.preventDefault();
 });

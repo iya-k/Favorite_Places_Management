@@ -66,6 +66,26 @@ public class LoginRessource {
 		return status;
 	}
 
+	@POST
+	@Path("/check-user")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public int checkUser() {
+		int status = 0;
+
+		// TODO check user is connected
+
+		switch(status) {
+			case 1:
+				System.out.println("user is connected");
+				break;
+			default:
+				System.out.println("user is not connected");
+				break;
+		}
+
+		return status;
+	}
+
 	@DELETE
 	@Path("/{id}")
 	public int deleteUser(User user) {
