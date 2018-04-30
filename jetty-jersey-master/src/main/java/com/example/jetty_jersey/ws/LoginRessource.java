@@ -86,6 +86,26 @@ public class LoginRessource {
 		return status;
 	}
 
+	@POST
+	@Path("/logout")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public int logout() {
+		int status = 1;
+
+		// TODO logout current user
+
+		switch(status) {
+			case 1:
+				System.out.println("user logout with successes");
+				break;
+			default:
+				System.out.println("something went wrong");
+				break;
+		}
+
+		return status;
+	}
+
 	@DELETE
 	@Path("/{id}")
 	public int deleteUser(User user) {
