@@ -30,14 +30,20 @@ public class EventDAO extends DAO<Event>{
 	
 	@Override
 	public SearchResponse getSearchResponse(String index, String type, String query) {
-
-		SearchResponse response = client.prepareSearch(index)
+		SearchResponse response= null;
+		try{
+			response = client.prepareSearch(index)
 				.setTypes(type)
 				.setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
 				.setQuery(QueryBuilders.multiMatchQuery(query,"mapname","eventname","longitude","latitude","begin","end")
 						.type(Type.CROSS_FIELDS)
 						.operator(Operator.AND)).get();
+		}catch(IndexNotFoundException e){
+			client.admin().indices().prepareCreate(index).get();
+		}
 		return response;
+		
+		
 	}
 
 	@Override
