@@ -41,9 +41,11 @@ public class EventDAO extends DAO<Event>{
 		}catch(IndexNotFoundException e){
 			client.admin().indices().prepareCreate(index).get();
 		}
+
+
+		System.out.println(response);
+
 		return response;
-		
-		
 	}
 
 	@Override
@@ -55,7 +57,6 @@ public class EventDAO extends DAO<Event>{
 		SearchResponse response = getSearchResponse(index,type,query);
 		boolean res = response != null && 0 < response.getHits().getHits().length;
 		return (res);
-		
 	}
 
 

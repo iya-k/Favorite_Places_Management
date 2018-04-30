@@ -20,16 +20,20 @@ $('#registerSubmit').click(function(event){
             'confirmPassword' : confirmPassword
         }),
 		success: function(data) {
-			alert("success");
-			document.getElementById("username").value = "";
-			document.getElementById("first-name").value = "";
-			document.getElementById("email").value = "";
-			document.getElementById("last-name").value = "";
-			document.getElementById("confirm-password").value = "";
-			document.getElementById("password").value = "";
+			console.log("success");
+			if(data == 1){
+			    alert("Sign up with successes");
+			    window.location.replace("../login");
+			}else if(data == 0){
+			    alert("Fill all required fills");
+			}else{
+			    alert("something went wrong,\nplease, try again !!!");
+			}
+
 		},
 		fail: function(data) {
-			alert("fail");
+			console("fail");
+            alert("something went wrong,\nplease, try again !!!");
 		}
 	});
 

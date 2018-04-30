@@ -66,10 +66,9 @@ public class PlaceRessource {
     public int addPlace(PlaceRequest placeRequest) {
     	int status = 0;
         System.out.println(placeRequest.toString());
-        placeRequest.saveImages("place_image_");
 
     	if(placeRequest!=null){
-    		if(placeRequest.getType() ==0){
+    		if(placeRequest.getType() == 0){
     			Place place = new Place(placeRequest, Constants.getCurrentMapName());
     			status = placeDao.add(Constants.pINDEX, Constants.pTYPE, place);
     			if(status ==1){
