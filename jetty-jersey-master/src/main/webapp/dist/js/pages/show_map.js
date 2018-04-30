@@ -51,7 +51,7 @@ $("#submitAddMap").click(function(event) {
     if(data.image.length != 0){
         $.ajax({
             type: 'PUT',
-            url: '../ws/maps/add_map',
+            url: '../ws/maps/',
             dataType: 'json',
             contentType: 'application/json',
             data: JSON.stringify(data),

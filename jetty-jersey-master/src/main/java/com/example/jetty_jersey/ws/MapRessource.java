@@ -27,12 +27,20 @@ public class MapRessource {
 	@Path("/{id_map}")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Map getMap(@PathParam("id_map") String id_map)  {
+	public Map getMap(@PathParam("id_map") String id_map) {
+		System.out.println("getMap");
 		Map status = null;
-		System.out.println("id_map " + id_map);
-		id_map = "OZeD-GIBe9pBoNiChq18map";
-		String mapname = Constants.getUserId()+" "+id_map;
-		Map map = mapDao.find("mapdb","map",mapname);
+
+		System.out.println("id_map = " + id_map);
+		if(id_map.equals("-1")){
+			// TODO search a last map id
+			// id_map = last_id_map;
+		}
+
+		String mapname = Constants.getUserId() + " " + id_map;
+		System.out.println("mapname = " + mapname);
+		Map map = mapDao.find("mapdb","map", mapname);
+
 		System.out.println("Map trouve : "+map);
 		if(map != null){
 			Constants.setCurrentMapName(mapDao.getId("mapdb","map",map));
@@ -45,63 +53,87 @@ public class MapRessource {
 		}
 		return status;
 	}
+
 	@Path("/list")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Map> getMaps(@PathParam("q")String q) {
+	public List<Map> getMaps() {
 		System.out.println("getMaps");
-		String query = "NJdv92IBe9pBoNiC9K3Ymap";
-		List<Map> listMap = mapDao.findAllById(Constants.mINDEX, Constants.mTYPE,query);
+		List<Map> listMap = null;
+
+		// TODO get current user id
+		String user_id = null;
+		listMap = mapDao.findAllById(Constants.mINDEX, Constants.mTYPE, user_id);
+
 		return listMap;
 	}
 
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
-	public int addMap(Map obj) {
-		ok = mapDao.add(Constants.mINDEX, Constants.mTYPE, obj);
-
-		return ok;
-	}
-
-	@POST
-	@Path("/{id_map}")
-	@Consumes(MediaType.APPLICATION_JSON)
-	public int updateMap(Map map) {
-		return mapDao.update(Constants.mINDEX, Constants.mTYPE, map);
-	}
-
-	@DELETE
-	@Path("/{id_map}")
-	public int deleteMap(Map map) {
-		return mapDao.delete(Constants.mINDEX, map);
-	}
-
-	@PUT
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Path("/add_map")
 	public int addMap(MapRequest mapRequest) {
 		int status = 0;
 		System.out.println(mapRequest.toString());
-		mapRequest.saveImage("map_image_");
 
-        Map map;
-        if (mapRequest != null) {
+		Map map;
+		if (mapRequest != null) {
 			String imageName = Constants.getCurrentUser().getUsername()+mapRequest.getName()+Constants.getCurrentDateTime("yyyyMMddhhmmss");
 			mapRequest.saveImage(imageName);
 			map = new Map(mapRequest,Constants.getUserId());
 			status = mapDao.add(Constants.mINDEX, Constants.mTYPE, map);
-        }
-        switch (status) {
-            case 0:
-                System.out.println("missing data");
-                break;
-            case 1:
-                System.out.println("add map with successes");
-                break;
-            default: // -1
-                System.out.println("something went wrong");
-                break;
-        }
-        return status;
+		}
+		switch (status) {
+			case 0:
+				System.out.println("missing data");
+				break;
+			case 1:
+				System.out.println("add map with successes");
+				break;
+			default: // -1
+				System.out.println("something went wrong");
+				break;
+		}
+		return status;
+	}
+
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	public int updateMap(MapRequest mapRequest) {
+		int status = 0;
+		System.out.println(mapRequest.toString());
+
+
+
+		Map map;
+		if (mapRequest != null) {
+			String imageName = Constants.getCurrentUser().getUsername()+mapRequest.getName()+Constants.getCurrentDateTime("yyyyMMddhhmmss");
+			mapRequest.saveImage(imageName);
+			map = new Map(mapRequest,Constants.getUserId());
+			status = mapDao.add(Constants.mINDEX, Constants.mTYPE, map);
+		}
+		switch (status) {
+			case 0:
+				System.out.println("missing data");
+				break;
+			case 1:
+				System.out.println("add map with successes");
+				break;
+			default: // -1
+				System.out.println("something went wrong");
+				break;
+		}
+		return status;
+	}
+
+	@DELETE
+	@Path("/{id_map}")
+	public int deleteMap(@PathParam("id_map") String id_map) {
+		int status = -1;
+		// TODO get current map if exist
+		Map map = null;
+		if(map != null){
+			status = mapDao.delete(Constants.mINDEX, map);
+		}
+
+		return status;
 	}
 }
