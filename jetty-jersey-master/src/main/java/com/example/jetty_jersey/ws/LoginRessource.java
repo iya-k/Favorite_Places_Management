@@ -70,10 +70,7 @@ public class LoginRessource {
 	@Path("/check-user")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public int checkUser() {
-		int status = 0;
-
-		// TODO check user is connected
-
+		int status =Constants.getCurrentUser() == null?0:1;
 		switch(status) {
 			case 1:
 				System.out.println("user is connected");
@@ -82,7 +79,6 @@ public class LoginRessource {
 				System.out.println("user is not connected");
 				break;
 		}
-
 		return status;
 	}
 
