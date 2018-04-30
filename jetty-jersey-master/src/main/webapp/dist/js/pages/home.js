@@ -5,15 +5,15 @@ $.ajax({
     data: {},
     success: function(data) {
         if(data == 1){
-            window.location.replace("http://localhost:8082/map_show/");
+            window.location.replace("/map_show");
         }else{
-            window.location.replace("http://localhost:8082/login/");
+            window.location.replace("/login");
         }
     },
     fail: function(){
-        window.location.replace("http://localhost:8082/login/");
+        window.location.replace("/login/");
     },
     error: function() {
-        window.location.replace("http://localhost:8082/login/");
+        window.location.replace("/login");
     }
 });

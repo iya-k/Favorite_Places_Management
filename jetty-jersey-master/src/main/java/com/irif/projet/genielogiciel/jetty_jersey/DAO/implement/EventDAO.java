@@ -41,20 +41,22 @@ public class EventDAO extends DAO<Event>{
 		}catch(IndexNotFoundException e){
 			client.admin().indices().prepareCreate(index).get();
 		}
+
+
+		System.out.println(response);
+
 		return response;
-		
-		
 	}
 
 	@Override
-	public boolean exist(String index, String type,Event e){
-		Event event = e;
-		SearchResponse response = client.prepareSearch(index)
-                .setTypes(type)
-                .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
-                .setQuery(QueryBuilders.matchQuery("name",event.getPlacename()))
-                .get();
-		return (0<response.getHits().getHits().length);
+	public boolean exist(String index, String type,Event event){
+		String query = event.getMapname()+" "+
+				event.getPlacename()+" "+
+				event.getLongitude()+" "+
+				event.getLatitude();
+		SearchResponse response = getSearchResponse(index,type,query);
+		boolean res = response != null && 0 < response.getHits().getHits().length;
+		return (res);
 	}
 
 
