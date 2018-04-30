@@ -80,28 +80,26 @@ public class MapRessource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("/add_map")
 	public int addMap(MapRequest mapRequest) {
-		System.out.println(mapRequest.toString());
 		int status = 0;
+		System.out.println(mapRequest.toString());
+		mapRequest.saveImage("map_image_");
+
         Map map;
         if (mapRequest != null) {
-        	try {
-        		String imageName = Constants.getCurrentUser().getUsername()+mapRequest.getName()+Constants.getCurrentDateTime("yyyyMMddhhmmss");
-                mapRequest.saveImage(imageName);
-                map = new Map(mapRequest,Constants.getUserId());
-                status = mapDao.add(Constants.uINDEX, Constants.uTYPE, map);
-            } catch (IOException e) {
-                //e.printStackTrace();
-            }
+			String imageName = Constants.getCurrentUser().getUsername()+mapRequest.getName()+Constants.getCurrentDateTime("yyyyMMddhhmmss");
+			mapRequest.saveImage(imageName);
+			map = new Map(mapRequest,Constants.getUserId());
+			status = mapDao.add(Constants.uINDEX, Constants.uTYPE, map);
         }
         switch (status) {
-            case -1:
-                System.out.println("Exception");
-                break;
             case 0:
-                System.out.println("Echec");
+                System.out.println("missing data");
                 break;
             case 1:
-                System.out.println("Reussite");
+                System.out.println("add map with successes");
+                break;
+            default: // -1
+                System.out.println("something went wrong");
                 break;
         }
         return status;

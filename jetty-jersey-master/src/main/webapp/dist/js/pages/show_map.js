@@ -57,15 +57,16 @@ $("#submitAddMap").click(function(event) {
             data: JSON.stringify(data),
             success: function(data) {
                 console.log("success");
-
                 if(data == 1){
-                    $("#add-map-modal").hide();
+                    $("#add-map-modal").modal("hide");
                     alert("Map has being added with successes");
-                }else{
+                }else if(data == 0){
                     alert("Please, Fill all required fields !!!");
+                }else{
+                    alert("something went wrong,\nplease, try again !!!");
                 }
             },
-            fail: function(data) {
+            fail: function() {
                 console.log("fail");
                 alert("something went wrong,\nplease, try again !!!");
             }
@@ -76,6 +77,9 @@ $("#submitAddMap").click(function(event) {
     event.preventDefault();
 });
 
+/**
+ * Add place button on click
+ */
 $("#submitAddPlace").click(function(event) {
     var fileInput = $("#place-images-form");
     var base64Input = $("#place-image-base64");
@@ -93,16 +97,25 @@ $("#submitAddPlace").click(function(event) {
 
     if(data.images.length != 0){
         $.ajax({
-            type: 'POST',
+            type: 'PUT',
             url: '../ws/id_map/add_place',
             dataType: 'json',
             contentType: 'application/json',
             data: JSON.stringify(data),
             success: function(data) {
-                console.log("success")
+                console.log("success");
+                if(data == 1){
+                    $("#add-place-modal").modal("hide");
+                    alert("Place/Event has being added with successes");
+                }else if(data == 0){
+                    alert("Please, Fill all required fields !!!");
+                }else{
+                    alert("something went wrong,\nplease, try again !!!");
+                }
             },
             fail: function(data) {
                 console.log("fail");
+                alert("something went wrong,\nplease, try again !!!");
             }
         });
         base64Input.val("");
@@ -111,6 +124,9 @@ $("#submitAddPlace").click(function(event) {
     event.preventDefault();
 });
 
+/**
+ * Image input change in map form
+ */
 $("#map-images-form").change(function(event){
     var fileInput = $("#map-images-form");
     var base64Input = $("#map-image-base64");
@@ -119,6 +135,9 @@ $("#map-images-form").change(function(event){
     event.preventDefault(); 
 });
 
+/**
+ * Images imput change in place form
+ */
 $("#place-images-form").change(function(event){
     var fileInput = $("#place-images-form");
     var base64Input = $("#place-image-base64");
@@ -127,6 +146,9 @@ $("#place-images-form").change(function(event){
     event.preventDefault(); 
 });
 
+/**
+ * Logout button on click
+ */
 $("#logout").click(function(event){
     $.ajax({
         type: 'POST',

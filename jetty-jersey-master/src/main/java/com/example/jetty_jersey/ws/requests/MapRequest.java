@@ -49,7 +49,7 @@ public class MapRequest {
         this.image = image;
     }
 
-    public void saveImage(String picturename) throws IOException {
+    public void saveImage(String picturename) {
         if(!image.isEmpty()){
             imagePath = saveImage(image, "dist/img/map",picturename);
         }

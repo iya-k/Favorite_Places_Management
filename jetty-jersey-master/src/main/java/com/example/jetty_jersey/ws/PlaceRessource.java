@@ -60,13 +60,15 @@ public class PlaceRessource {
         return placeDao.delete(Constants.pINDEX, place);
     }
 
-    @POST
+    @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/add_place")
     public int addPlace(PlaceRequest placeRequest) {
     	int status = 0;
+        System.out.println(placeRequest.toString());
+        placeRequest.saveImages("place_image_");
+
     	if(placeRequest!=null){
-    		
     		if(placeRequest.getType() ==1){
     			Place place = new Place(placeRequest, Constants.getCurrentMapName());
     			status = placeDao.add(Constants.pINDEX, Constants.pTYPE, place);
@@ -79,7 +81,6 @@ public class PlaceRessource {
 						pic = new Picture(place.getPlacename(), placeRequest.getImagesPath()[i], placeid);
 					}
     			}
-    			
     		}else{
     			Event event  = new Event(placeRequest, Constants.getCurrentMapName());
     			status = eventDao.add(Constants.eINDEX, Constants.eTYPE, event);
@@ -95,7 +96,17 @@ public class PlaceRessource {
     		}
     	}
         
-
+        switch (status) {
+            case 0:
+                System.out.println("missing data");
+                break;
+            case 1:
+                System.out.println("add map with successes");
+                break;
+            default: // -1
+                System.out.println("something went wrong");
+                break;
+        }
         return status;
     }
 }
