@@ -24,23 +24,23 @@ public class MapRessource {
 	Map retour = null;
 	int ok;
 
-	@Path("/id_map")
+	@Path("/{id_map}")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Map getMap(@PathParam("q")String q) {
+	public Map getMap(@PathParam("id_map") String id_map)  {
 		Map status = null;
-		System.out.println("getMap");
-		q ="";
-		String mapname = Constants.getUserId()+" "+q;
+		System.out.println("id_map " + id_map);
+		id_map = "OZeD-GIBe9pBoNiChq18map";
+		String mapname = Constants.getUserId()+" "+id_map;
 		Map map = mapDao.find("mapdb","map",mapname);
-		//System.out.println("Map trouve : "+map);
+		System.out.println("Map trouve : "+map);
 		if(map != null){
 			Constants.setCurrentMapName(mapDao.getId("mapdb","map",map));
 			for (int i = 0; i < map.getPlaceList().size(); i++) {
-				//System.out.println("place "+map.getPlaceList().get(i));
+				System.out.println("place "+map.getPlaceList().get(i));
 			}
 			for (int i = 0; i < map.getEventList().size(); i++) {
-				//System.out.println("place "+map.getEventList().get(i));
+				System.out.println("place "+map.getEventList().get(i));
 			}
 		}
 		return status;

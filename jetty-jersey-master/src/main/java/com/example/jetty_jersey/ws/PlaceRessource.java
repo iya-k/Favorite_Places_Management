@@ -69,7 +69,7 @@ public class PlaceRessource {
         placeRequest.saveImages("place_image_");
 
     	if(placeRequest!=null){
-    		if(placeRequest.getType() ==1){
+    		if(placeRequest.getType() ==0){
     			Place place = new Place(placeRequest, Constants.getCurrentMapName());
     			status = placeDao.add(Constants.pINDEX, Constants.pTYPE, place);
     			if(status ==1){
@@ -89,7 +89,7 @@ public class PlaceRessource {
     				String imageName = Constants.getUserId()+Constants.getCurrentMapName()+placeRequest.getName()+Constants.getCurrentDateTime("yyyyMMddhhmmss");
                     placeRequest.saveImages(imageName);
                     Picture pic;
-                    String eventid = placeDao.getId(Constants.eINDEX, Constants.eTYPE, event);
+                    String eventid = eventDao.getId(Constants.eINDEX, Constants.eTYPE, event);
                     for (int i = 0; i < placeRequest.getImagesPath().length; i++) {
 						pic = new Picture(event.getPlacename(), placeRequest.getImagesPath()[i], eventid);
 						pictureDao.add(Constants.piINDEX, Constants.piTYPE, pic);
@@ -103,7 +103,7 @@ public class PlaceRessource {
                 System.out.println("missing data");
                 break;
             case 1:
-                System.out.println("add map with successes");
+                System.out.println("add place/event with successes");
                 break;
             default: // -1
                 System.out.println("something went wrong");
