@@ -113,7 +113,7 @@ public class MapDAO extends DAO<Map>{
 	public List<Map> findAllById(String index, String type, String query){//id tab
 		Class<Map> cl = Map.class;
 		List<Map> mapList = new ArrayList<>();
-		SearchResponse response = getResponse(index, type,query,"userid", "mode",Operator.AND);
+		SearchResponse response = getResponse(index, type,query,"userid", "mode",Operator.AND);//OR
 		SearchHit[] res = response.getHits().getHits();
 		 for(int i = 0; i < res.length;i++) {
 			 mapList.add(getObj(res[i],cl));

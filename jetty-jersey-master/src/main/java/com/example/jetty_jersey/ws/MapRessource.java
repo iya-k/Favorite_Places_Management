@@ -29,17 +29,19 @@ public class MapRessource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Map getMap(@PathParam("q")String q) {
 		Map status = null;
-		String mapname = "NJdv92IBe9pBoNiC9K3Ymap";
-		Map map = mapDao.find("homemapdb","homemap",mapname);
-		System.out.println("Map trouve : "+map);
-		for (int i = 0; i < map.getPlaceList().size(); i++) {
-			System.out.println("place "+map.getPlaceList().get(i));
-		}
-		for (int i = 0; i < map.getEventList().size(); i++) {
-			System.out.println("place "+map.getEventList().get(i));
-		}
-		if (q != "") {
-			status = mapDao.find(Constants.mINDEX, Constants.mTYPE, q);
+		System.out.println("getMap");
+		q ="";
+		String mapname = Constants.getUserId()+" "+q;
+		Map map = mapDao.find("mapdb","map",mapname);
+		//System.out.println("Map trouve : "+map);
+		if(map != null){
+			Constants.setCurrentMapName(mapDao.getId("mapdb","map",map));
+			for (int i = 0; i < map.getPlaceList().size(); i++) {
+				//System.out.println("place "+map.getPlaceList().get(i));
+			}
+			for (int i = 0; i < map.getEventList().size(); i++) {
+				//System.out.println("place "+map.getEventList().get(i));
+			}
 		}
 		return status;
 	}
@@ -47,17 +49,10 @@ public class MapRessource {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Map> getMaps(@PathParam("q")String q) {
-		List<Map> status = null;
-		String username = "NJdv92IBe9pBoNiC9K3Ymap";
-		Map map = mapDao.find("homemapdb","homemap",username);
-		System.out.println("Map trouve : "+map);
-		for (int i = 0; i < map.getPlaceList().size(); i++) {
-			System.out.println("place "+map.getPlaceList().get(i));
-		}
-		for (int i = 0; i < map.getEventList().size(); i++) {
-			System.out.println("event "+map.getEventList().get(i));
-		}
-		return status;
+		System.out.println("getMaps");
+		String query = "NJdv92IBe9pBoNiC9K3Ymap";
+		List<Map> listMap = mapDao.findAllById(Constants.mINDEX, Constants.mTYPE,query);
+		return listMap;
 	}
 
 	@PUT

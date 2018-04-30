@@ -71,7 +71,7 @@ public class PlaceDAO extends DAO<Place>{
 					place.getLatitude();
 			id = getSearchResponse(index,type,query).getHits().getHits()[0].getId();
 		}catch(ArrayIndexOutOfBoundsException | NullPointerException e){
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		return(id);
 
