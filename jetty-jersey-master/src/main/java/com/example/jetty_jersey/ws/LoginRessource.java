@@ -88,7 +88,11 @@ public class LoginRessource {
 	public int logout() {
 		int status = 1;
 
-		// TODO logout current user
+		Constants.setCurrentUser(null);
+		Constants.setUserId(null);
+		Constants.setCurrentMapName(null);
+
+		status = Constants.getCurrentUser()==null?1:0;
 
 		switch(status) {
 			case 1:
