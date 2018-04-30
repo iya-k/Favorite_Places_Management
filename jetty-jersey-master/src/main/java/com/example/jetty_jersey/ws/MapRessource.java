@@ -29,29 +29,27 @@ public class MapRessource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Map getMap(@PathParam("id_map") String id_map) {
 		System.out.println("getMap");
-		Map status = null;
-
+		Map map = null;
+		String userid = Constants.getUserId() ;
 		System.out.println("id_map = " + id_map);
 		if(id_map.equals("-1")){
-			// TODO search a last map id
-			// id_map = last_id_map;
+			id_map  = Constants.getCurrentMapName();
 		}
-
-		String mapname = Constants.getUserId() + " " + id_map;
-		System.out.println("mapname = " + mapname);
-		Map map = mapDao.find("mapdb","map", mapname);
-
-		System.out.println("Map trouve : "+map);
+		if (userid==null || id_map==null){
+			return null;
+		}
+		String mapname = userid + " " + id_map;
+		map = mapDao.find("mapdb","map", mapname);
 		if(map != null){
 			Constants.setCurrentMapName(mapDao.getId("mapdb","map",map));
-			for (int i = 0; i < map.getPlaceList().size(); i++) {
-				System.out.println("place "+map.getPlaceList().get(i));
-			}
-			for (int i = 0; i < map.getEventList().size(); i++) {
-				System.out.println("place "+map.getEventList().get(i));
-			}
+				for (int i = 0; i < map.getPlaceList().size(); i++) {
+					System.out.println("place "+map.getPlaceList().get(i));
+				}
+				for (int i = 0; i < map.getEventList().size(); i++) {
+					System.out.println("event "+map.getEventList().get(i));
+				}
 		}
-		return status;
+		return map;
 	}
 
 	@Path("/list")
@@ -60,11 +58,10 @@ public class MapRessource {
 	public List<Map> getMaps() {
 		System.out.println("getMaps");
 		List<Map> listMap = null;
-
-		// TODO get current user id
-		String user_id = null;
-		listMap = mapDao.findAllById(Constants.mINDEX, Constants.mTYPE, user_id);
-
+		String user_id = Constants.getUserId();
+		if(user_id!=null){
+			listMap = mapDao.findAllById(Constants.mINDEX, Constants.mTYPE, user_id);
+		}
 		return listMap;
 	}
 
@@ -82,15 +79,15 @@ public class MapRessource {
 			status = mapDao.add(Constants.mINDEX, Constants.mTYPE, map);
 		}
 		switch (status) {
-			case 0:
-				System.out.println("missing data");
-				break;
-			case 1:
-				System.out.println("add map with successes");
-				break;
-			default: // -1
-				System.out.println("something went wrong");
-				break;
+		case 0:
+			System.out.println("missing data");
+			break;
+		case 1:
+			System.out.println("add map with successes");
+			break;
+		default: // -1
+			System.out.println("something went wrong");
+			break;
 		}
 		return status;
 	}
@@ -111,15 +108,15 @@ public class MapRessource {
 			status = mapDao.add(Constants.mINDEX, Constants.mTYPE, map);
 		}
 		switch (status) {
-			case 0:
-				System.out.println("missing data");
-				break;
-			case 1:
-				System.out.println("add map with successes");
-				break;
-			default: // -1
-				System.out.println("something went wrong");
-				break;
+		case 0:
+			System.out.println("missing data");
+			break;
+		case 1:
+			System.out.println("add map with successes");
+			break;
+		default: // -1
+			System.out.println("something went wrong");
+			break;
 		}
 		return status;
 	}
@@ -128,12 +125,12 @@ public class MapRessource {
 	@Path("/{id_map}")
 	public int deleteMap(@PathParam("id_map") String id_map) {
 		int status = -1;
-		// TODO get current map if exist
-		Map map = null;
-		if(map != null){
-			status = mapDao.delete(Constants.mINDEX, map);
+		if(id_map != null){
+			Map map = mapDao.find(Constants.mINDEX, Constants.mTYPE, id_map);
+			if(map != null){
+				status = mapDao.delete(Constants.mINDEX, map);
+			}
 		}
-
 		return status;
 	}
 }

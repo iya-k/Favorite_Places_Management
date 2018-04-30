@@ -76,10 +76,12 @@ public class PlaceRessource {
                     placeRequest.saveImages(imageName);
                     Picture pic;
                     String placeid = placeDao.getId(Constants.pINDEX, Constants.pTYPE, place);
-                    for (int i = 0; i < placeRequest.getImagesPath().length; i++) {
-						pic = new Picture(place.getPlacename(), placeRequest.getImagesPath()[i], placeid);
-						pictureDao.add(Constants.piINDEX, Constants.piTYPE, pic);
-					}
+                    if(placeid != null){
+                    	for (int i = 0; i < placeRequest.getImagesPath().length; i++) {
+    						pic = new Picture(place.getPlacename(), placeRequest.getImagesPath()[i], placeid);
+    						pictureDao.add(Constants.piINDEX, Constants.piTYPE, pic);
+    					}
+                    }    
     			}
     		}else{
     			Event event  = new Event(placeRequest, Constants.getCurrentMapName());
@@ -89,10 +91,12 @@ public class PlaceRessource {
                     placeRequest.saveImages(imageName);
                     Picture pic;
                     String eventid = eventDao.getId(Constants.eINDEX, Constants.eTYPE, event);
-                    for (int i = 0; i < placeRequest.getImagesPath().length; i++) {
-						pic = new Picture(event.getPlacename(), placeRequest.getImagesPath()[i], eventid);
-						pictureDao.add(Constants.piINDEX, Constants.piTYPE, pic);
-					}
+                    if(eventid != null){
+                    	for (int i = 0; i < placeRequest.getImagesPath().length; i++) {
+    						pic = new Picture(event.getPlacename(), placeRequest.getImagesPath()[i], eventid);
+    						pictureDao.add(Constants.piINDEX, Constants.piTYPE, pic);
+    					}
+                    }   
     			}
     		}
     	}
