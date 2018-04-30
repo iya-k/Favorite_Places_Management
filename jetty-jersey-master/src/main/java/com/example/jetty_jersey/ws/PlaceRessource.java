@@ -79,6 +79,7 @@ public class PlaceRessource {
                     String placeid = placeDao.getId(Constants.pINDEX, Constants.pTYPE, place);
                     for (int i = 0; i < placeRequest.getImagesPath().length; i++) {
 						pic = new Picture(place.getPlacename(), placeRequest.getImagesPath()[i], placeid);
+						pictureDao.add(Constants.piINDEX, Constants.piTYPE, pic);
 					}
     			}
     		}else{
@@ -91,6 +92,7 @@ public class PlaceRessource {
                     String eventid = placeDao.getId(Constants.eINDEX, Constants.eTYPE, event);
                     for (int i = 0; i < placeRequest.getImagesPath().length; i++) {
 						pic = new Picture(event.getPlacename(), placeRequest.getImagesPath()[i], eventid);
+						pictureDao.add(Constants.piINDEX, Constants.piTYPE, pic);
 					}
     			}
     		}

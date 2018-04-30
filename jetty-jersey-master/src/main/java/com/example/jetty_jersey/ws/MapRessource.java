@@ -76,7 +76,7 @@ public class MapRessource {
 		return mapDao.delete(Constants.mINDEX, map);
 	}
 
-	@POST
+	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("/add_map")
 	public int addMap(MapRequest mapRequest) {
@@ -89,7 +89,7 @@ public class MapRessource {
 			String imageName = Constants.getCurrentUser().getUsername()+mapRequest.getName()+Constants.getCurrentDateTime("yyyyMMddhhmmss");
 			mapRequest.saveImage(imageName);
 			map = new Map(mapRequest,Constants.getUserId());
-			status = mapDao.add(Constants.uINDEX, Constants.uTYPE, map);
+			status = mapDao.add(Constants.mINDEX, Constants.mTYPE, map);
         }
         switch (status) {
             case 0:

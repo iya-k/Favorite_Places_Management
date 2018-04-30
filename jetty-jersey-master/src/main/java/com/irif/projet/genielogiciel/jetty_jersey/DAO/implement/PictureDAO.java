@@ -2,9 +2,11 @@ package com.irif.projet.genielogiciel.jetty_jersey.DAO.implement;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.client.transport.TransportClient;
+import org.elasticsearch.index.IndexNotFoundException;
 import org.elasticsearch.index.query.Operator;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.MultiMatchQueryBuilder.Type;
@@ -22,13 +24,17 @@ public class PictureDAO extends DAO<Picture>{
 	}
 	@Override
 	public SearchResponse getSearchResponse(String index, String type,String query){
-
-		SearchResponse response = client.prepareSearch(index)
+		SearchResponse response = null;
+		try{
+			response = client.prepareSearch(index)
 				.setTypes(type)
 				.setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
 				.setQuery(QueryBuilders.multiMatchQuery(query,"url","placeid")
 						.type(Type.CROSS_FIELDS)
 						.operator(Operator.AND)).get();
+		}catch(IndexNotFoundException e) {
+			client.admin().indices().prepareCreate(index).get();
+		}
 		return response;
 	}
 
