@@ -92,14 +92,12 @@ public class MapRessource {
 		return status;
 	}
 
+	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	public int updateMap(MapRequest mapRequest) {
 		int status = 0;
 		System.out.println(mapRequest.toString());
-
-
-
 		Map map;
 		if (mapRequest != null) {
 			String imageName = Constants.getCurrentUser().getUsername()+mapRequest.getName()+Constants.getCurrentDateTime("yyyyMMddhhmmss");

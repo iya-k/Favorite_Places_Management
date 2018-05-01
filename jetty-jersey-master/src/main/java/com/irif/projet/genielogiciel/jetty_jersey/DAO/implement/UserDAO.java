@@ -45,11 +45,7 @@ public class UserDAO extends DAO<User>{
 		}
 		return response;
 	}
-	/**
-	 *
-	 * @param index type User
-	 * @return  user_id
-	 */
+
 	@Override
 	public String getId(String index, String type, User user){
 		String id = "";
@@ -61,11 +57,7 @@ public class UserDAO extends DAO<User>{
 		}
 		return(id);
 	}
-	/**
-	 * look at the existence of a user
-	 * @param index type User
-	 * @return  boolean
-	 */
+
 	@Override
 	public boolean exist(String index, String type, User user){
 		String query = user.getUsername();
@@ -99,11 +91,7 @@ public class UserDAO extends DAO<User>{
 		return (user);
 	}
 
-	/**
-	 * delete method
-	 * @param index user
-	 * @return  status
-	 */
+
 	@Override
 	public int delete(String index,User user){
 		String username = user.getUsername();

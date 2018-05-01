@@ -35,7 +35,13 @@ public abstract class DAO<T>{
 		  this.client = client;
 		  this.mapper = new ObjectMapper();
 	  }
-
+	  
+	  /**
+	   * 
+	   * @param hit : ElesticSearch hit
+	   * @param t : The object's class
+	   * @return  the hit transformed to the corresponding class object and return it
+	   */
 	  public T getObj(SearchHit hit,Class<T> t){
 		  T obj = null;
 		  try{
@@ -45,36 +51,68 @@ public abstract class DAO<T>{
 		  }
 		  return obj;
 	  }
-
+	  
+	  /**
+	   * 
+	   * @param index : index of the database
+	   * @param type : type of the database
+	   * @param query : the query to execute
+	   * @return the object T corresponding to the query
+	   */
 	  public abstract T find(String index,String type,String query);
 
 	  /**
-		*
-	    * @param index type User
-		* @return  SearchResponse
-		*/
+	   * 
+	   * @param index : index of the database
+	   * @param type : type of the database
+	   * @param query : the query to execute
+	   * @return SearchResponse corresponding to the query
+	   */
 	  public abstract SearchResponse getSearchResponse(String index, String type, String query);
 
+	  /**
+	   * 
+	   * @param index : index of the database
+	   * @param type : type of the database
+	   * @param obj : The object that allows to verify its presence on the database
+	   * @return true if the object exist on database else false
+	   */
 	  public abstract boolean exist(String index,String type,T obj);
 
-	  public abstract String getId(String index, String type, T obj);
 	  /**
-		* delete method
-	    * @param obj
-		* @return boolean if deleted true else false
-		*/
+	   * 
+	   * @param index : index of the database
+	   * @param type : type of the database
+	   * @param obj : The object for which we want to get the id
+	   * @return : id of the object on database
+	   */
+	  public abstract String getId(String index, String type, T obj);
+	 
+	  /**
+	   * 
+	   * @param index : index of the database
+	   * @param obj : The object that we want to delete fromdatabase
+	   * @return  1:the object has been delected  != 0 else
+	   */
 	  public abstract int delete(String index,T obj);
 
 
+	  /**
+	   * 
+	   * @param index : index of the database
+	   * @param type : type of the database
+	   * @param query : the query to execute
+	   * @return list of elements corresponding to the query
+	   */
 	  public abstract List<T> findAllById(String index,String type,String query);
-
-	 /**
-	  * 
-	  * @param index
-	  * @param type
-	  * @param obj
-	  * @return :
-	  */
+	  
+	  /**
+	   * 
+	   * @param index : index of the database
+	   * @param type : type of the database
+	   * @param obj :The object that we want to add on database
+	   * @return 1: if the object was added -1: if an error has occured 0 else
+	   */
 	  public int add(String index,String type,T obj){
 			int res = 0;
 			try{
@@ -95,10 +133,10 @@ public abstract class DAO<T>{
      
 	  /**
 	   * 
-	   * @param index
-	   * @param type
-	   * @param obj
-	   * @return
+	   * @param index : index of the database
+	   * @param type : type of the database
+	   * @param obj :The object that we want to modify on database
+	   * @return 1: if the object was added -1: if an error has occured 0: else
 	   */
 	  public int update(String index,String type,T obj){
 		 int status = 0;
@@ -120,10 +158,10 @@ public abstract class DAO<T>{
 	  }
 
 	  /**
-		* update method
-		* @param obj
-		* @return boolean if updated true else false
-		*/
+	   * 
+	   * @param index : index of the database that we want to delete
+	   * @return true if the index was deleted false else
+	   */
 	  public boolean deleteIndex(String index){
 
 			BulkByScrollResponse response = DeleteByQueryAction.INSTANCE.newRequestBuilder(client)
@@ -135,13 +173,20 @@ public abstract class DAO<T>{
 	  }
 	  /**
 	   *
-	   * @param index
-	   * @param type
+
 	   * @param id if id=0 no matching with id else matching with id
 	   * @return T list corresponding to the id
 	   * @throws JsonParseException
 	   * @throws JsonMappingException
 	   * @throws IOException
+	   */
+	  
+	  /**
+	   * 
+	   * @param index : index of the database
+	   * @param type : type of the database
+	   * @param t : the class of the object that we want 
+	   * @return list of elements corresponding to the index
 	   */
 	  public List<T> findAll(String index,String type,Class<T> t){
 			 List<T> res = new ArrayList<T>();
