@@ -21,6 +21,36 @@ $.ajax({
     }
 });
 
+var db_maps = [];
+
+$.ajax({
+    type: 'GET',
+    url: '../ws/maps/list',
+    dataType: 'json',
+    data: {},
+    success: function(data) {
+        if(data != null) {
+            console.log(data);
+
+            $.each(data, function( index, value ) {
+                db_maps[index] = {
+                    "url": "../" + value.mapimg,
+                    "name": value.mapname
+                };
+
+                console.log( index + ": " + db_maps[index]);
+            });
+        }
+    },
+    fail: function(){
+        console.log("something went wrong !!");
+    },
+    error: function() {
+        console.log("something went wrong !!");
+    }
+});
+
+
 _.templateSettings.variable = "rc";
 
 var new_place_coordinate;
@@ -190,7 +220,8 @@ $("#plus-option").click(function() {
 $("#index-map").click(function() {
     // alert("index map get clicked");
     var data = {
-        maps: [{
+        maps: db_maps
+        /*[{
                 "url": "../dist/img/map-1.png",
                 "name": "Map 1"
             },
@@ -202,7 +233,7 @@ $("#index-map").click(function() {
                 "url": "../dist/img/map-3.png",
                 "name": "Map 3"
             }
-        ]
+        ]*/
     };
     popupMapsListModel(data);
 });
