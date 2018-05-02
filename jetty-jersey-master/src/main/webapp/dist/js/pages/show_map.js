@@ -1,4 +1,27 @@
 /**
+ * Chech user whether is connected or not
+ */
+$.ajax({
+    type: 'POST',
+    url: '../ws/users/check-user',
+    dataType: 'json',
+    data: {},
+    success: function(data) {
+        if(data == 1){
+            console.log("user connected");
+        }else{
+            window.location.replace("/login");
+        }
+    },
+    fail: function(){
+        window.location.replace("/login/");
+    },
+    error: function() {
+        window.location.replace("/login");
+    }
+});
+
+/**
  * function get file from {@param fileInput} then code it to base64 string.
  * the string result get saved into {@param base64Input}
  *
