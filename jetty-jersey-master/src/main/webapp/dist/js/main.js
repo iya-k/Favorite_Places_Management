@@ -1,3 +1,26 @@
+/**
+ * Chech user whether is connected or not
+ */
+$.ajax({
+    type: 'POST',
+    url: '../ws/users/check-user',
+    dataType: 'json',
+    data: {},
+    success: function(data) {
+        if(data == 1){
+            console.log("user connected");
+        }else{
+            window.location.replace("/login");
+        }
+    },
+    fail: function(){
+        window.location.replace("/login/");
+    },
+    error: function() {
+        window.location.replace("/login");
+    }
+});
+
 _.templateSettings.variable = "rc";
 
 var new_place_coordinate;
@@ -50,7 +73,7 @@ function initMap() {
                 lng: 2.3189001
             }, // coordiantes
             icon: "../dist/img/map-marker-red.png", // icon image
-            label: "location 1", // place name
+            // label: "location 1", // place name
         },
         {
             coords: {
@@ -58,21 +81,21 @@ function initMap() {
                 lng: 2.3409146
             }, // coordiantes
             icon: "../dist/img/map-marker-blue.png", // icon image
-            label: "location 2", // place name
+            // label: "location 2", // place name
         },
         {
             coords: {
-                lat: 48.8375083,
-                lng: 2.1000479
+                lat: 48.8448768,
+                lng: 2.4013125
             }, // coordiantes
             icon: "../dist/img/map-marker-green.png", // icon image
-            label: "location 3", // place name
+            // label: "location 3", // place name
         },
     ]; // markers to fill on a map
 
     var map = new google.maps.Map(document.getElementById("google-map"), {
-        center: new google.maps.LatLng(48.8589507, 2.2770201),
-        zoom: 12
+        center: new google.maps.LatLng(48.8618195, 2.3549639),
+        zoom: 12.5
     });
 
     /**
